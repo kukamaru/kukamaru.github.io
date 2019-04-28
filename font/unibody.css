@@ -1,0 +1,29 @@
+
+/* fonts */  
+
+@font-face {
+  font-family: unibody;
+  src: url(Unibody8Pro-RegularItalic.otf);
+  font-style: italic;
+}
+
+@font-face {
+  font-family: unibody_caps;
+  src: url(Unibody8Pro-RegularSmallCaps.otf);
+}
+@font-face {
+  font-family: unibody_black;
+  src: url(Unibody8Pro-Black.otf);
+}
+
+@font-face {
+  font-family: unibody;
+  src: url(Unibody8Pro-Regular.otf);
+  font-weight: normal;
+}
+
+@font-face {
+  font-family: unibody;
+  src: url(Unibody8Pro-Bold.otf);
+  font-weight: bold;
+}
