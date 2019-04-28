@@ -2,6 +2,7 @@
 
 body {
 	font-family: unibody;
+	font-size:8px;
 }
 
 h1 {
@@ -19,6 +20,7 @@ h1 {
 
 div.maintext {
 	font-size:8px;
+	background: teal;
 }
 
 div.currenttime {

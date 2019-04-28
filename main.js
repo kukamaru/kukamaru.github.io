@@ -60,9 +60,19 @@ function button() {
 	}, 2000)
 }
 
+function clearText() {
+	while(maintext.firstChild){
+		maintext.removeChild(maintext.firstChild);
+	}
+}
+
+var iT = 0;
+
 function appendText(i) {
 	var node = document.createElement("p");
 	var textnode = document.createTextNode(i);
 	node.appendChild(textnode);
+	node.setAttribute("id",iT);
+	iT = iT + 1;
 	document.getElementById("maintext").appendChild(node);
 }
