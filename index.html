@@ -2,17 +2,30 @@
 	<head>
 		<title>Timers n shit</title>
 		<link rel="stylesheet" href="style.css">
+
+		<script src="main.js"></script>		
 	</head>
 
 
 
 	<body>		
-		<script src="main.js"></script>
+
 
 		<h1>header1</h1>
+
+		<input type="checkbox" id="msCheck" onclick="msVisCheck()" checked="true">
+		<label for="msCheck">Milliseconds</label>
+
+		<input type="button" value="button!!" id="button" onclick="button()">
+
 		<a href="flipclock.html">-- flipclock --</a>
+
+		<div id="maintext" class="maintext">
+			<p id="main000000">boingo</p>
+		</div>
+
 		<div class="currenttime">
-			<span id="text1">asd</span><span id="text2">asd</span><span id="text3">asd</span><span id="text4">asd</span>
+			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span>
 		</div>
 		
 	</body>
