@@ -67,12 +67,14 @@ function clearText() {
 }
 
 var iT = 0;
-
+function isEven(x) { return (x%2)==0; }
 function appendText(i) {
 	var node = document.createElement("p");
 	var textnode = document.createTextNode(i);
 	node.appendChild(textnode);
 	node.setAttribute("id",iT);
+	if (isEven(iT)) { node.setAttribute("class","even") }
+	else 			{ node.setAttribute("class","odd")  }
 	iT = iT + 1;
 	document.getElementById("maintext").appendChild(node);
 }
