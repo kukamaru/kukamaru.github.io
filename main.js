@@ -61,7 +61,8 @@ function button() {
 }
 
 function appendText(i) {
-	var currentText = document.getElementById("maintext").innerHTML;
-	var newText = currentText +"<p>"+ i +"</p>";
-	document.getElementById("maintext").innerHTML = newText;
+	var node = document.createElement("p");
+	var textnode = document.createTextNode(i);
+	node.appendChild(textnode);
+	document.getElementById("maintext").appendChild(node);
 }
