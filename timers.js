@@ -1,8 +1,17 @@
-var myVar = setInterval(function() {
-	myTimer();
-}, 1000);
+var myVar = setInterval(myTimer, 1);
 
 function myTimer() {
 	var d = new Date();
-	document.getElementById("text1").innerHTML = d.toLocaleTimeString();
+
+	hours = d.getHours();
+	minutes = d.getMinutes();
+	seconds = d.getSeconds();
+	ms = d.getMilliseconds();
+
+
+	document.getElementById("text1").innerHTML = hours;
+	document.getElementById("text2").innerHTML = minutes;
+	document.getElementById("text3").innerHTML = seconds;
+	document.getElementById("text4").innerHTML = ms;
+
 }
