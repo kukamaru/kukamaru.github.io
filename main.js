@@ -1,5 +1,6 @@
 var myVar = setInterval(myTimer, 11);
 var msVisible = true;
+var timeStamps = true;
 
 function msVisCheck() {
 	var checkBox = document.getElementById("msCheck");
@@ -73,13 +74,29 @@ function clearText() {
 }
 
 function appendText(i) {
+	var text = i;
+
+	if (timeStamps){
+		var d = new Date();
+
+		hours = addZero(d.getHours());
+		minutes = addZero(d.getMinutes());
+		seconds = addZero(d.getSeconds());
+
+		ts = "[" + hours + ":" + minutes + ":" + seconds + "]";
+		text = ts + " - " + text;
+		}
+
 	var node = document.createElement("p");
-	var textnode = document.createTextNode(i);
+	var textnode = document.createTextNode(text);
+
 	node.appendChild(textnode);
 	node.setAttribute("id",iT);
+
 	if (isEven(iT)) { node.setAttribute("class","even") }
 	else 			{ node.setAttribute("class","odd")  }
 	iT = iT + 1;
+
 	document.getElementById("maintext").appendChild(node);
 }
 

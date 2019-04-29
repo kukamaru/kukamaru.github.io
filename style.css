@@ -27,6 +27,7 @@ div.maintext p {
 }
 div.maintext p.odd  {	background: rgb(200,200,200);   }
 div.maintext p.even {/*	background: blue; */}
+div.maintext #welcome { font-weight: bold; }
 
 div.currenttime {
 	padding: 2px 6px;
