@@ -1,5 +1,10 @@
 @import url("font/unibody.css");
 
+:root {
+	--freeze-color: blue;
+	--alert-color: red;
+}
+
 body {
 	font-family: unibody;
 	font-size:8px;
@@ -31,6 +36,9 @@ div.maintext p {
 div.maintext p.odd  {	background: rgb(200,200,200);   }
 div.maintext p.even {/*	background: blue; */}
 div.maintext #welcome { font-weight: bold; }
+div.maintext p.freeze { color:var(--freeze-color); }
+div.maintext p.alert { color:var(--alert-color); }
+
 
 div.currenttime {
 	padding: 2px 6px;

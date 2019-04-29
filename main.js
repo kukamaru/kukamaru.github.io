@@ -78,11 +78,13 @@ function myTimer() {
 }
 
 function button() {
+	appendText("button pressed");
+
 	var start = Date.now();
 	console.log("button pressed: " + start);
 	setTimeout(function(){ 
 		console.log("time elapsed");
-		appendText("BOING:" + start); 
+		appendText("BOING:" + start,"alert"); 
 	}, 2000)
 }
 
@@ -90,6 +92,7 @@ function button() {
 
 var iT = 0; /* Span ID for text */
 function isEven(x) { return (x%2)==0; }
+function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
 function clearText() {
 	while(maintext.firstChild){
@@ -98,8 +101,10 @@ function clearText() {
 	iT = 0;
 }
 
-function appendText(i) {
+function appendText(i,c) {
 	var text = i;
+	var textClass = evenOdd(iT);
+	if (c){	textClass = " " + c; }
 
 	if (timeStamps){
 		var d = new Date();
@@ -117,18 +122,17 @@ function appendText(i) {
 
 	node.appendChild(textnode);
 	node.setAttribute("id",iT);
-
-	if (isEven(iT)) { node.setAttribute("class","even") }
-	else 			{ node.setAttribute("class","odd")  }
-	iT = iT + 1;
+    node.setAttribute("class",textClass);
 
 	document.getElementById("maintext").appendChild(node);
+
+	iT = iT + 1;
 }
 
 /* cookies */
 function checkCookies() {
 	var text = "";
-	appendText("bingo boingo")
+	appendText("bingo boingo","freeze")
 	if (navigator.cookieEnabled == true){
 		text = "cookies are enabled";
 	}
