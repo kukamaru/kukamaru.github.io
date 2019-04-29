@@ -25,6 +25,7 @@ function eggTimer(eS,eM,eH) {
     var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
 	appendText("egg timer starting, " + cookingTime + " milliseconds");
+
 	startTimer(cookingTime,"egg done",0);
 
 	menuHide();
@@ -37,6 +38,7 @@ function startTimer(T,t,s) {
 	appendText("T = " + T)
 
 	timerRunning = true;
+
 	setTimeout(function(){alarm(t,s);},T);
 }
 
@@ -48,6 +50,8 @@ function alarm(text,sound) {
 
 	var audio = new Audio('audio/eggsound1.mp3');
 	audio.play();
+
+	timerRunning = false;
 }
 
 /* Milliseconds Checkbox */
