@@ -1,7 +1,54 @@
 var myVar = setInterval(myTimer, 11);
+
 var msVisible = true;
 var timeStamps = true;
+var timerRunning = false;
+
+var timerOrigin;
 var windowState;
+
+
+/*sounds*/
+/*
+var sounds = [ { 
+	soundName: "eggsound",
+	soundFile: 'audio/eggsound1.mp3',
+	}
+]
+;
+*/
+
+/* EGGTIMER */
+function eggTimer(eS,eM,eH) {
+	if (eH == undefined) { eH = 0; }
+	if (eM == undefined) { eM = 0; }
+    var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
+
+	appendText("egg timer starting, " + cookingTime + " milliseconds");
+	startTimer(cookingTime,"egg done",0);
+
+	menuHide();
+}
+
+function startTimer(T,t,s) {
+	var d = new Date();
+	var endTime = d + T;
+	appendText("expecting alarm at" + endTime);
+	appendText("T = " + T)
+
+	timerRunning = true;
+	setTimeout(function(){alarm(t,s);},T);
+}
+
+
+/*ALARM CORE FUNCTION*/
+function alarm(text,sound) {
+	appendText(text,"alert");
+	appendText("playing sound: " + sound);
+
+	var audio = new Audio('audio/eggsound1.mp3');
+	audio.play();
+}
 
 /* Milliseconds Checkbox */
 function msVisCheck() {
@@ -63,6 +110,12 @@ function addZeroMs(i) {
 
 function myTimer() {
 	var d = new Date();
+	if (timerRunning){
+		document.getElementById("timediv").style.background = "green";
+	}
+	else {
+		document.getElementById("timediv").style.background = "black";
+	}
 
 	hours = addZero(d.getHours());
 	minutes = addZero(d.getMinutes());
@@ -85,7 +138,7 @@ function button() {
 	console.log("button pressed: " + start);
 	setTimeout(function(){ 
 		console.log("time elapsed");
-		appendText("BOING:" + start,"alert"); 
+		alarm("boing","alarm.mp3"); 
 	}, 2000)
 }
 
@@ -99,6 +152,7 @@ function menuShow(i){
 	bg.style.background = "var(--wrapperbg-color)"
 	focus.style.visibility = "visible";
 }
+
 function menuHide(){
 	var bg = document.getElementById("menuwrapper");
 	var focus = document.getElementById(windowState);
@@ -107,11 +161,6 @@ function menuHide(){
 	focus.style.visibility = "hidden";
 	setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 }
-
-function recipeShow() {
-	alert("no recipe");
-}
-
 
 var iT = 0; /* Span ID for text */
 function isEven(x) { return (x%2)==0; }

@@ -3,7 +3,7 @@
 		<title>Timers n shit</title>
 		<link rel="stylesheet" href="style.css">
 
-		<script src="main.js"></script>		
+		<script src="main.js"></script>
 	</head>
 
 
@@ -11,9 +11,10 @@
 	<body>		
 		<body onload="checkCookies()">
 
-		<div class="menu" id="menu">
-			<ul class="nav" id="menu">
-				<li><button>Egg Timer (8m 30s)</button></li>
+		<div id="menu" class="menu">
+			<ul id="menulist" class="nav">
+				<li><button onclick="javascript:eggTimer(30,8);">Egg Timer (8m 30s)</button></li>
+				<li><button onclick="javascript:eggTimer(10);">Test Timer (10s)</button></li>
 			</ul>
 		</div>
 

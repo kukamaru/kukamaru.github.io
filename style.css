@@ -40,6 +40,7 @@ div.bg {
 	transition-duration: 0.2s;
 	transition-property: background;
 	visibility: hidden;
+	z-index: 1;
 }
 div.menu {
 	visibility: hidden;
@@ -64,6 +65,9 @@ div.menu {
 
 div.maintext {
 	font-size:8px;
+	background: white;
+	bottom:0;
+	position:absolute;
 }
 
 div.maintext p {
