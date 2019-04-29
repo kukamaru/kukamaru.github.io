@@ -20,11 +20,13 @@ h1 {
 
 div.maintext {
 	font-size:8px;
-	background: teal;
 }
 
-div.maintext p.even {	background: gray; }
-div.maintext p.odd  {	background: blue; }
+div.maintext p {
+	margin: 0;
+}
+div.maintext p.odd  {	background: rgb(200,200,200);   }
+div.maintext p.even {/*	background: blue; */}
 
 div.currenttime {
 	padding: 2px 6px;

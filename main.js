@@ -60,14 +60,18 @@ function button() {
 	}, 2000)
 }
 
+
+
+var iT = 0; /* Span ID for text */
+function isEven(x) { return (x%2)==0; }
+
 function clearText() {
 	while(maintext.firstChild){
 		maintext.removeChild(maintext.firstChild);
 	}
+	iT = 0;
 }
 
-var iT = 0;
-function isEven(x) { return (x%2)==0; }
 function appendText(i) {
 	var node = document.createElement("p");
 	var textnode = document.createTextNode(i);
@@ -77,4 +81,18 @@ function appendText(i) {
 	else 			{ node.setAttribute("class","odd")  }
 	iT = iT + 1;
 	document.getElementById("maintext").appendChild(node);
+}
+
+/* cookies */
+function checkCookies() {
+	var text = "";
+	appendText("bingo boingo")
+	if (navigator.cookieEnabled == true){
+		text = "cookies are enabled";
+	}
+	else {
+		text = "cookies are disabled";
+	}
+
+	appendText(text);
 }
