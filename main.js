@@ -2,6 +2,7 @@ var myVar = setInterval(myTimer, 11);
 var msVisible = true;
 var timeStamps = true;
 
+/* Milliseconds Checkbox */
 function msVisCheck() {
 	var checkBox = document.getElementById("msCheck");
 	var text = document.getElementById("text4");
@@ -12,6 +13,17 @@ function msVisCheck() {
 	else { 
 		text.style.display = "none";
 		msVisible = false;
+	}
+}
+
+/* Timestamp Checkbox */
+function tsVisCheck() {
+	var checkBox = document.getElementById("tsCheck");
+	if (checkBox.checked == true) {	
+		timeStamps = true;
+	}
+	else { 
+		timeStamps = false;
 	}
 }
 
