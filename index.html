@@ -11,9 +11,21 @@
 	<body>		
 		<body onload="checkCookies()">
 
-
+		<div class="menu" id="menu" onclick="">
+			<ul class="nav" id="menu">
+				<li><button>Egg Timer (8m 30s)</button></li>
+			</ul>
+		</div>
+		
+		<div id="menuwrapper" class="bg" onclick="menuHide();"></div>
 
 		<h1>header1</h1>
+
+		<ul id="nav" class="nav">
+			<li><button onclick="javascript:recipeShow();">show recipe</button></li>
+			<li><button onclick="javascript:menuShow('menu');">menu</button></li>
+			<li><button href="flipclock.html">-- flipclock --</button></li>
+		</ul>
 
 		<input type="checkbox" id="msCheck" onclick="msVisCheck()" checked="true">
 		<label for="msCheck">Milliseconds</label>
@@ -21,7 +33,6 @@
 		<input type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked="true">
 		<label for="tsCheck">Timestamps</label>
 
-		<a href="flipclock.html">-- flipclock --</a>
 
 		<button value="button!!" id="button" onclick="button()">buton</button>
 		<button value="clear!!" id="clear" onclick="clearText()">clear</button>

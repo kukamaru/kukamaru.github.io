@@ -1,6 +1,7 @@
 var myVar = setInterval(myTimer, 11);
 var msVisible = true;
 var timeStamps = true;
+var windowState;
 
 /* Milliseconds Checkbox */
 function msVisCheck() {
@@ -88,6 +89,28 @@ function button() {
 	}, 2000)
 }
 
+function menuShow(i){
+	var bg = document.getElementById("menuwrapper");
+
+	var focus = document.getElementById(i);
+	windowState = i;
+
+	bg.style.visibility = "visible";
+	bg.style.background = "var(--wrapperbg-color)"
+	focus.style.visibility = "visible";
+}
+function menuHide(){
+	var bg = document.getElementById("menuwrapper");
+	var focus = document.getElementById(windowState);
+
+	bg.style.background = "rgba(0,0,0,0)";
+	focus.style.visibility = "hidden";
+	setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+}
+
+function recipeShow() {
+	alert("no recipe");
+}
 
 
 var iT = 0; /* Span ID for text */

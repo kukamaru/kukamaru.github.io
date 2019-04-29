@@ -3,6 +3,7 @@
 :root {
 	--freeze-color: blue;
 	--alert-color: red;
+	--wrapperbg-color: rgba(0,0,0,0.8);
 }
 
 body {
@@ -12,6 +13,42 @@ body {
 
 h1 {
 	font-size: 16px;
+}
+ 
+.nav li 		{ display: inline; }
+.nav button {
+	font-family: unibody-caps;
+	color: orange;
+	height: 40px;
+	border:solid 1px orange;
+	font-size: 8px;
+	background: yellow;
+	outline:none;
+}
+.nav button:hover {
+	color: red;
+	border-color: red;
+}
+.nav button:active {
+	transform:scale(0.99);
+}
+
+div.bg { 
+	background-color: rgba(0,0,0,0); 
+	position:absolute;
+	left:0; top:0; bottom:0; right: 0;
+	transition-duration: 0.2s;
+	transition-property: background;
+	visibility: hidden;
+}
+div.menu {
+	visibility: hidden;
+	position: absolute;
+	background: white;
+	padding:20px;
+	top:100px;
+	left:100px;
+	z-index: 2;
 }
 
 #text1, #text2, #text3 {
@@ -23,7 +60,6 @@ h1 {
 	font-size:8px;
 	transition: width color 0.2s;
     -webkit-transition: color 0.2s;
-
 }
 
 div.maintext {
