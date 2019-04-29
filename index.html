@@ -11,18 +11,24 @@
 	<body>		
 		<body onload="checkCookies()">
 
-		<div class="menu" id="menu" onclick="">
+		<div class="menu" id="menu">
 			<ul class="nav" id="menu">
 				<li><button>Egg Timer (8m 30s)</button></li>
 			</ul>
 		</div>
+
+		<div id="recipe">
+			<p>
+			</p>
+		</div>
+
 		
 		<div id="menuwrapper" class="bg" onclick="menuHide();"></div>
 
 		<h1>header1</h1>
 
 		<ul id="nav" class="nav">
-			<li><button onclick="javascript:recipeShow();">show recipe</button></li>
+			<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 			<li><button onclick="javascript:menuShow('menu');">menu</button></li>
 			<li><button href="flipclock.html">-- flipclock --</button></li>
 		</ul>
