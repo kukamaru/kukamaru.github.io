@@ -104,7 +104,7 @@ function clearText() {
 function appendText(i,c) {
 	var text = i;
 	var textClass = evenOdd(iT);
-	if (c){	textClass = " " + c; }
+	if (c){	textClass = textClass + " " + c; }
 
 	if (timeStamps){
 		var d = new Date();
