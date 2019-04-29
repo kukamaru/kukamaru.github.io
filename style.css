@@ -16,6 +16,9 @@ h1 {
 
 #text4 {
 	font-size:8px;
+	transition: width color 0.2s;
+    -webkit-transition: color 0.2s;
+
 }
 
 div.maintext {
@@ -36,5 +39,6 @@ div.currenttime {
     position:absolute;
     bottom: 0;
     right: 20px;
+    transition:2s;
 }
 

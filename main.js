@@ -6,13 +6,26 @@ var timeStamps = true;
 function msVisCheck() {
 	var checkBox = document.getElementById("msCheck");
 	var text = document.getElementById("text4");
+	var div = document.getElementById("timediv");
+
+	var delay = 200;
+
 	if (checkBox.checked == true) {	
-		text.style.display = "inline";
+		text.style.visibility = "visible";
 		msVisible = true;
+		text.style.color = "rgba(255,255,255,1)";
+		div.style.width = "160px";
+
 	}
 	else { 
-		text.style.display = "none";
 		msVisible = false;
+		text.style.color = "rgba(255,255,255,0)";
+		div.style.width = "130px";
+		setTimeout(function(){
+			text.style.visibility = "hidden";
+		}, delay);
+		
+
 	}
 }
 
@@ -122,6 +135,7 @@ function checkCookies() {
 	else {
 		text = "cookies are disabled";
 	}
+	msVisCheck();
 
 	appendText(text);
 }
