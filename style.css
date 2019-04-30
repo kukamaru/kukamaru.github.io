@@ -79,6 +79,14 @@ div.maintext #welcome { font-weight: bold; }
 div.maintext p.freeze { color:var(--freeze-color); }
 div.maintext p.alert { color:var(--alert-color); }
 
+div.bars {
+	padding:0; margin:0;
+	width:100%;
+	position: absolute;
+	bottom: 33px; left:0;
+	display: inline;
+	background: blue;
+}
 
 div.currenttime {
 	padding: 2px 6px;
