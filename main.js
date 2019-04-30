@@ -9,7 +9,7 @@ var timeStamps = true;
 var timerRunning = false;
 var timersRunning = 0;
 var windowState = false;
-
+var activeTimers = [];
 var timerOrigin;
 
 
@@ -44,13 +44,14 @@ var timerOrigin;
 		if(msVisible == true){
 			document.getElementById("text4").innerHTML = "." + ms;
 		}
+		renderBars();
 	}
 
 /** EGGTIMER **/
 	function eggTimer(eS,eM,eH) {
 		if (eH == undefined) { eH = 0; }
 		if (eM == undefined) { eM = 0; }
-	    var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
+	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
 		appendText("egg timer starting, " + cookingTime + " milliseconds");
 
@@ -63,16 +64,24 @@ var timerOrigin;
 	function startTimer(T,text,soundID) {
 		timerID++;
 
-		var d = new Date();
-		var endTime = d + T;
+		var d = new Date(); 
+		var fms = d.valueOf() + T;
+		var f = new Date(fms);
+		
+		activeTimers.push({
+			ID:timerID,
+			start:d,
+			finish:f,
+			duration:T
+		});
 
-		appendText("expecting alarm at" + endTime);
+		appendText("expecting alarm at " + f);
 		appendText("T = " + T);
 
 		timersRunning++;
 		timerRunning = true;
 
-		newBar(timerID,T,text);
+		newBar(timerID,text);
 		setAlarm(timerID,T,text,soundID);
 	}
 /**ALARM CORE FUNCTION **/
@@ -83,8 +92,7 @@ var timerOrigin;
 	function alarm(ID,text,soundID) {
 		appendText(text,"alert");
 		appendText("playing sound: " + soundID);
-
-
+		// activeTimers.pop(ID);
 
 		/** not actually responding to soundID **/
 		var audio = new Audio('audio/eggsound1.mp3');
@@ -98,7 +106,7 @@ var timerOrigin;
 		appendText(timersRunning + " alarms remain","status")
 	}
 /** BARS **/
-	function newBar(ID,T,text) {
+	function newBar(ID,text) {
 		var div = document.createElement('div');
 		var progressdiv = document.createElement('div');
 		var parent = document.getElementById('bars');
@@ -106,7 +114,7 @@ var timerOrigin;
 
 		divID = "bar" + ID;
 		progressID = "progress" + ID;
-		text = text + " " + ID + " " + T;
+		// text = text + " " + ID + " " + T;
 
 		var label = document.createElement('p');
    	label.innerHTML = text;
@@ -124,8 +132,32 @@ var timerOrigin;
 	function hideBar(ID) {
 		var div = document.getElementById('bar'+ID);
 		var parent = document.getElementById('bars');
-		parent.removeChild(div);
+		div.style.visibility = "hidden";
+
+		setTimeout(function(){parent.removeChild(div);},10000); 
 	}
+
+	function renderBars() {
+		now = new Date().valueOf();
+		num = activeTimers.length;
+
+		for (i = 0; i < num; i++){
+			start = activeTimers[i].start.valueOf();
+			end = activeTimers[i].finish.valueOf();
+
+			var elapsed = now-start;
+			var total = end-start;
+
+			elapsedFraction = (elapsed/total*100);
+			if (elapsedFraction > 100) { elapsedFraction = 100 }
+			o = elapsedFraction + "%";
+
+			bar = document.getElementById("progress" + activeTimers[i].ID);
+
+			if (bar != undefined){ bar.style.width = o; }
+		}
+	}
+
 
 /* Buttons and menu */
 	function button() {
