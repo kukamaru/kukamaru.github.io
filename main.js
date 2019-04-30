@@ -75,7 +75,7 @@ var timerOrigin;
 		newBar(timerID,T,text);
 		setAlarm(timerID,T,text,soundID);
 	}
-/** ALARM CORE FUNCTION **/
+/**ALARM CORE FUNCTION **/
 	function setAlarm(ID,T,text,soundID) {
 			setTimeout(function(){alarm(ID,text,soundID);}
 			,T)
@@ -100,19 +100,24 @@ var timerOrigin;
 /** BARS **/
 	function newBar(ID,T,text) {
 		var div = document.createElement('div');
+		var progressdiv = document.createElement('div');
 		var parent = document.getElementById('bars');
 
-		var label = document.createElement('p');
 
-		divid = "bar" + ID;
-
+		divID = "bar" + ID;
+		progressID = "progress" + ID;
 		text = text + " " + ID + " " + T;
 
-		label.innerHTML = text;
+		var label = document.createElement('p');
+   	label.innerHTML = text;
 
 		div.setAttribute('class',"bar");
-		div.setAttribute('id', divid);
+		div.setAttribute('id', divID);
+		progressdiv.setAttribute('class',"progressbar")
+		progressdiv.setAttribute('id', progressID)
+
 		div.appendChild(label);
+		div.appendChild(progressdiv);
 
 		parent.appendChild(div);
 	}
@@ -161,12 +166,7 @@ var timerOrigin;
 /* Timestamp Checkbox */
 	function tsVisCheck() {
 		var checkBox = document.getElementById("tsCheck");
-		if (checkBox.checked == true) {	
-			timeStamps = true;
-		}
-		else { 
-			timeStamps = false;
-		}
+		timeStamps = checkBox.checked
 	}
 /* Milliseconds Checkbox */
 	function msVisCheck() {
@@ -211,23 +211,29 @@ var timerOrigin;
 		var textClass = evenOdd(iT);
 		if (c){	textClass = textClass + " " + c; }
 
-		if (timeStamps){
+		var node = document.createElement("p");
+		var textnode = document.createTextNode(text);
+
+		node.setAttribute("id",iT);
+	   node.setAttribute("class",textClass);
+
+	   if (timeStamps){
 			var d = new Date();
 
 			hours = addZero(d.getHours());
 			minutes = addZero(d.getMinutes());
 			seconds = addZero(d.getSeconds());
 
-			ts = "[" + hours + ":" + minutes + ":" + seconds + "]";
-			text = ts + " - " + text;
-			}
+			ts = "[" + hours + ":" + minutes + ":" + seconds + "] ";
 
-		var node = document.createElement("p");
-		var textnode = document.createTextNode(text);
+			var tsText = document.createTextNode(ts);
+			var tsNode = document.createElement("span");
+			tsNode.appendChild(tsText);
+			tsNode.setAttribute("class","timestamp");
 
+			node.appendChild(tsNode)
+		}
 		node.appendChild(textnode);
-		node.setAttribute("id",iT);
-	    node.setAttribute("class",textClass);
 
 		document.getElementById("maintext").appendChild(node);
 

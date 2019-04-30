@@ -6,6 +6,8 @@
 	--status-color: teal;
 
 	--wrapperbg-color: rgba(0,0,0,0.8);
+
+	--timestamp-separator: "- ";
 }
 
 body {
@@ -75,20 +77,50 @@ div.maintext {
 div.maintext p {
 	margin: 0;
 }
-div.maintext p.odd  {	background: rgb(200,200,200);   }
+
+div.maintext p.odd  {	background: rgb(245,245,245);   }
 div.maintext p.even {/*	background: blue; */}
 div.maintext #welcome { font-weight: bold; }
 div.maintext p.freeze { color:var(--freeze-color);  }
-div.maintext p.alert  { color:var(--alert-color);   }
+div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
 div.maintext p.status { color:var(--status-color);  }
+div.maintext p span.timestamp { font-weight: normal; }
 
 div.bars {
 	padding:0; margin:0;
+	margin-bottom: 10px;
 	width:100%;
 	position: absolute;
 	bottom: 33px; left:0;
 	display: inline;
 	background: blue;
+}
+
+div.bar {
+	background: rgba(255,0,0,0.5);
+	position: relative;
+	z-index: 0;
+	height: 20px;
+	margin-bottom: 10px;
+}
+div.bar p { 
+	margin: 0;
+	z-index: 2;
+	position: relative;
+}
+div.progressbar {
+	margin: 0;
+	padding: 0;
+	background: lime;
+	width: 50%;
+	height: 100%;
+	position: absolute;
+	left: 0;
+	top:0;
+	bottom: 0;
+	z-index: 1;
+	height: 20px;
+
 }
 
 div.currenttime {
