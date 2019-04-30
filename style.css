@@ -3,6 +3,8 @@
 :root {
 	--freeze-color: blue;
 	--alert-color: red;
+	--status-color: teal;
+
 	--wrapperbg-color: rgba(0,0,0,0.8);
 }
 
@@ -76,8 +78,9 @@ div.maintext p {
 div.maintext p.odd  {	background: rgb(200,200,200);   }
 div.maintext p.even {/*	background: blue; */}
 div.maintext #welcome { font-weight: bold; }
-div.maintext p.freeze { color:var(--freeze-color); }
-div.maintext p.alert { color:var(--alert-color); }
+div.maintext p.freeze { color:var(--freeze-color);  }
+div.maintext p.alert  { color:var(--alert-color);   }
+div.maintext p.status { color:var(--status-color);  }
 
 div.bars {
 	padding:0; margin:0;
