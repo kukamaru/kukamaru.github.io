@@ -44,6 +44,7 @@ var timerOrigin;
 		if(msVisible == true){
 			document.getElementById("text4").innerHTML = "." + ms;
 		}
+
 		renderBars();
 	}
 
@@ -62,8 +63,6 @@ var timerOrigin;
 
 	var timerID = 0;
 	function startTimer(T,text,soundID) {
-		timerID++;
-
 		var d = new Date(); 
 		var fms = d.valueOf() + T;
 		var f = new Date(fms);
@@ -72,7 +71,8 @@ var timerOrigin;
 			ID:timerID,
 			start:d,
 			finish:f,
-			duration:T
+			duration:T,
+			active:true
 		});
 
 		appendText("expecting alarm at " + f);
@@ -83,16 +83,20 @@ var timerOrigin;
 
 		newBar(timerID,text);
 		setAlarm(timerID,T,text,soundID);
+
+		timerID++;
 	}
 /**ALARM CORE FUNCTION **/
 	function setAlarm(ID,T,text,soundID) {
 			setTimeout(function(){alarm(ID,text,soundID);}
 			,T)
 	}
+
 	function alarm(ID,text,soundID) {
 		appendText(text,"alert");
 		appendText("playing sound: " + soundID);
-		// activeTimers.pop(ID);
+		
+		activeTimers[ID].active = false;
 
 		/** not actually responding to soundID **/
 		var audio = new Audio('audio/eggsound1.mp3');
@@ -131,12 +135,16 @@ var timerOrigin;
 	}
 	function hideBar(ID) {
 		var div = document.getElementById('bar'+ID);
+		var bar = document.getElementById('progress' + ID)
 		var parent = document.getElementById('bars');
-		div.style.visibility = "hidden";
+		bar.style.height = "0px";
+		div.style.height = "0px";
+		div.style.marginBottom = "0px"
+
 
 		setTimeout(function(){parent.removeChild(div);},10000); 
 	}
-
+ //renderbars is looped from main function
 	function renderBars() {
 		now = new Date().valueOf();
 		num = activeTimers.length;
@@ -150,11 +158,14 @@ var timerOrigin;
 
 			elapsedFraction = (elapsed/total*100);
 			if (elapsedFraction > 100) { elapsedFraction = 100 }
-			o = elapsedFraction + "%";
+			widthPercent = elapsedFraction + "%";
 
 			bar = document.getElementById("progress" + activeTimers[i].ID);
 
-			if (bar != undefined){ bar.style.width = o; }
+			if (bar != undefined){ 
+				bar.style.width = widthPercent;
+				if (elapsedFraction > 80) bar.style.background = "red";
+			}
 		}
 	}
 
