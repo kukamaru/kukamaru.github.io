@@ -128,6 +128,8 @@ var timerOrigin;
 		progressdiv.setAttribute('class',"progressbar")
 		progressdiv.setAttribute('id', progressID)
 
+		label.setAttribute('id',"barlabel" + ID)
+
 		div.appendChild(label);
 		div.appendChild(progressdiv);
 
@@ -137,9 +139,14 @@ var timerOrigin;
 		var div = document.getElementById('bar'+ID);
 		var bar = document.getElementById('progress' + ID)
 		var parent = document.getElementById('bars');
+
+		var label = document.getElementById('barlabel' + ID);
+
+
+		label.style.color = "rgba(0,0,0,0)";
 		bar.style.height = "0px";
 		div.style.height = "0px";
-		div.style.marginBottom = "0px"
+		div.style.marginBottom = "0px";
 
 
 		setTimeout(function(){parent.removeChild(div);},10000); 
@@ -172,14 +179,8 @@ var timerOrigin;
 
 /* Buttons and menu */
 	function button() {
-		appendText("button pressed");
-
-		var start = Date.now();
-		console.log("button pressed: " + start);
-		setTimeout(function(){ 
-			console.log("time elapsed");
-			alarm("boing","alarm.mp3"); 
-		}, 2000)
+		appendText("button pressed","status");
+		eggTimer(3);
 	}
 	function button2() {
 		appendText("button2 pressed");
