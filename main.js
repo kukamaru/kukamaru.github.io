@@ -195,11 +195,13 @@ var timerOrigin;
 		var bar = document.getElementById('progress' + ID)
 		var label = document.getElementById('barlabel' + ID);
 		var countdown = document.getElementById('barcountdown' + ID);
+		var countdownms = document.getElementById('barcountdownms' + ID);
 
 
 
 		label.style.color = "rgba(0,0,0,0)";
 		countdown.style.color = "rgba(0,0,0,0)";
+		countdownms.style.color = "rgba(0,0,0,0)";
 		bar.style.height = "0px";
 		div.style.height = "0px";
 		div.style.marginBottom = "0px";
@@ -227,15 +229,16 @@ var timerOrigin;
 
 				if (elapsedFraction > 100) 	{ elapsedFraction = 100 }
 
-				if (current.inverted) { widthPercent = 100-elapsedFraction }
-				else 									{ widthPercent = elapsedFraction }
+				if (current.inverted) 	{ widthPercent = 100-elapsedFraction }
+				else 							{ widthPercent = elapsedFraction }
 
 				if (current.countdown) {
 					countdown = document.getElementById("barcountdown" + current.ID);
 					ms = 			document.getElementById("barcountdownms" + current.ID);
-					countdown.innerHTML = renderTime(remainder);
-					ms.innerHTML		  = renderMs(remainder);
+					countdown.innerHTML 				= renderTime(remainder);
+					ms.innerHTML = (msVisible) ? renderMs(remainder) : "";
 				}
+
 				widthPercent = widthPercent + "%";
 
 				bar.style.width = widthPercent;
@@ -290,16 +293,16 @@ var timerOrigin;
 			var checkBox = document.getElementById("msCheck");
 			var text = document.getElementById("text4");
 			var div = document.getElementById("timediv");
-
 			var delay = 200;
 
 			if (checkBox.checked == true) {	
 				msVisible = true;
 
 				text.style.color = "rgba(255,255,255,1)";
+
 				text.style.visibility = "visible";
 
-				div.style.width = "160px";
+				div.style.width = "200px";
 
 			}
 			else { 
@@ -309,8 +312,9 @@ var timerOrigin;
 				setTimeout(function(){
 					text.style.visibility = "hidden";
 				}, delay);
+
 				
-				div.style.width = "130px";
+				div.style.width = "140px";
 			}
 	}
 
