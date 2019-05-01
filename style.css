@@ -5,6 +5,16 @@
 	--alert-color: red;
 	--status-color: teal;
 
+	--buttonTextColor: purple;
+	--buttonBorderColor: black;
+	--buttonBackgroundColor: white;
+
+	--buttonHoverTextColor: blue;
+	--buttonHoverBorderColor: lightgray;
+	--buttonHoverBackgroundColor: pink;
+
+
+
 	--wrapperbg-color: rgba(0,0,0,0.8);
 
 	--timestamp-separator: "- ";
@@ -22,22 +32,26 @@ h1 {
 div.headerdiv {
 	background-color: rgba(255,255,255,0.90);
 }
- 
+
 .nav li 		{ display: inline; }
-.nav button {
+button {
 	font-family: unibody-caps;
-	color: orange;
-	height: 40px;
-	border:solid 1px orange;
+
+	color: var(--buttonTextColor);
+	background: var(--buttonBackgroundColor);
+
+	padding:3px 16px 4px;
+	border:solid 1px var(--buttonBorderColor);
 	font-size: 8px;
-	background: yellow;
 	outline:none;
 }
-.nav button:hover {
-	color: red;
-	border-color: red;
+button:hover { 
+	color: var(--buttonHoverTextColor);  
+	border-color: var(--buttonHoverBorderColor);
+	background-color: var(--buttonHoverBackgroundColor);
+	text-decoration: underline;
 }
-.nav button:active {
+button:active {
 	transform:scale(0.99);
 }
 
