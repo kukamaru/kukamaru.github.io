@@ -13,29 +13,43 @@ var activeTimers = [];
 var timerOrigin;
 
 
-/*sounds*/
+//sounds
 	
 	var sounds = [ 
 		{ 
 			soundName: "eggsound",
 			src: "audio/eggsound1.mp3",
 			looping: false
-		}/*,
+		},
 
 
 		{
-			soundName: "jingle"
+			soundName: "jingle",
 			src: "audio/jingle.mp3",
 			looping: false
 		},
 
 
 		{
-			soundName: "beat"
-			src: "audio/beat.mp3",
+			soundName: "groove",
+			src: "audio/groove.mp3",
 			looping: true
-		}*/
+		}
 	];
+/* Cookies + Init */
+	function checkCookies() {
+		var text = "";
+		appendText("bingo boingo","freeze")
+		if (navigator.cookieEnabled == true){
+			text = "cookies are enabled";
+		}
+		else {
+			text = "cookies are disabled";
+		}
+		msVisCheck();
+
+		appendText(text);
+	}
 
 /* Main Function */
 	function mainLoop() {
@@ -62,26 +76,11 @@ var timerOrigin;
 
 		renderBars();
 	}
-	function renderTime(i) {
-		var d = new Date(i);
 
-		H = d.getHours() - 1;
-		M = d.getMinutes();
-		S = d.getSeconds();
-
-		h = (H>0) ? addZero(H) + ":" : "";
-		m = (M>0) ? addZero(M) + ":" : "";
-		s = addZero(S);
-
-		return h+m+s
-	}
-	function renderMs(i) {
-		var d = new Date(i);
-		return "." + addZeroMs(d.getMilliseconds())
-	}
 
 /** EGGTIMER **/
 	function newTimer(){
+		// makes new timer from new timer form
 		form = document.getElementById("newTimer");
 
 		h = form.h.value;
@@ -89,6 +88,7 @@ var timerOrigin;
 		s = form.s.value;
 		size = form.size.value;
 		text = form.text.value;
+		soundID = form.sound.value;
 
 		style = size;
 
@@ -96,23 +96,23 @@ var timerOrigin;
 		if (form.inverted.checked){ style = "inverted " + style }
 
 
-		eggTimer(s,m,h,style,text);
+		eggTimer(s,m,h,style,text,soundID);
 
 		form.reset();
 	}
 
-	function eggTimer(eS,eM,eH,style,text) {
-		if (eH == undefined) { eH = 0; }
-		if (eM == undefined) { eM = 0; }
-		if (text == undefined) { text = "eggtimer (undefined)" }
-	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
-
-		 appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
-
-
+	function eggTimer(eS,eM,eH,style,text,sound) {
+		if (eH == undefined) 	{ eH = 0; }
+		if (eM == undefined) 	{ eM = 0; }
+		if (text == undefined) 	{ text = "eggtimer (undefined)" }
+		if (!sound) 				{ sound = 0 }
 		if (!style) { style = "normal"; }
 
-		startTimer(cookingTime,text,0,style);
+	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
+
+		appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
+
+   	startTimer(cookingTime,text,sound,style);
 		menuHide();
 	}
 
@@ -126,15 +126,17 @@ var timerOrigin;
 
 		activeTimers.push({
 			ID: 			timerID,
+			active: 		true,
+			text:  		text,
+
 			start: 		d,
 			finish: 		f,
 			duration: 	T,
+
 			style: 		style,
-			text:  		text,
+			soundID: 	soundID,
 			inverted:   style.includes("inverted"),
-			countdown:  style.includes("countdown"),
-			active: 		true,
-			soundID: 	soundID
+			countdown:  style.includes("countdown")
 
 		});
 
@@ -157,21 +159,24 @@ var timerOrigin;
 	function alarm(ID) {
 		text = activeTimers[ID].text;
 		soundID = activeTimers[ID].soundID;
+		isLooping = sounds[soundID].looping;
 
 		appendText(text,"alert");
 		
-		activeTimers[ID].active = false;
 
-		/** not actually responding to soundID **/
-		
+		appendText("isLooping = " + isLooping);
 		appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
 		
-	//	var audio = new Audio('audio/eggsound1.mp3');
 		var audio = new Audio(sounds[soundID].src);
+		if (isLooping){
+			 audio.setAttribute("loop",true);
+			 //function for stopping the audio
+		}
 		audio.play();
 
 		hideBar(ID);
 
+		activeTimers[ID].active = false;
 		timersRunning--;
 		if (timersRunning == 0) { timerRunning = false }
 
@@ -276,10 +281,10 @@ var timerOrigin;
 
 /* Buttons and menu */
 	function button() {
-		appendText("button pressed","status");
-		eggTimer(21,4,0,"big countdown","bigtest");
-		eggTimer(2,3,0,"countdown","medium test");
-		eggTimer(30,0,0,"small","smalltest");
+		appendText("button pressed","alert");
+		eggTimer(0,21,4,"big countdown","bigtest",0);
+		eggTimer(5,0,0,"countdown","medium test",1);
+		eggTimer(15,0,0,"small","smalltest + looped sound",2);
 	}
 	function button2() {
 		appendText("button2 pressed");
@@ -388,6 +393,25 @@ var timerOrigin;
 		iT = iT + 1;
 	}
 
+//Number Things for clocks etc.
+	function renderTime(i) {
+		var d = new Date(i);
+
+		H = d.getHours() - 1;
+		M = d.getMinutes();
+		S = d.getSeconds();
+
+		h = (H>0) ? addZero(H) + ":" : "";
+		m = (M>0) ? addZero(M) + ":" : "";
+		s = addZero(S);
+
+		return h+m+s
+	}
+	function renderMs(i) {
+		var d = new Date(i);
+		return "." + addZeroMs(d.getMilliseconds())
+	}
+
 	function addZero(i) {
 	  if (i < 10) {
 	    i = "0" + i;
@@ -410,17 +434,3 @@ var timerOrigin;
 	function isEven(x) { return (x%2)==0; }
 	function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
-/* Cookies */
-	function checkCookies() {
-		var text = "";
-		appendText("bingo boingo","freeze")
-		if (navigator.cookieEnabled == true){
-			text = "cookies are enabled";
-		}
-		else {
-			text = "cookies are disabled";
-		}
-		msVisCheck();
-
-		appendText(text);
-	}
