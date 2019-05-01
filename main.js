@@ -36,6 +36,7 @@ var timerOrigin;
 			looping: true
 		}
 	];
+
 /* Cookies + Init */
 	function checkCookies() {
 		var text = "";
@@ -128,6 +129,7 @@ var timerOrigin;
 			ID: 			timerID,
 			active: 		true,
 			text:  		text,
+			isLooping:  false, 
 
 			start: 		d,
 			finish: 		f,
@@ -170,9 +172,12 @@ var timerOrigin;
 		var audio = new Audio(sounds[soundID].src);
 		if (isLooping){
 			 audio.setAttribute("loop",true);
+			 activeTimers[ID].audio = audio;
+			 audio.play();
 			 //function for stopping the audio
+			 alarmWindow(ID);
 		}
-		audio.play();
+		else { audio.play(); }
 
 		hideBar(ID);
 
@@ -182,6 +187,25 @@ var timerOrigin;
 
 		//appendText(timersRunning + " alarms remain","status")
 	}
+	function alarmWindow(ID) {
+		div = document.getElementById('alarmBG');
+
+		stopButton = document.createElement('button');
+		stopButton.setAttribute("onclick","alarmStop("+ID+")");
+		stopButton.setAttribute("id","stopButton"+ID);
+
+		stopButton.innerHTML = activeTimers[ID].text;
+
+		div.appendChild(stopButton);
+	}
+	function alarmStop(ID) {
+		div    = document.getElementById('alarmBG')
+		stopButton = document.getElementById("stopButton"+ID);
+		audio  = activeTimers[ID].audio;
+		audio.pause();
+		div.removeChild(stopButton);
+	} 
+
 /** BARS **/
 	function newBar(ID) {
 		var parent = document.getElementById('bars');
@@ -280,7 +304,7 @@ var timerOrigin;
 
 
 /* Buttons and menu */
-	function button() {
+	function button1() {
 		appendText("button pressed","alert");
 		eggTimer(0,21,4,"big countdown","bigtest",0);
 		eggTimer(5,0,0,"countdown","medium test",1);
