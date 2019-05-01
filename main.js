@@ -129,7 +129,6 @@ var timerOrigin;
 			ID: 			timerID,
 			active: 		true,
 			text:  		text,
-			isLooping:  false, 
 
 			start: 		d,
 			finish: 		f,
@@ -164,17 +163,14 @@ var timerOrigin;
 		isLooping = sounds[soundID].looping;
 
 		appendText(text,"alert");
-		
-
-		appendText("isLooping = " + isLooping);
-		appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
+		//appendText("isLooping = " + isLooping);
+		//appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
 		
 		var audio = new Audio(sounds[soundID].src);
 		if (isLooping){
 			 audio.setAttribute("loop",true);
 			 activeTimers[ID].audio = audio;
 			 audio.play();
-			 //function for stopping the audio
 			 alarmWindow(ID);
 		}
 		else { audio.play(); }
@@ -184,11 +180,12 @@ var timerOrigin;
 		activeTimers[ID].active = false;
 		timersRunning--;
 		if (timersRunning == 0) { timerRunning = false }
-
 		//appendText(timersRunning + " alarms remain","status")
 	}
+
 	function alarmWindow(ID) {
-		div = document.getElementById('alarmBG');
+		alarmShow();
+		bg = document.getElementById('alarmBG');
 
 		stopButton = document.createElement('button');
 		stopButton.setAttribute("onclick","alarmStop("+ID+")");
@@ -196,14 +193,17 @@ var timerOrigin;
 
 		stopButton.innerHTML = activeTimers[ID].text;
 
-		div.appendChild(stopButton);
+		bg.appendChild(stopButton);
 	}
 	function alarmStop(ID) {
-		div    = document.getElementById('alarmBG')
+		bg = document.getElementById('alarmBG')
 		stopButton = document.getElementById("stopButton"+ID);
-		audio  = activeTimers[ID].audio;
+		audio = activeTimers[ID].audio;
+
 		audio.pause();
-		div.removeChild(stopButton);
+		bg.removeChild(stopButton);
+
+		alarmHide();
 	} 
 
 /** BARS **/
@@ -263,7 +263,7 @@ var timerOrigin;
 
 		setTimeout(function(){parent.removeChild(div);},10000); 
 	}
- //renderbars is looped from main function
+   //renderbars is looped from main function
 	function renderBars() {
 		now = new Date().valueOf();
 		num = activeTimers.length;
@@ -302,7 +302,6 @@ var timerOrigin;
 		}
 	}
 
-
 /* Buttons and menu */
 	function button1() {
 		appendText("button pressed","alert");
@@ -337,6 +336,21 @@ var timerOrigin;
 			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 		}
 	}
+	function alarmShow(){
+
+		//bake into alarmWindow
+		var bg = document.getElementById("alarmBG");
+		bg.style.background = "rgba(255,0,0,0.5)";
+		bg.style.visibility = "visible";
+	}
+	function alarmHide(){
+		//if (windowState){
+			var bg = document.getElementById("alarmBG");
+			bg.style.background = "rgba(0,0,0,0)";
+			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+		//}
+	}
+	
 /* Timestamp Checkbox */
 	function tsVisCheck() {
 		var checkBox = document.getElementById("tsCheck");

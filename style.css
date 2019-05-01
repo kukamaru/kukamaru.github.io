@@ -41,7 +41,7 @@ div.headerdiv {
 	transform:scale(0.99);
 }
 
-div.menuBG { 
+.menuBG, .alarmBG { 
 	background-color: rgba(0,0,0,0); 
 	position:absolute;
 	left:0; top:0; bottom:0; right: 0;
@@ -50,6 +50,8 @@ div.menuBG {
 	visibility: hidden;
 	z-index: 1;
 }
+
+
 div.menu {
 	visibility: hidden;
 	position: absolute;
