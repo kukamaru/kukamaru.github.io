@@ -2,8 +2,8 @@
 var myVar = setInterval(mainLoop, 11);
 
 //defaults
-var msVisible = true;
-var timeStamps = true;
+var msVisible;
+var timeStamps;
 
 //globals
 var timerRunning = false;
@@ -68,7 +68,6 @@ var timerOrigin;
 /** EGGTIMER **/
 	function newTimer(){
 		form = document.getElementById("newTimer");
-		appendText(form.countdown.checked);
 
 		h = form.h.value;
 		m = form.m.value;
@@ -76,8 +75,11 @@ var timerOrigin;
 		size = form.size.value;
 		text = form.text.value;
 
-		if (form.countdown.checked){ style = "countdown " + size; }
-		else { style = size }
+		style = size;
+
+		if (form.countdown.checked){ style = "countdown " + style }
+		if (form.inverted.checked){ style = "inverted " + style }
+
 
 		eggTimer(s,m,h,style,text);
 
@@ -90,7 +92,7 @@ var timerOrigin;
 		if (text == undefined) { text = "eggtimer (undefined)" }
 	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
-		appendText(text + " starting, " + cookingTime + " milliseconds");
+		appendText(text + " starting, " + cookingTime + " milliseconds","status");
 
 
 		if (!style) { style = "normal"; }
@@ -117,6 +119,7 @@ var timerOrigin;
 			inverted:   style.includes("inverted"),
 			countdown:  style.includes("countdown"),
 			active: 		true
+
 		});
 
 		appendText("expecting alarm at " + f);
@@ -137,11 +140,11 @@ var timerOrigin;
 
 	function alarm(ID,text,soundID) {
 		appendText(text,"alert");
-		appendText("playing sound: " + soundID);
 		
 		activeTimers[ID].active = false;
 
 		/** not actually responding to soundID **/
+		appendText("playing sound: " + soundID);
 		var audio = new Audio('audio/eggsound1.mp3');
 		audio.play();
 
@@ -150,7 +153,7 @@ var timerOrigin;
 		timersRunning--;
 		if (timersRunning == 0) { timerRunning = false }
 
-		appendText(timersRunning + " alarms remain","status")
+		//appendText(timersRunning + " alarms remain","status")
 	}
 /** BARS **/
 	function newBar(ID) {
@@ -252,7 +255,7 @@ var timerOrigin;
 /* Buttons and menu */
 	function button() {
 		appendText("button pressed","status");
-		eggTimer(20,4,0,"big countdown","bigtest");
+		eggTimer(21,4,0,"big countdown","bigtest");
 		eggTimer(2,3,0,"countdown","medium test");
 		eggTimer(30,0,0,"small","smalltest");
 	}
@@ -302,7 +305,7 @@ var timerOrigin;
 
 				text.style.visibility = "visible";
 
-				div.style.width = "200px";
+				div.style.width = "420px";
 
 			}
 			else { 
@@ -314,7 +317,7 @@ var timerOrigin;
 				}, delay);
 
 				
-				div.style.width = "140px";
+				div.style.width = "200px";
 			}
 	}
 

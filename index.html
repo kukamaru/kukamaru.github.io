@@ -34,7 +34,8 @@
 				<input type="number" name="s" value="30">
 				<br>
 
-				<input type="checkbox" label="countdown" name="countdown" checked="false" >Countdown
+				<input type="checkbox" name="countdown" checked>Countdown
+				<input type="checkbox" name="inverted">Inverted
 				<br>
 
 				<input type="radio" name="size" value="big">Big
@@ -56,10 +57,10 @@
 				<li><button onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
 			</ul>
 
-			<input type="checkbox" id="msCheck" onclick="msVisCheck()" checked="true">
+			<input type="checkbox" id="msCheck" onclick="msVisCheck()">
 			<label for="msCheck">Milliseconds</label>
 
-			<input type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked="true">
+			<input type="checkbox" id="tsCheck" onclick="tsVisCheck()">
 			<label for="tsCheck">Timestamps</label>
 
 
