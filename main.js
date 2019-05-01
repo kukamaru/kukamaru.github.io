@@ -49,41 +49,49 @@ var timerOrigin;
 	}
 
 /** EGGTIMER **/
-	function eggTimer(eS,eM,eH) {
+	function eggTimer(eS,eM,eH,style) {
+
 		if (eH == undefined) { eH = 0; }
 		if (eM == undefined) { eM = 0; }
 	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
 		appendText("egg timer starting, " + cookingTime + " milliseconds");
 
-		startTimer(cookingTime,"egg",0);
 
+		if (!style) { style = "normal"; }
+
+		startTimer(cookingTime,"egg",0,style);
 		menuHide();
 	}
 
 	var timerID = 0;
-	function startTimer(T,text,soundID) {
+
+	function startTimer(T,text,soundID,style) {
 		var d = new Date(); 
-		var fms = d.valueOf() + T;
-		var f = new Date(fms);
 		
+		var f = new Date(d.valueOf() + T);
+		if (!style) { style = "normal"; }
+
 		activeTimers.push({
-			ID:timerID,
-			start:d,
-			finish:f,
-			duration:T,
-			active:true
+			ID: 			timerID,
+			start: 		d,
+			finish: 		f,
+			duration: 	T,
+			style: 		style,
+			text:  		text,
+			inverted:   style.includes("inverted"),
+			countdown:  style.includes("countdown"),
+			active: 		true
 		});
 
 		appendText("expecting alarm at " + f);
 		appendText("T = " + T);
 
-		timersRunning++;
-		timerRunning = true;
-
-		newBar(timerID,text);
+		newBar(timerID);
 		setAlarm(timerID,T,text,soundID);
 
+		timersRunning++;
+		timerRunning = true;
 		timerID++;
 	}
 /**ALARM CORE FUNCTION **/
@@ -110,37 +118,31 @@ var timerOrigin;
 		appendText(timersRunning + " alarms remain","status")
 	}
 /** BARS **/
-	function newBar(ID,text) {
-		var div = document.createElement('div');
-		var progressdiv = document.createElement('div');
+	function newBar(ID) {
 		var parent = document.getElementById('bars');
-
-
-		divID = "bar" + ID;
-		progressID = "progress" + ID;
-		// text = text + " " + ID + " " + T;
-
+		var div = document.createElement('div');
+		var bar = document.createElement('div');
 		var label = document.createElement('p');
-   	label.innerHTML = text;
 
-		div.setAttribute('class',"bar");
-		div.setAttribute('id', divID);
-		progressdiv.setAttribute('class',"progressbar")
-		progressdiv.setAttribute('id', progressID)
+		div.setAttribute('class',"bar" + " " + activeTimers[ID].style);
+		div.setAttribute('id',"bar" + ID);
+		bar.setAttribute('class',"progressbar");
+		bar.setAttribute('id',"progress" + ID);
 
-		label.setAttribute('id',"barlabel" + ID)
+		label.setAttribute('id',"barlabel" + ID);
+   	label.innerHTML = activeTimers[ID].text;
 
 		div.appendChild(label);
-		div.appendChild(progressdiv);
+		div.appendChild(bar);
 
 		parent.appendChild(div);
 	}
 	function hideBar(ID) {
+		var parent = document.getElementById('bars');
 		var div = document.getElementById('bar'+ID);
 		var bar = document.getElementById('progress' + ID)
-		var parent = document.getElementById('bars');
-
 		var label = document.getElementById('barlabel' + ID);
+
 
 
 		label.style.color = "rgba(0,0,0,0)";
@@ -157,17 +159,27 @@ var timerOrigin;
 		num = activeTimers.length;
 
 		for (i = 0; i < num; i++){
+			current = activeTimers[i];
+			bar = document.getElementById("progress" + activeTimers[i].ID);
+
 			start = activeTimers[i].start.valueOf();
 			end = activeTimers[i].finish.valueOf();
 
-			var elapsed = now-start;
-			var total = end-start;
+			elapsed = now-start;
+			total = end-start;
 
 			elapsedFraction = (elapsed/total*100);
-			if (elapsedFraction > 100) { elapsedFraction = 100 }
-			widthPercent = elapsedFraction + "%";
 
-			bar = document.getElementById("progress" + activeTimers[i].ID);
+			if (elapsedFraction > 100) 	{ elapsedFraction = 100 }
+
+			if (activeTimers[i].inverted) { widthPercent = 100-elapsedFraction }
+			else 									{ widthPercent = elapsedFraction }
+
+			if (current.countdown){
+				label = document.getElementById("barlabel" + current.ID);
+				label.innerHTML = elapsed;
+			}
+			widthPercent = widthPercent + "%";
 
 			if (bar != undefined){ 
 				bar.style.width = widthPercent;
@@ -198,14 +210,16 @@ var timerOrigin;
 	}
 
 	function menuHide(){
-		var bg = document.getElementById("menuwrapper");
-		var focus = document.getElementById(windowState);
+			if (windowState){
+			var bg = document.getElementById("menuwrapper");
+			var focus = document.getElementById(windowState);
 
-		windowState = false;
+			windowState = false;
 
-		bg.style.background = "rgba(0,0,0,0)";
-		focus.style.visibility = "hidden";
-		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+			bg.style.background = "rgba(0,0,0,0)";
+			focus.style.visibility = "hidden";
+			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+		}
 	}
 /* Timestamp Checkbox */
 	function tsVisCheck() {
