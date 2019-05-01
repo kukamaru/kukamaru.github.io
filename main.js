@@ -14,14 +14,29 @@ var timerOrigin;
 
 
 /*sounds*/
-	/*
-	var sounds = [ { 
-		soundName: "eggsound",
-		soundFile: 'audio/eggsound1.mp3',
-		}
-	]
-	;
-	*/
+	
+	var sounds = [ 
+		{ 
+			soundName: "eggsound",
+			src: "audio/eggsound1.mp3",
+			looping: false
+		}/*,
+
+
+		{
+			soundName: "jingle"
+			src: "audio/jingle.mp3",
+			looping: false
+		},
+
+
+		{
+			soundName: "beat"
+			src: "audio/beat.mp3",
+			looping: true
+		}*/
+	];
+
 /* Main Function */
 	function mainLoop() {
 		var d = new Date();
@@ -92,7 +107,7 @@ var timerOrigin;
 		if (text == undefined) { text = "eggtimer (undefined)" }
 	   var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
-		appendText(text + " starting, " + cookingTime + " milliseconds","status");
+		 appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
 
 
 		if (!style) { style = "normal"; }
@@ -118,12 +133,13 @@ var timerOrigin;
 			text:  		text,
 			inverted:   style.includes("inverted"),
 			countdown:  style.includes("countdown"),
-			active: 		true
+			active: 		true,
+			soundID: 	soundID
 
 		});
 
-		appendText("expecting alarm at " + f);
-		appendText("T = " + T);
+		//appendText("expecting alarm at " + f);
+		//appendText("T = " + T);
 
 		newBar(timerID);
 		setAlarm(timerID,T,text,soundID);
@@ -134,18 +150,24 @@ var timerOrigin;
 	}
 /**ALARM CORE FUNCTION **/
 	function setAlarm(ID,T,text,soundID) {
-			setTimeout(function(){alarm(ID,text,soundID);}
+			setTimeout(function(){alarm(ID);}
 			,T)
 	}
 
-	function alarm(ID,text,soundID) {
+	function alarm(ID) {
+		text = activeTimers[ID].text;
+		soundID = activeTimers[ID].soundID;
+
 		appendText(text,"alert");
 		
 		activeTimers[ID].active = false;
 
 		/** not actually responding to soundID **/
-		appendText("playing sound: " + soundID);
-		var audio = new Audio('audio/eggsound1.mp3');
+		
+		appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
+		
+	//	var audio = new Audio('audio/eggsound1.mp3');
+		var audio = new Audio(sounds[soundID].src);
 		audio.play();
 
 		hideBar(ID);
