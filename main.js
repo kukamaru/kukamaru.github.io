@@ -186,6 +186,7 @@ var timerOrigin;
 	function alarmWindow(ID) {
 		alarmShow();
 		bg = document.getElementById('alarmBG');
+		div = document.getElementById('alarmWindow');
 
 		stopButton = document.createElement('button');
 		stopButton.setAttribute("onclick","alarmStop("+ID+")");
@@ -193,15 +194,17 @@ var timerOrigin;
 
 		stopButton.innerHTML = activeTimers[ID].text;
 
-		bg.appendChild(stopButton);
+		div.appendChild(stopButton);
+		div.style.opacity = 1;
 	}
 	function alarmStop(ID) {
-		bg = document.getElementById('alarmBG')
+		div = document.getElementById('alarmWindow')
 		stopButton = document.getElementById("stopButton"+ID);
 		audio = activeTimers[ID].audio;
 
 		audio.pause();
-		bg.removeChild(stopButton);
+		div.removeChild(stopButton);
+		div.style.opacity = 0;
 
 		alarmHide();
 	} 
@@ -311,6 +314,7 @@ var timerOrigin;
 	}
 	function button2() {
 		appendText("button2 pressed");
+		eggTimer(1,0,0,"big","loop alarmspam",2)
 	}
 
 	function menuShow(i){
@@ -322,6 +326,7 @@ var timerOrigin;
 		bg.style.visibility = "visible";
 		bg.style.background = "var(--wrapperbg-color)"
 		focus.style.visibility = "visible";
+		focus.style.display = "block";
 	}
 
 	function menuHide(){
@@ -333,6 +338,7 @@ var timerOrigin;
 
 			bg.style.background = "rgba(0,0,0,0)";
 			focus.style.visibility = "hidden";
+			focus.style.display = "none";
 			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 		}
 	}

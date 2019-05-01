@@ -49,18 +49,47 @@ div.headerdiv {
 	transition-property: background;
 	visibility: hidden;
 	z-index: 1;
+	width: 100%
+}
+.menuWrapper {
+	position: absolute;
+	left:0; top:0; bottom:0; right: 0;
+	width: 100%;
+	z-index: 2;
+
+	visibility: hidden;
 }
 
+.menu, .alarmwindow { 
+	margin: 20vh auto;
+	background-color:white;
+	padding:20px;
+	z-index: 2;
+}
 
 div.menu {
 	visibility: hidden;
-	position: absolute;
-	background: white;
-	padding:20px;
-	top:100px;
-	left:100px;
-	z-index: 2;
+	max-width: 70%;
+	display: none;
 }
+
+div.alarmWindow {
+	color:var(--alert-color);
+
+	padding:20px;
+	width:70%;	
+	outline: 1px solid var(--alert-color);
+	outline-offset: -8px;
+}
+.alarmWindow h1 {
+	text-align: center;
+}
+
+.alarmWindow button {
+	display: block;
+	margin:0 auto;
+}
+
 
 #text1, #text2, #text3 {
 	font-size:16px;
