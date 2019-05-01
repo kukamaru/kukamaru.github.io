@@ -11,38 +11,61 @@
 	<body>		
 		<body onload="checkCookies()">
 
-		<div id="menu" class="menu">
-			<ul id="menulist" class="nav">
-				<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
-				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
-			</ul>
-		</div>
+
 
 		<div id="recipe">
 			<p>
 			</p>
 		</div>
 
+		<div id="menu" class="menu">
+			<ul id="menulist" class="nav">
+				<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
+				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
+			</ul>
+		</div>
+		<div id="newTimerMenu" class="menu">
+			<form id="newTimer">
+				<input type="text" name="text" value="timer00">
+				<br>
+
+				<input type="number" name="h" value="0">
+				<input type="number" name="m" value="1">
+				<input type="number" name="s" value="30">
+				<br>
+
+				<input type="checkbox" label="countdown" name="countdown" checked="false" >Countdown
+				<br>
+
+				<input type="radio" name="size" value="big">Big
+				<input type="radio" name="size" value="medium" checked="true">Medium
+				<input type="radio" name="size" value="small">Small
+
+			</form>
+			<button onclick="javascript:newTimer()">start timer</button>
+		</div>
 		
-		<div id="menuwrapper" class="bg" onclick="menuHide();"></div>
+		<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
 
-		<h1>header1</h1>
+		<div class="headerdiv">
+			<h1>header1</h1>
 
-		<ul id="nav" class="nav">
-			<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
-			<li><button onclick="javascript:menuShow('menu');">menu</button></li>
-			<li><button href="flipclock.html">-- flipclock --</button></li>
-		</ul>
+			<ul id="nav" class="nav">
+				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
+				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
+				<li><button onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
+			</ul>
 
-		<input type="checkbox" id="msCheck" onclick="msVisCheck()" checked="true">
-		<label for="msCheck">Milliseconds</label>
+			<input type="checkbox" id="msCheck" onclick="msVisCheck()" checked="true">
+			<label for="msCheck">Milliseconds</label>
 
-		<input type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked="true">
-		<label for="tsCheck">Timestamps</label>
+			<input type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked="true">
+			<label for="tsCheck">Timestamps</label>
 
 
-		<button value="button!!" id="button" onclick="button()">buton</button>
-		<button value="clear!!" id="clear" onclick="clearText()">clear</button>
+			<button value="button!!" id="button" onclick="button()">buton</button>
+			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
+		</div>
 
 		<div id="maintext" class="maintext">
 			<p id="welcome">Hello :)</p>

@@ -18,6 +18,10 @@ body {
 h1 {
 	font-size: 16px;
 }
+
+div.headerdiv {
+	background-color: rgba(255,255,255,0.90);
+}
  
 .nav li 		{ display: inline; }
 .nav button {
@@ -37,7 +41,7 @@ h1 {
 	transform:scale(0.99);
 }
 
-div.bg { 
+div.menuBG { 
 	background-color: rgba(0,0,0,0); 
 	position:absolute;
 	left:0; top:0; bottom:0; right: 0;
@@ -72,6 +76,7 @@ div.maintext {
 	background: white;
 	bottom:0;
 	position:absolute;
+	z-index: -100;
 }
 
 div.maintext p {
@@ -94,18 +99,20 @@ div.bars {
 	bottom: 32px; left:0;
 	display: inline;
 }
-
+div.bar, div.bar div.progressbar{
+	height: 20px;
+}
 div.bar {
 	background: rgba(0,0,0,0.5);
 	position: relative;
 	z-index: 0;
 	margin-bottom: 4px;
-	transition: height 2s, background-color 1s, margin-bottom 2s;
+	transition: height 2s, background-color 1s, margin-bottom 12s;
 }
 div.progressbar {
 	margin: 0;
 	padding: 0;
-	background: lime;
+	background: green;
 	height: 100%;
 	position: absolute;
 	left: 0;
@@ -122,10 +129,6 @@ div.big, div.big div.progressbar{
 	height: 40px;
 }
 
-div.normal, div.normal div.progressbar{
-	height: 20px;
-}
-
 div.small, div.small div.progressbar{
 	height: 10px;
 }
@@ -134,11 +137,27 @@ div.small p {
 }
 
 div.bar p { 
-	display: inline;
+	display: block;
 	margin: 0;
 	z-index: 2;
 	position: absolute;
 	transition: color 0.5s;
+}
+
+div.bar .barlabel {
+	font-style: italic;
+}
+
+div.bar .barcountdown {
+	right:0px;
+}
+
+div.bar.big .barcountdown {
+	font-size: 16px;
+}
+
+div.bar.big .barcountdownms {
+	font-size: 8px;
 }
 
 div.currenttime {
