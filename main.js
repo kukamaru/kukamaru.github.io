@@ -10,6 +10,7 @@ var timerRunning = false;
 var timersRunning = 0;
 var windowState = false;
 var activeTimers = [];
+var activeAlarms = [];
 var timerOrigin;
 
 
@@ -169,8 +170,10 @@ var timerOrigin;
 		var audio = new Audio(sounds[soundID].src);
 		if (isLooping){
 			 audio.setAttribute("loop",true);
-			 activeTimers[ID].audio = audio;
+			 //activeTimers[ID].audio = audio;
 			 audio.play();
+			 activeAlarms.push(audio);
+
 			 alarmWindow(ID);
 		}
 		else { audio.play(); }
@@ -185,30 +188,68 @@ var timerOrigin;
 
 	function alarmWindow(ID) {
 		alarmShow();
-		bg = document.getElementById('alarmBG');
+		firstAlarm = (activeAlarms.length == 1);
+
 		div = document.getElementById('alarmWindow');
+		bg = document.getElementById('alarmBG');
+		content = document.getElementById('alarmContent');
 
-		stopButton = document.createElement('button');
-		stopButton.setAttribute("onclick","alarmStop("+ID+")");
-		stopButton.setAttribute("id","stopButton"+ID);
+		if (firstAlarm){
+			stopButton = document.createElement('button');
+			stopButton.setAttribute("onclick","alarmStop()");
+			stopButton.setAttribute("id","stopButton");
+			stopButton.innerHTML = "-- Stop Alarm --";
 
-		stopButton.innerHTML = activeTimers[ID].text;
+			div.appendChild(stopButton);
+		}
+		else {
+			stopButton = document.getElementById('stopButton');
+			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ")";
 
-		div.appendChild(stopButton);
+			hr = document.createElement('hr');
+			content.appendChild(hr);
+		}
+
+		p = document.createElement('p');
+		p.innerHTML = activeTimers[ID].text;
+		p.setAttribute("id","alarmText"+ID);
+		content.appendChild(p);
+
 		div.style.opacity = 1;
 	}
-	function alarmStop(ID) {
-		div = document.getElementById('alarmWindow')
-		stopButton = document.getElementById("stopButton"+ID);
-		audio = activeTimers[ID].audio;
 
-		audio.pause();
-		div.removeChild(stopButton);
-		div.style.opacity = 0;
-
+	function alarmStop() {
+		for(let i=0; i < activeAlarms.length; i++) {
+			activeAlarms[i].pause();
+		}
+		activeAlarms = [];
 		alarmHide();
 	} 
 
+//alarm window manip
+	function alarmShow(){
+		var bg = document.getElementById("alarmBG");
+
+		bg.style.background = "rgba(255,0,0,0.5)";
+		bg.style.visibility = "visible";
+	}
+	function alarmHide(){
+		div = document.getElementById('alarmWindow');
+		content = document.getElementById('alarmContent')
+		stopButton = document.getElementById("stopButton");
+		var bg = document.getElementById("alarmBG");
+
+		while(content.firstChild) {
+			content.removeChild(content.firstChild);
+		}
+		if (stopButton) { div.removeChild(stopButton); }
+
+		div.style.opacity = 0;
+		bg.style.background = "rgba(0,0,0,0)";
+
+		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+	}
+	 
 /** BARS **/
 	function newBar(ID) {
 		var parent = document.getElementById('bars');
@@ -312,6 +353,7 @@ var timerOrigin;
 		eggTimer(5,0,0,"countdown","medium test",1);
 		eggTimer(15,0,0,"small","smalltest + looped sound",2);
 	}
+
 	function button2() {
 		appendText("button2 pressed");
 		eggTimer(1,0,0,"big","loop alarmspam",2)
@@ -342,21 +384,7 @@ var timerOrigin;
 			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 		}
 	}
-	function alarmShow(){
 
-		//bake into alarmWindow
-		var bg = document.getElementById("alarmBG");
-		bg.style.background = "rgba(255,0,0,0.5)";
-		bg.style.visibility = "visible";
-	}
-	function alarmHide(){
-		//if (windowState){
-			var bg = document.getElementById("alarmBG");
-			bg.style.background = "rgba(0,0,0,0)";
-			setTimeout(function(){bg.style.visibility = "hidden";}, 250)
-		//}
-	}
-	
 /* Timestamp Checkbox */
 	function tsVisCheck() {
 		var checkBox = document.getElementById("tsCheck");

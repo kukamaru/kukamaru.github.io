@@ -99,11 +99,20 @@ div.alarmWindow {
 	text-align: center;
 }
 
-.alarmWindow p {
+#alarmContent p {
 	text-align: center;
 }
+#alarmContent {
+	/*background: pink;*/
+}
+#alarmContent hr { 
+	border-style: solid;
+	border-color: transparent;
+	border-top-color: var(--alert-color);
+	height: 1px;
+}
+
 .alarmWindow p:last {}
-.alarmWindow hr { padding: 4px; visibility: hidden; }
 .alarmWindow button {
 	display: block;
 	margin:0 auto;
