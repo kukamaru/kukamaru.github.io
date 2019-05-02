@@ -127,10 +127,26 @@ div.alarmIcon {
 	display: inline;
 	margin:10px;
 	padding: 10px 50px;
-	color:var(--alert-color);
-	border-color:var(--alert-color);
 }
 
+.alarmWindow button.stopButton{
+	border-color: green;
+	color: green;
+}
+.alarmWindow button.stopButton:hover {
+	background-color: lightgreen;
+
+}
+.alarmWindow button.snoozeButton {
+	color: gray;
+	border-color: gray;
+}
+
+.alarmWindow button.snoozeButton:hover {
+	color: darkgray;
+	border-color: darkgray;
+	background-color: lightgray;
+}
 
 #text1, #text2, #text3 {
 	font-size:16px;

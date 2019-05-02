@@ -200,13 +200,15 @@ var timerOrigin;
 			stopButton = document.createElement('button');
 			stopButton.setAttribute("onclick","alarmStop()");
 			stopButton.setAttribute("id","stopButton");
+			stopButton.setAttribute("class","stopButton");
 			stopButton.innerHTML = "-- Stop Alarm --";
 
 			if (canSnooze){
 				snoozeButton = document.createElement('button');
 				snoozeButton.setAttribute("onclick",'alarmSnooze()');
 				snoozeButton.setAttribute("id","snoozeButton");
-				snoozeButton.innerHTML = "Snooze Alarm";
+				snoozeButton.setAttribute("class","snoozeButton");
+				snoozeButton.innerHTML = "Snooze Alarm <br> (5 minutes)";
 			}
 
 			icon = document.createElement('div');
@@ -219,8 +221,10 @@ var timerOrigin;
 
 		}
 		else {
-			stopButton = document.getElementById('stopButton');
+			//stopButton = document.getElementById('stopButton');
 			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ") --";
+			if (snoozeButton) { snoozeButton.innerHTML = "Snooze Alarms <br> (5 minutes)"; }
+
 
 			hr = document.createElement('hr');
 			content.appendChild(hr);
@@ -271,7 +275,8 @@ var timerOrigin;
 
 	function alarmSnooze(){
 		appendText("snoozeButton pressed, expecting alarmSnooze()","status");
-		appendText("snoozeButton NON OPERATIONAL","alert");
+		alarmStop();
+		eggTimer(0,5,0,"medium countdown","snooze alarm",2);
 	}
 
 /** BARS **/
