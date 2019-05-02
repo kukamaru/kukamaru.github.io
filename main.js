@@ -81,10 +81,10 @@ function initLocal() {
 function mainLoop() {
 	var d = new Date();
 	if (timerRunning){
-		document.getElementById("timediv").style.background = "green";
+		document.getElementById("timediv").style.background = "var(--active-bar)";
 	}
 	else {
-		document.getElementById("timediv").style.background = "black";
+		document.getElementById("timediv").style.background = "var(--stopped-bar)";
 	}
 
 	hours = addZero(d.getHours());
@@ -248,7 +248,7 @@ function alarmWindow(ID) {
 			var stopButton = document.getElementById('stopButton');
 			var snoozeButton = document.getElementById('snoozeButton');
 
-			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ") --";
+			stopButton.innerHTML = "-- Stop Alarms (" + activeAlarms.length + ") --";
 			if (snoozeButton) { snoozeButton.innerHTML = "Snooze Alarms <br> (5 minutes)"; }
 			
 			var hr = document.createElement('hr');
@@ -392,7 +392,7 @@ function renderBars() {
 			widthPercent = widthPercent + "%";
 
 			bar.style.width = widthPercent;
-			if (elapsedFraction > 80) bar.style.background = "red";
+			if (remainder < 2000) bar.style.background = "var(--bar-completing)";
 
 		}
 	}

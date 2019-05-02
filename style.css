@@ -1,6 +1,10 @@
 @import url("font/unibody.css");
 
 :root {
+	--active-bar: blueviolet;
+	--stopped-bar: indigo;
+	--bar-completing: green;
+
 	--freeze-color: blue;
 	--alert-color: red;
 	--status-color: teal;
@@ -201,7 +205,7 @@ div.bar {
 div.progressbar {
 	margin: 0;
 	padding: 0;
-	background: green;
+	background: var(--active-bar);
 	height: 100%;
 	position: absolute;
 	left: 0;
