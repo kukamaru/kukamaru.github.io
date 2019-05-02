@@ -62,9 +62,19 @@ function isLocal() {
 	var url = window.location.href;
 	return (url != "http://www.utamaru.com/");
 }
+
 function initLocal() {
 	var body = document.getElementsByTagName("BODY")[0];
 	body.style.background = "url(water1_512.jpg)";
+	var header = document.getElementById("header");
+
+	var t = document.createTextNode(" (local version)");
+	var span = document.createElement("span");
+	span.style.color = "var(--alert-color)";
+
+	span.appendChild(t);
+
+	header.appendChild(span);
 }
 
 /* Main Function */
@@ -95,92 +105,90 @@ function mainLoop() {
 
 
 /** EGGTIMER **/
-function newTimer(){
-		// makes new timer from new timer form
-		form = document.getElementById("newTimer");
+function newTimer() {
+	form = document.getElementById("newTimer");
 
-		h = form.h.value;
-		m = form.m.value;
-		s = form.s.value;
-		size = form.size.value;
-		text = form.text.value;
-		soundID = form.sound.value;
-		protected = form.protected.value;
+	h = form.h.value;
+	m = form.m.value;
+	s = form.s.value;
+	size = form.size.value;
+	text = form.text.value;
+	soundID = form.sound.value;
+	protected = form.protected.value;
 
-		style = size;
+	style = size;
 
-		if (form.countdown.checked){ style = "countdown " + style }
-			if (form.inverted.checked){ style = "inverted " + style }
-				if (form.protected.checked){ style = "protected " + style }
+	if (form.countdown.checked){ style = "countdown " + style; }
+	if (form.inverted.checked){ style = "inverted " + style; }
+	if (form.protected.checked){ style = "protected " + style; }
 
 
-					eggTimer(s,m,h,style,text,soundID);
+	eggTimer(s,m,h,style,text,soundID);
 
-				form.reset();
-			}
+	form.reset();
+}
 
-			function eggTimer(eS,eM,eH,style,text,sound) {
-				if (eH == undefined) 	{ eH = 0; }
-				if (eM == undefined) 	{ eM = 0; }
-				if (text == undefined) 	{ text = "eggtimer (undefined)" }
-					if (!sound) 				{ sound = 0 }
-						if (!style) { style = "normal"; }
+function eggTimer(eS,eM,eH,style,text,sound) {
+	if (eH == undefined) 	{ eH = 0; }
+	if (eM == undefined) 	{ eM = 0; }
+	if (text == undefined) 	{ text = "eggtimer (undefined)"; }
+	if (!sound) 				{ sound = 0; }
+	if (!style) { style = "normal"; }
 
-					var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
+	var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
 
-					appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
+	appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
 
-					startTimer(cookingTime,text,sound,style);
-					menuHide();
-				}
+	startTimer(cookingTime,text,sound,style);
+	menuHide();
+}
 
-				var timerID = 0;
+var timerID = 0;
 
-				function startTimer(T,text,soundID,style) {
-					var d = new Date(); 
-					var f = new Date(d.valueOf() + T);
+function startTimer(T,text,soundID,style) {
+	var d = new Date(); 
+	var f = new Date(d.valueOf() + T);
 
-					if (!style) { style = "normal"; }
+	if (!style) { style = "normal"; }
 
-					activeTimers.push({
-						ID: 			timerID,
-						active: 		true,
-						text:  		text,
+	activeTimers.push(
+	{
+		ID: 			timerID,
+		active: 		true,
+		text:  		text,
 
-						start: 		d,
-						finish: 		f,
-						duration: 	T,
+		start: 		d,
+		finish: 		f,
+		duration: 	T,
 
-						style: 		style,
-						soundID: 	soundID,
-						inverted:   style.includes("inverted"),
-						countdown:  style.includes("countdown"),
-						protected:  style.includes("protected"), 
+		style: 		style,
+		soundID: 	soundID,
+		inverted:   style.includes("inverted"),
+		countdown:  style.includes("countdown"),
+		protected:  style.includes("protected"), 
 
-					});
-
-		//appendText("expecting alarm at " + f);
-		//appendText("T = " + T);
-
-		newBar(timerID);
-		setAlarm(timerID,T,text,soundID);
-
-		timersRunning++;
-		timerRunning = true;
-		timerID++;
 	}
-	/**ALARM CORE FUNCTION **/
-	function setAlarm(ID,T,text,soundID) {
-		setTimeout(function(){alarm(ID);}
-			,T)
-	}
+	);
 
-	function alarm(ID) {
-		var text = activeTimers[ID].text;
-		var soundID = activeTimers[ID].soundID;
-		var isLooping = sounds[soundID].looping;
+	newBar(timerID);
+	setAlarm(timerID,T,text,soundID);
 
-		appendText(text,"alert");
+	timersRunning++;
+	timerRunning = true;
+	timerID++;
+}
+/**ALARM CORE FUNCTION **/
+function setAlarm(ID,T,text,soundID) {
+	setTimeout(function(){alarm(ID);}
+		,T)
+}
+
+function alarm(ID) {
+	var text = activeTimers[ID].text;
+	var soundID = activeTimers[ID].soundID;
+	var isLooping = sounds[soundID].looping;
+
+	appendText(text,"alert");
 		//appendText("isLooping = " + isLooping);
 		//appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
 		
