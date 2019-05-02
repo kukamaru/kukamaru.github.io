@@ -507,7 +507,7 @@ var timerOrigin;
 
 	function checkProtect() {
 			for (var i = 0; i < activeTimers.length; i++) {
-				if (activeTimers[i].protected) {
+				if (activeTimers[i].protected && activeTimers[i].active) {
 					return true;
 				}
 			}
