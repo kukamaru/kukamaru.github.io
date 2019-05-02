@@ -15,20 +15,7 @@ var activeAlarms = [];
 var timerOrigin;
 
 
-window.onbeforeunload = function() {
-		if (checkProtect()) {
-	    	return "Are you sure?";
-	 	}
- };
-function checkProtect() {
-//		var res = false;
-		for (var i = 0; i < activeTimers.length; i++) {
-			if (activeTimers[i].protected) {
-				return true;
-			}
-		}
-		return false;
-}
+
 //sounds
 	
 	var sounds = [ 
@@ -510,6 +497,21 @@ function checkProtect() {
 		document.getElementById("maintext").appendChild(node);
 
 		iT = iT + 1;
+	}
+//Warning dialog if protected timer
+	window.onbeforeunload = function() {
+			if (checkProtect()) {
+		    	return "Timers running, close?";
+		 	}
+	}
+
+	function checkProtect() {
+			for (var i = 0; i < activeTimers.length; i++) {
+				if (activeTimers[i].protected) {
+					return true;
+				}
+			}
+			return false;
 	}
 
 //Number Things for clocks etc.
