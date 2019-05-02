@@ -13,7 +13,7 @@
 	--buttonHoverBorderColor: lightgray;
 	--buttonHoverBackgroundColor: pink;
 
-
+	--alert-icon: url("icons/loudspeaker_rays_red-0.png");
 
 	--wrapperbg-color: rgba(0,0,0,0.8);
 
@@ -95,27 +95,37 @@ div.alarmWindow {
 	outline: 1px solid var(--alert-color);
 	outline-offset: -8px;
 }
-.alarmWindow h1 {
+
+.alarmWindow {
 	text-align: center;
 }
 
-#alarmContent p {
-	text-align: center;
+div.alarmIcon {
+	margin: auto;
+	width: 32px;
+	height: 32px;
+	background-image: var(--alert-icon);
 }
-#alarmContent {
+
+
+.alarmContent {
 	/*background: pink;*/
 }
-#alarmContent hr { 
+.alarmContent hr { 
 	border-style: solid;
 	border-color: transparent;
 	border-top-color: var(--alert-color);
 	height: 1px;
 }
-
+.alarmButtons {
+	display: flex;
+	justify-content: space-around;
+}
 .alarmWindow p:last {}
 .alarmWindow button {
-	display: block;
-	margin:0 auto;
+	width:100%;
+	display: inline;
+	margin:10px;
 	padding: 10px 50px;
 	color:var(--alert-color);
 	border-color:var(--alert-color);

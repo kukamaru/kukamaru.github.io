@@ -9,6 +9,7 @@ var timeStamps;
 var timerRunning = false;
 var timersRunning = 0;
 var windowState = false;
+var canSnooze = true;
 var activeTimers = [];
 var activeAlarms = [];
 var timerOrigin;
@@ -191,6 +192,7 @@ var timerOrigin;
 		firstAlarm = (activeAlarms.length == 1);
 
 		div = document.getElementById('alarmWindow');
+		buttondiv = document.getElementById('alarmButtons');
 		bg = document.getElementById('alarmBG');
 		content = document.getElementById('alarmContent');
 
@@ -200,11 +202,25 @@ var timerOrigin;
 			stopButton.setAttribute("id","stopButton");
 			stopButton.innerHTML = "-- Stop Alarm --";
 
-			div.appendChild(stopButton);
+			if (canSnooze){
+				snoozeButton = document.createElement('button');
+				snoozeButton.setAttribute("onclick",'alarmSnooze()');
+				snoozeButton.setAttribute("id","snoozeButton");
+				snoozeButton.innerHTML = "Snooze Alarm";
+			}
+
+			icon = document.createElement('div');
+			icon.setAttribute("class","alarmIcon");
+
+			content.appendChild(icon);
+
+			buttondiv.appendChild(stopButton);
+			buttondiv.appendChild(snoozeButton);
+
 		}
 		else {
 			stopButton = document.getElementById('stopButton');
-			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ")";
+			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ") --";
 
 			hr = document.createElement('hr');
 			content.appendChild(hr);
@@ -234,22 +250,30 @@ var timerOrigin;
 		bg.style.visibility = "visible";
 	}
 	function alarmHide(){
-		div = document.getElementById('alarmWindow');
-		content = document.getElementById('alarmContent')
-		stopButton = document.getElementById("stopButton");
-		var bg = document.getElementById("alarmBG");
+		var bg = 		document.getElementById("alarmBG");
+		div = 			document.getElementById('alarmWindow');
+		buttondiv = 	document.getElementById('alarmButtons');
+		content = 		document.getElementById('alarmContent');
+		stopButton = 	document.getElementById("stopButton");
 
 		while(content.firstChild) {
 			content.removeChild(content.firstChild);
 		}
-		if (stopButton) { div.removeChild(stopButton); }
+		while(buttondiv.firstChild) {
+			buttondiv.removeChild(buttondiv.firstChild);
+		}
 
 		div.style.opacity = 0;
 		bg.style.background = "rgba(0,0,0,0)";
 
-		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
+		setTimeout(function(){bg.style.visibility = "hidden";}, 250);
 	}
-	 
+
+	function alarmSnooze(){
+		appendText("snoozeButton pressed, expecting alarmSnooze()","status");
+		appendText("snoozeButton NON OPERATIONAL","alert");
+	}
+
 /** BARS **/
 	function newBar(ID) {
 		var parent = document.getElementById('bars');
