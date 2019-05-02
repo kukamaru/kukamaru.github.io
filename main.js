@@ -55,11 +55,16 @@ function checkCookies() {
 	appendText(text);
 	appendText("loaded from: " + window.location.href,"status");
 	appendText("isLocal " + isLocal());
+	if (isLocal()) { initLocal(); }
 }
 
 function isLocal() {
 	var url = window.location.href;
-	return (url != "www.utamaru.com");
+	return (url != "http://www.utamaru.com/");
+}
+function initLocal() {
+	var body = document.getElementsByTagName("BODY")[0];
+	body.style.background = "url(water1_512.jpg)";
 }
 
 /* Main Function */
@@ -219,7 +224,7 @@ function alarmWindow(ID) {
 				snoozeButton.setAttribute("onclick",'alarmSnooze()');
 				snoozeButton.setAttribute("id","snoozeButton");
 				snoozeButton.setAttribute("class","snoozeButton");
-				snoozeButton.innerHTML = "Snooze Alarm <br> (5 minutes)";
+				snoozeButton.innerHTML = "Snooze Alarm\n(5 minutes)";
 			}
 
 			icon = document.createElement('div');

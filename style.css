@@ -143,9 +143,10 @@ div.alarmIcon {
 }
 
 .alarmWindow button.snoozeButton:hover {
-	color: darkgray;
+	color:black;
 	border-color: darkgray;
 	background-color: lightgray;
+	text-decoration-color: darkgray;
 }
 
 #text1, #text2, #text3 {
