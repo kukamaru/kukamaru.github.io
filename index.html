@@ -1,5 +1,6 @@
 <html>
 	<head>
+		<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png" id="favicon">
 		<title>Timers n shit</title>
 		<link rel="stylesheet" href="style.css">
 
@@ -51,6 +52,10 @@
 					<input type="checkbox" name="countdown" checked>Countdown
 					<input type="checkbox" name="inverted">Inverted
 					<br>
+					<!-- <input type="checkbox" name="snooze">Snoozable
+					-->
+					<input type="checkbox" name="protected" checked>Protect window while active
+					<br>
 
 					<input type="radio" name="size" value="big">Big
 					<input type="radio" name="size" value="medium" checked="true">Medium
@@ -65,7 +70,8 @@
 				<button onclick="javascript:newTimer()">start timer</button>
 			</div>
 			<div id="recipe">
-				<p>
+				<p style="background-color: white">
+					recepie bois
 				</p>
 			</div>
 		</div>

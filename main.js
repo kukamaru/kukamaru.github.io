@@ -15,6 +15,20 @@ var activeAlarms = [];
 var timerOrigin;
 
 
+window.onbeforeunload = function() {
+		if (checkProtect()) {
+	    	return "Are you sure?";
+	 	}
+ };
+function checkProtect() {
+//		var res = false;
+		for (var i = 0; i < activeTimers.length; i++) {
+			if (activeTimers[i].protected) {
+				return true;
+			}
+		}
+		return false;
+}
 //sounds
 	
 	var sounds = [ 
@@ -92,11 +106,13 @@ var timerOrigin;
 		size = form.size.value;
 		text = form.text.value;
 		soundID = form.sound.value;
+		protected = form.protected.value;
 
 		style = size;
 
 		if (form.countdown.checked){ style = "countdown " + style }
 		if (form.inverted.checked){ style = "inverted " + style }
+		if (form.protected.checked){ style = "protected " + style }
 
 
 		eggTimer(s,m,h,style,text,soundID);
@@ -139,7 +155,8 @@ var timerOrigin;
 			style: 		style,
 			soundID: 	soundID,
 			inverted:   style.includes("inverted"),
-			countdown:  style.includes("countdown")
+			countdown:  style.includes("countdown"),
+			protected:  style.includes("protected"), 
 
 		});
 
