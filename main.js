@@ -160,9 +160,9 @@ var timerOrigin;
 	}
 
 	function alarm(ID) {
-		text = activeTimers[ID].text;
-		soundID = activeTimers[ID].soundID;
-		isLooping = sounds[soundID].looping;
+		var text = activeTimers[ID].text;
+		var soundID = activeTimers[ID].soundID;
+		var isLooping = sounds[soundID].looping;
 
 		appendText(text,"alert");
 		//appendText("isLooping = " + isLooping);
@@ -171,7 +171,6 @@ var timerOrigin;
 		var audio = new Audio(sounds[soundID].src);
 		if (isLooping){
 			 audio.setAttribute("loop",true);
-			 //activeTimers[ID].audio = audio;
 			 audio.play();
 			 activeAlarms.push(audio);
 
@@ -191,20 +190,21 @@ var timerOrigin;
 		alarmShow();
 		firstAlarm = (activeAlarms.length == 1);
 
-		div = document.getElementById('alarmWindow');
-		buttondiv = document.getElementById('alarmButtons');
-		bg = document.getElementById('alarmBG');
-		content = document.getElementById('alarmContent');
+		var div = document.getElementById('alarmWindow');
+		var buttondiv = document.getElementById('alarmButtons');
+		var bg = document.getElementById('alarmBG');
+		var content = document.getElementById('alarmContent');
 
-		if (firstAlarm){
-			stopButton = document.createElement('button');
+		if (firstAlarm){ 						//create buttons if first
+
+			var stopButton = document.createElement('button');
 			stopButton.setAttribute("onclick","alarmStop()");
 			stopButton.setAttribute("id","stopButton");
 			stopButton.setAttribute("class","stopButton");
 			stopButton.innerHTML = "-- Stop Alarm --";
 
 			if (canSnooze){
-				snoozeButton = document.createElement('button');
+				var snoozeButton = document.createElement('button');
 				snoozeButton.setAttribute("onclick",'alarmSnooze()');
 				snoozeButton.setAttribute("id","snoozeButton");
 				snoozeButton.setAttribute("class","snoozeButton");
@@ -221,16 +221,17 @@ var timerOrigin;
 
 		}
 		else {
-			//stopButton = document.getElementById('stopButton');
+			var stopButton = document.getElementById('stopButton');
+			var snoozeButton = document.getElementById('snoozeButton');
+
 			stopButton.innerHTML = "-- Stop Alarms (" + activeTimers.length + ") --";
 			if (snoozeButton) { snoozeButton.innerHTML = "Snooze Alarms <br> (5 minutes)"; }
-
-
-			hr = document.createElement('hr');
+			
+			var hr = document.createElement('hr');
 			content.appendChild(hr);
 		}
 
-		p = document.createElement('p');
+		var p = document.createElement('p');
 		p.innerHTML = activeTimers[ID].text;
 		p.setAttribute("id","alarmText"+ID);
 		content.appendChild(p);

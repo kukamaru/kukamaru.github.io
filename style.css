@@ -113,20 +113,20 @@ div.alarmIcon {
 }
 .alarmContent hr { 
 	border-style: solid;
-	border-color: transparent;
 	border-top-color: var(--alert-color);
-	height: 1px;
+	border-bottom: none;
+	margin: 0px 10px;
+	padding: 0;
 }
 .alarmButtons {
 	display: flex;
 	justify-content: space-around;
 }
-.alarmWindow p:last {}
 .alarmWindow button {
 	width:100%;
 	display: inline;
 	margin:10px;
-	padding: 10px 50px;
+	padding: 7px 0px 8px;
 }
 
 .alarmWindow button.stopButton{
