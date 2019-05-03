@@ -2,7 +2,7 @@
 var myVar = setInterval(mainLoop, 11);
 
 //faves (wip)
-var myFaves = 0;
+var myFaves = 2;
 
 //defaults
 var msVisible;
@@ -53,6 +53,7 @@ function bodyLoad() {
 	if (isLocal()) { initLocal(); }
 	msVisCheck();
 	tsVisCheck();
+	loadFaves();
 }
 
 function initLocal() {
@@ -422,20 +423,29 @@ function loadFaves(){
 		return li;
 	}
 
-	ul.appendChild(newFaveButton(myFaves));
-	myFaves++;
+	if (myFaves == 0) {
+		collapseSpacer(false);
+	}
+	for (var i = 0 ; i < myFaves ; i++){
+		ul.appendChild(newFaveButton(i));
+	}
 }
 
 function menuShow(i){
+	if (windowState) { 
+		var current = document.getElementById(windowState);
+		current.style.display = "none";
+	}
+
 	var bg = document.getElementById("menuBG");
 	var focus = document.getElementById(i);
-
-	windowState = i;
 
 	bg.style.visibility = "visible";
 	bg.style.background = "var(--wrapperbg-color)"
 	focus.style.visibility = "visible";
 	focus.style.display = "flex";
+
+	windowState = i;
 }
 
 function menuHide() {
@@ -471,6 +481,7 @@ function toggleOptions() {
 
 	optionState = !optionState;	
 }
+
 function deleteFaveButton(id) {
 	var par = document.getElementById("favorites");
 	var li = document.getElementById("faveli" + id);
@@ -485,9 +496,36 @@ function deleteFaveButton(id) {
 		x[i].style.height = "0px";
 		x[i].style.borderWidth = "0px";
 	}
+
 	li.style.padding = 0;
 
+
+	myFaves--;
+	if(myFaves == 0){ collapseSpacer(true); toggleOptions(); }
 	setTimeout(function(){ deleteIt(); },3000);
+}
+
+function collapseSpacer(i) {
+	var collapse = i;
+
+	appendText("collapseSpacer running, reverse = " + reverse);
+
+	upper = document.getElementById("prefav");
+	lower = document.getElementById("postfav");
+	label = document.getElementById("nofav");
+
+	if (collapse) {
+		upper.style.padding = "2px 0 2px";
+		lower.style.padding = "0 0 12px";
+		label.style.opacity = 1;
+		faveSpacerCollapsed = true;
+	}
+	else {
+		upper.style.padding = "10px 0";
+		lower.style.padding = "10px 0";
+		label.style.opacity = 0;
+		faveSpacerCollapsed = false;		
+	}
 }
 
 /* Timestamp Checkbox */

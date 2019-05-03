@@ -17,7 +17,7 @@
 			<ul id="nav" class="nav">
 				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
-				<li><button onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
+				<li><button class ="green" onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
 				<br>
 				<li><input type="text" value="lol" id="testText01"></li>
 				<li><button onclick="javascript:ttButton();">ttButton</button></li>
@@ -42,13 +42,13 @@
 	<div id="menuwrapper" class="menuwrapper">
 		<div id="menu" class="menu">
 			<ul id="menulist" class="nav">
-				<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
+				<li><button class="green" onclick="javascript:menuShow('newTimerMenu')">New Timer</button></li>
 				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
-				<li><hr></li>
+				<li id="prefav"><hr></li>
 				<ul id="favorites" class="nav">
 				</ul>
-				<li><hr></li>
-				<li><button onclick="javascript:loadFaves();">Settings</button></li>
+				<li id="postfav"><div id="nofav">no favorites :(</div><hr></li>
+				<li><button onclick="javascript:menuShow('settings');">Settings</button></li>
 				<li><button onclick="javascript:toggleOptions();">Edit faves</button></li>
 			</ul>
 		</div>
@@ -65,8 +65,7 @@
 				<input type="checkbox" name="countdown" checked>Countdown
 				<input type="checkbox" name="inverted">Inverted
 				<br>
-					<!-- <input type="checkbox" name="snooze">Snoozable
-					-->
+					<!-- <input type="checkbox" name="snooze">Snoozable	-->
 					<input type="checkbox" name="protected" checked>Protect window while active
 					<br>
 
@@ -80,7 +79,8 @@
 						<option value=2>2</option>
 					</select>
 				</form>
-				<button onclick="javascript:newTimer()">start timer</button>
+				<button>add favorite</button>
+				<button class="green" onclick="javascript:newTimer()">start timer</button>
 			</div>
 			<div id="recipe">
 				<p style="background-color: white">

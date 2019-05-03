@@ -158,11 +158,23 @@ div.menu {
 					width 0.3s ease-out,
 					opacity 0.3s ease-in-out,
 					border-width 0.3s ease-out,
-					height 2s ease-out;
+					height 0.5s ease-in-out;
 }
 .menu li:last-child 		{ padding-bottom: 0 }
 ul#favorites li:last-child { padding-bottom: 10px; }
 
+#prefav hr, #postfav hr {
+	transition: padding 0.5s ease-in;
+}
+#postfav { position: relative; }
+#nofav {
+	transition: opacity 0.2s ease-in-out 0.3s;
+	opacity: 0;
+	bottom: 7px;
+	width: 100%;
+	background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 35%, rgba(0,212,255,0) 90%);	position: absolute;
+	color:var(--edit-color);
+}
 
 div.alarmWindow {
 	color:var(--alert-color);
@@ -200,11 +212,11 @@ div.alarmIcon {
 	padding: 7px 0px 8px;
 }
 
-.alarmWindow button.stopButton{
+.alarmWindow button.stopButton, Button.green {
 	border-color: green;
 	color: green;
 }
-.alarmWindow button.stopButton:hover {
+.alarmWindow button.stopButton:hover , Button.green:hover {
 	background-color: lightgreen;
 
 }
