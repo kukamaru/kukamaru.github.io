@@ -63,40 +63,6 @@ function initLocal() {
 	header.appendChild(span);
 }
 
-/* Cookies */
-
-function ttButton() {
-	function setCookie(cname,cvalue,exdays) {
-		var d = new Date();
-		d.setTime(d.getTime() + (exdays*24*60*60*1000));
-		var expires = "expires=" + d.toGMTString();
-
-		appendText("cookie saved: test1="+input);
-		appendText(expires,"status")
-
-		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-	}
-	
-
-	var input = document.getElementById("testText01").value;
-	setCookie("test1",input,1);
-}
-
-function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
-}
 
 /* Main Function */
 
@@ -125,6 +91,12 @@ function mainLoop() {
 	renderBars();
 }
 
+//Favorite Timer
+
+function ttButton() {	
+	var input = document.getElementById("testText01").value;
+	setCookie("test1",input,1);
+}
 
 //New Timer Menu Function
 function newTimer() {
@@ -537,6 +509,35 @@ function addZeroMs(i) {
 
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
+
+/* Cookies */
+function setCookie(cname,cvalue,exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	var expires = "expires=" + d.toGMTString();
+
+	appendText("cookie saved:" + cname + "=" + cvalue);
+	appendText(expires,"status")
+
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
 
 // Testing Junk
 
