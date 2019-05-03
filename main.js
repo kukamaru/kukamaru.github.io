@@ -4,15 +4,17 @@ var myVar = setInterval(mainLoop, 11);
 //defaults
 var msVisible;
 var timeStamps;
+var optionButtonWidth = "76px";
 
 //variables
 var timerRunning = false;
 var timersRunning = 0;
-var windowState = false;
 var canSnooze = true;
 var activeTimers = [];
 var activeAlarms = [];
 var timerOrigin;
+var windowState = false;
+var optionState = true;
 
 /* Init */
 
@@ -55,9 +57,9 @@ function initLocal() {
 	var header = document.getElementById("header");
 
 	var t = document.createTextNode(" (local version)");
+
 	var span = document.createElement("span");
 	span.style.color = "var(--alert-color)";
-
 	span.appendChild(t);
 
 	header.appendChild(span);
@@ -226,7 +228,7 @@ function alarmWindow(ID) {
 				snoozeButton.setAttribute("onclick",'alarmSnooze()');
 				snoozeButton.setAttribute("id","snoozeButton");
 				snoozeButton.setAttribute("class","snoozeButton");
-				snoozeButton.innerHTML = "Snooze Alarm\n(5 minutes)";
+				snoozeButton.innerHTML = "Snooze Alarm <br> (5 minutes)";
 			}
 
 			icon = document.createElement('div');
@@ -401,10 +403,10 @@ function menuShow(i){
 	bg.style.visibility = "visible";
 	bg.style.background = "var(--wrapperbg-color)"
 	focus.style.visibility = "visible";
-	focus.style.display = "block";
+	focus.style.display = "flex";
 }
 
-function menuHide(){
+function menuHide() {
 	if (windowState){
 		var bg = document.getElementById("menuBG");
 		var focus = document.getElementById(windowState);
@@ -417,11 +419,29 @@ function menuHide(){
 		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 	}
 }
+function toggleOptions() {
+	var a = document.getElementById("edit");
+	var b = document.getElementById("delete");
+	
+	var tar = (!optionState) ? optionButtonWidth : "0%";
+
+	a.style.width = tar;
+	b.style.width = tar;
+
+	optionState = !optionState;	
+}
 
 /* Timestamp Checkbox */
 function tsVisCheck() {
 	var checkBox = document.getElementById("tsCheck");
-	timeStamps = checkBox.checked
+	timeStamps = checkBox.checked;
+
+	var stamps = document.getElementsByClassName("timestamp");
+
+	for (i = 0; i < stamps.length; i++){
+		stamps[i].style.opacity = (timeStamps) ? 1 : 0;
+		stamps[i].style.width = (timeStamps) ? "auto" : "0px";
+	}
 }
 /* Milliseconds Checkbox */
 function msVisCheck() {
@@ -437,7 +457,7 @@ function msVisCheck() {
 
 		text.style.visibility = "visible";
 
-		div.style.width = "420px";
+		div.style.width = "440px";
 
 	}
 	else { 
@@ -448,7 +468,7 @@ function msVisCheck() {
 			text.style.visibility = "hidden";
 		}, delay);
 
-		div.style.width = "200px";
+		div.style.width = "420px";
 	}
 }
 

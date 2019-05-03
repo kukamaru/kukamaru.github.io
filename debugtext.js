@@ -10,22 +10,22 @@ function appendText(i,c) {
 	node.setAttribute("id",iT);
 	node.setAttribute("class",textClass);
 
-	if (timeStamps){
-		var d = new Date();
 
-		var hours = addZero(d.getHours());
-		var minutes = addZero(d.getMinutes());
-	   var seconds = addZero(d.getSeconds());
+	var d = new Date();
 
-		var ts = "[" + hours + ":" + minutes + ":" + seconds + "] ";
+	var hours = addZero(d.getHours());
+	var minutes = addZero(d.getMinutes());
+   var seconds = addZero(d.getSeconds());
 
-		var tsText = document.createTextNode(ts);
-		var tsNode = document.createElement("span");
-		tsNode.appendChild(tsText);
-		tsNode.setAttribute("class","timestamp");
+	var ts = "[" + hours + ":" + minutes + ":" + seconds + "] ";
 
-		node.appendChild(tsNode)
-	}
+	var tsText = document.createTextNode(ts);
+	var tsNode = document.createElement("span");
+	tsNode.appendChild(tsText);
+	tsNode.setAttribute("class","timestamp");
+
+	node.appendChild(tsNode)
+
 	node.appendChild(textnode);
 
 	document.getElementById("maintext").appendChild(node);

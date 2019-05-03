@@ -8,6 +8,7 @@
 	--freeze-color: blue;
 	--alert-color: red;
 	--status-color: teal;
+	--edit-color:darkgray;
 
 	--background-color: white;
 
@@ -29,13 +30,21 @@
 body {
 	font-family: unibody;
 	font-size:8px;
+	margin:0;
 }
 
 h1 {
 	font-size: 16px;
+	margin: 0;
 }
 
-.nav li 		{ display: inline; }
+hr { 
+	border-style: solid;
+	border-bottom: none;
+	margin: 0px 10px;
+	padding: 0;
+}
+
 button {
 	font-family: unibody-caps;
 
@@ -65,9 +74,11 @@ button:active {
 	transition-duration: 0.2s;
 	transition-property: background;
 	visibility: hidden;
-	z-index: 1;
 	width: 100%
 }
+.menuBG  { z-index: 1; }
+.alarmBG { z-index: 9; }
+
 
 
 .menuWrapper {
@@ -80,15 +91,21 @@ button:active {
 }
 
 .headerWrapper {
-	max-width: 80%;
+	width: 96%;
 	position: relative;
+	margin: auto;
 }
+
 .headerBG {
 	 position: absolute;
     width: 100%;
     height: 100%;
     z-index: -1;
     opacity: 0.8;
+}
+.headerDiv {
+	position: relative;
+	z-index: 1;
 }
 
 .menu, .alarmwindow, .headerBG {
@@ -97,14 +114,37 @@ button:active {
 .menu, .alarmwindow, .headerDiv { padding: 20px; }
 .menu, .alarmwindow { 
 	margin: 20vh auto;
-	z-index: 2;
+	text-align: center;
+	max-width: 300px;
 }
 
 div.menu {
 	visibility: hidden;
-	max-width: 70%;
+	width: 80%;
 	display: none;
+	z-index: 2;
 }
+
+.menu ul.nav {
+	width: 100%;
+	display: flex;
+	margin:0;
+	padding:0;
+	flex-direction: column; 
+}
+.menu li 	  			{ display: flex; flex-direction: row; margin:0px 0px; padding-bottom: 10px; }
+.menu button  			{ width: 100%; height: 46px; padding: 0; }
+.menu hr 				{ width: 100%; margin: 0; }
+.menu button.options	{ width: 70px; overflow: hidden; }
+.menu button.delete  { color:var(--alert-color); outline-color:var(--alert-color) }
+.menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
+.menu button {
+	transition-property: width; 
+	transition-duration: 0.22s;
+	transition-delay: 0.08s;
+}
+.menu li:last-child { padding-bottom: 0 }
+
 
 div.alarmWindow {
 	color:var(--alert-color);
@@ -113,10 +153,7 @@ div.alarmWindow {
 	width:70%;	
 	outline: 1px solid var(--alert-color);
 	outline-offset: -8px;
-}
-
-.alarmWindow {
-	text-align: center;
+	z-index: 10;
 }
 
 div.alarmIcon {
@@ -130,12 +167,9 @@ div.alarmIcon {
 .alarmContent {
 	/*background: pink;*/
 }
-.alarmContent hr { 
-	border-style: solid;
+
+.alarmContent hr {
 	border-top-color: var(--alert-color);
-	border-bottom: none;
-	margin: 0px 10px;
-	padding: 0;
 }
 .alarmButtons {
 	display: flex;
@@ -144,7 +178,7 @@ div.alarmIcon {
 .alarmWindow button {
 	width:100%;
 	display: inline;
-	margin:10px;
+	margin:5px;
 	padding: 7px 0px 8px;
 }
 
@@ -184,15 +218,16 @@ div.maintext {
 	background: white;
 	bottom:0;
 	position:absolute;
-	z-index: -100;
+	left:2vw;
 }
 
 div.maintext p {
 	margin: 0;
+	z-index: -2;
 }
 
 div.maintext p.odd  {	background: rgb(245,245,245);   }
-div.maintext p.even {/*	background: blue; */}
+div.maintext p.even {	background: white; }
 div.maintext #welcome { font-weight: bold; }
 div.maintext p.freeze { color:var(--freeze-color);  }
 div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
@@ -275,7 +310,7 @@ div.currenttime {
 	color:white;
     position:absolute;
     bottom: 0;
-    right: 20px;
+    right: 2vw;
     transition:2s;
 }
 
