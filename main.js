@@ -1,6 +1,9 @@
 // loops Main function at 11ms rate
 var myVar = setInterval(mainLoop, 11);
 
+//faves (wip)
+var myFaves = 0;
+
 //defaults
 var msVisible;
 var timeStamps;
@@ -49,6 +52,7 @@ function bodyLoad() {
 
 	if (isLocal()) { initLocal(); }
 	msVisCheck();
+	tsVisCheck();
 }
 
 function initLocal() {
@@ -393,31 +397,33 @@ function renderBars() {
 		}
 	}
 }
+
 function loadFaves(){
 	var ul = document.getElementById("favorites")
 
-	function newButton(id){
-		a = document.createElement("button");
-		e = document.createElement("button");
-		d = document.createElement("button");
+	function newFaveButton(id){
 		li = document.createElement("li");
 
-		function make(i,text,c,id){
-			t = document.createTextNode(text);
+		function make(text,c,id){
+			var i = document.createElement("button");
+			var t = document.createTextNode(text);
 			i.setAttribute("class",c);
 			i.setAttribute("id",c+id);
+			i.setAttribute("onclick","javascript:" + c + "FaveButton(" + id + ")")
 			i.appendChild(t);
 			return i;
 		}
 
-		li.appendChild(make(a,"NAME OF BUTAN"	,"fave"		,id));
-		li.appendChild(make(e,"EDIT"				,"edit"		,id));
-		li.appendChild(make(d,"DEL"				,"delete"	,id));
+		li.appendChild(make("NAME OF BUTAN"	,"fave"		,id));
+		li.appendChild(make("EDIT"				,"edit"		,id));
+		li.appendChild(make("DEL"				,"delete"	,id));
 
+		li.setAttribute("id","faveli"+id)
 		return li;
 	}
 
-	ul.appendChild(newButton(1));
+	ul.appendChild(newFaveButton(myFaves));
+	myFaves++;
 }
 
 function menuShow(i){
@@ -457,13 +463,31 @@ function toggleOptions() {
 		i.style.opacity = (!state) ? 1 : 0;
 	}
 
-	for (var x = 0 ; x < a.length ; x++){
+	for (var x = 0 ; x < a.length ; x++ ){
 		applyStyle(a[x],optionState);
 		applyStyle(b[x],optionState);
 		document.getElementsByClassName("fave")[x].style.borderRightColor = (optionState) ? "black" : "transparent";
 	}
 
 	optionState = !optionState;	
+}
+function deleteFaveButton(id) {
+	var par = document.getElementById("favorites");
+	var li = document.getElementById("faveli" + id);
+	var x = li.children;
+
+	function deleteIt() {
+		par.removeChild(li);
+	}
+
+	for (var i = 0 ; i < x.length ; i++ ) {
+		x[i].style.opacity = 0;
+		x[i].style.height = "0px";
+		x[i].style.borderWidth = "0px";
+	}
+	li.style.padding = 0;
+
+	setTimeout(function(){ deleteIt(); },3000);
 }
 
 /* Timestamp Checkbox */
