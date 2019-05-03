@@ -45,12 +45,14 @@
 				<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
 				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
 				<li><hr></li>
+				<ul id="favorites" class="nav">
 				<li><button onclick="javascript:toggleOptions();">Favorite timer 1</button>
-					<button class="options edit" id="edit">D</button>
-					<button class="options delete" id="delete">E</button>
+					<button class="options edit" id="edit">EDIT</button>
+					<button class="options delete" id="delete">DEL</button>
 				</li>
+				</ul>
 				<li><hr></li>
-				<li><button onclick="">Settings</button></li>
+				<li><button onclick="javascript:loadFaves();">Settings</button></li>
 				<li><button onclick="">Clear local data</button></li>
 			</ul>
 		</div>

@@ -18,7 +18,7 @@
 
 	--buttonHoverTextColor: blue;
 	--buttonHoverBorderColor: purple;
-	--buttonHoverBackgroundColor: pink;
+	--buttonHoverBackgroundColor: lightyellow;
 
 	--alert-icon: url("icons/loudspeaker_rays_red-0.png");
 
@@ -134,16 +134,21 @@ div.menu {
 }
 .menu li 	  			{ display: flex; flex-direction: row; margin:0px 0px; padding-bottom: 10px; }
 .menu button  			{ width: 100%; height: 46px; padding: 0; }
-.menu hr 				{ width: 100%; margin: 0; }
-.menu button.options	{ width: 70px; overflow: hidden; }
+.menu hr 				{ width: 100%; margin: 0; color:var(--edit-color); }
+.menu button.delete, .menu button.edit	{ 
+	overflow: hidden; 
+	border-width: 0px; 
+	width: 0px; 
+}
 .menu button.delete  { color:var(--alert-color); outline-color:var(--alert-color) }
 .menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
 .menu button {
-	transition-property: width; 
-	transition-duration: 0.22s;
-	transition-delay: 0.08s;
+					transition: width 0.3s ease-out,
+					opacity 0.3s ease-in-out,
+					border-width 0.3s ease-out;
 }
-.menu li:last-child { padding-bottom: 0 }
+.menu li:last-child 		{ padding-bottom: 0 }
+ul#favorites li:last-child { padding-bottom: 10px; }
 
 
 div.alarmWindow {
@@ -195,11 +200,15 @@ div.alarmIcon {
 	border-color: gray;
 }
 
-.alarmWindow button.snoozeButton:hover {
+.alarmWindow button.snoozeButton:hover, button.edit:hover {
 	color:black;
 	border-color: darkgray;
 	background-color: lightgray;
 	text-decoration-color: darkgray;
+}
+button.delete:hover {
+	background-color: pink;
+	border-color: red;
 }
 
 #text1, #text2, #text3 {

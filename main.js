@@ -14,7 +14,7 @@ var activeTimers = [];
 var activeAlarms = [];
 var timerOrigin;
 var windowState = false;
-var optionState = true;
+var optionState = false;
 
 /* Init */
 
@@ -393,6 +393,32 @@ function renderBars() {
 		}
 	}
 }
+function loadFaves(){
+	var ul = document.getElementById("favorites")
+
+	function newButton(id){
+		a = document.createElement("button");
+		e = document.createElement("button");
+		d = document.createElement("button");
+		li = document.createElement("li");
+
+		function make(i,text,c,id){
+			t = document.createTextNode(text);
+			i.setAttribute("class",c);
+			i.setAttribute("id",c+id);
+			i.appendChild(t);
+			return i;
+		}
+
+		li.appendChild(make(a,"NAME OF BUTAN"	,"fave"		,id));
+		li.appendChild(make(e,"EDIT"				,"edit"		,id));
+		li.appendChild(make(d,"DEL"				,"delete"	,id));
+
+		return li;
+	}
+
+	ul.appendChild(newButton(1));
+}
 
 function menuShow(i){
 	var bg = document.getElementById("menuBG");
@@ -418,15 +444,24 @@ function menuHide() {
 		focus.style.display = "none";
 		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 	}
+	if (optionState){ toggleOptions(); }
 }
+
 function toggleOptions() {
+	// rework to use class.
 	var a = document.getElementById("edit");
 	var b = document.getElementById("delete");
 	
-	var tar = (!optionState) ? optionButtonWidth : "0%";
+	var width = (!optionState) ? optionButtonWidth : "0%";
 
-	a.style.width = tar;
-	b.style.width = tar;
+	a.style.width = width;
+	b.style.width = width;
+
+	a.style.borderWidth = (!optionState) ? "1px" : "0px";
+	b.style.borderWidth = (!optionState) ? "1px" : "0px";
+
+	a.style.opacity = (!optionState) ? 1 : 0;
+	b.style.opacity = (!optionState) ? 1 : 0;
 
 	optionState = !optionState;	
 }
