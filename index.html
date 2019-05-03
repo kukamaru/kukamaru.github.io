@@ -1,22 +1,24 @@
 <html>
-	<head>
-		<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
-		<title>Timers n shit</title>
-		<link rel="stylesheet" href="style.css">
+<head>
+	<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
+	<title>Timers n shit</title>
+	<link rel="stylesheet" href="style.css">
 
-		<script src="main.js" type="text/javascript" onload="bootUp()"></script>
-	</head>
+	<script src="main.js" type="text/javascript" onload="bootUp()"></script>
+</head>
 
 
-	<body onload="bodyLoad()">
-
-		<div class="headerdiv">
+<body onload="bodyLoad()">
+	<div class="headerWrapper">
+		<div class="headerBG" id="headerBG"></div>
+		<div class="headerDiv" id="headerDiv">
 			<h1 id="header">header1</h1>
 
 			<ul id="nav" class="nav">
 				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
 				<li><button onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
+				<br>
 				<li><input type="text" value="lol" id="testText01"></li>
 				<li><button onclick="javascript:ttButton();">ttButton</button></li>
 			</ul>
@@ -32,28 +34,36 @@
 			<button value="button2" id="button2" onclick="testButton2()">testButton2</button>
 			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
 		</div>
+	</div>	
 
 
-		<div id="menuwrapper" class="menuwrapper">
-			<div id="menu" class="menu">
-				<ul id="menulist" class="nav">
-					<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
-					<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
-				</ul>
-			</div>
-			<div id="newTimerMenu" class="menu">
-				<form id="newTimer">
-					<input type="text" name="text" value="timer00">
-					<br>
 
-					<input type="number" name="h" value="0">
-					<input type="number" name="m" value="1">
-					<input type="number" name="s" value="30">
-					<br>
 
-					<input type="checkbox" name="countdown" checked>Countdown
-					<input type="checkbox" name="inverted">Inverted
-					<br>
+	<div id="menuwrapper" class="menuwrapper">
+		<div id="menu" class="menu">
+			<ul id="menulist" class="nav">
+				<li><button onclick="javascript:eggTimer(30,8,0,'big countdown');">Egg Timer (8min 30s)</button></li>
+				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
+				<br>
+				<hr>
+				<li><button onclick="">Clear local data</button></li>
+				<hr>
+				<li><button>Favorite timer 1</button><button>edit</button><button>delete</button></li>
+			</ul>
+		</div>
+		<div id="newTimerMenu" class="menu">
+			<form id="newTimer">
+				<input type="text" name="text" value="timer00">
+				<br>
+
+				<input type="number" name="h" value="0">
+				<input type="number" name="m" value="1">
+				<input type="number" name="s" value="30">
+				<br>
+
+				<input type="checkbox" name="countdown" checked>Countdown
+				<input type="checkbox" name="inverted">Inverted
+				<br>
 					<!-- <input type="checkbox" name="snooze">Snoozable
 					-->
 					<input type="checkbox" name="protected" checked>Protect window while active
@@ -77,7 +87,7 @@
 				</p>
 			</div>
 		</div>
-			
+
 		<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
 
 		<div id="alarmBG" class="alarmBG">
@@ -101,4 +111,4 @@
 		
 	</body>
 
-</html>
+	</html>

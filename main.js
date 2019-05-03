@@ -511,6 +511,8 @@ function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
 /* Cookies */
+
+/* use LocalStorage instead */
 function setCookie(cname,cvalue,exdays) {
 	var d = new Date();
 	d.setTime(d.getTime() + (exdays*24*60*60*1000));

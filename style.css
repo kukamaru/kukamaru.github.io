@@ -9,12 +9,14 @@
 	--alert-color: red;
 	--status-color: teal;
 
+	--background-color: white;
+
 	--buttonTextColor: purple;
 	--buttonBorderColor: black;
 	--buttonBackgroundColor: white;
 
 	--buttonHoverTextColor: blue;
-	--buttonHoverBorderColor: lightgray;
+	--buttonHoverBorderColor: purple;
 	--buttonHoverBackgroundColor: pink;
 
 	--alert-icon: url("icons/loudspeaker_rays_red-0.png");
@@ -31,10 +33,6 @@ body {
 
 h1 {
 	font-size: 16px;
-}
-
-div.headerdiv {
-	background-color: rgba(255,255,255,0.90);
 }
 
 .nav li 		{ display: inline; }
@@ -59,6 +57,7 @@ button:active {
 	transform:scale(0.99);
 }
 
+/* remember for BGs, position requires positioning of parent too */
 .menuBG, .alarmBG { 
 	background-color: rgba(0,0,0,0); 
 	position:absolute;
@@ -69,6 +68,8 @@ button:active {
 	z-index: 1;
 	width: 100%
 }
+
+
 .menuWrapper {
 	position: absolute;
 	left:0; top:0; bottom:0; right: 0;
@@ -78,10 +79,24 @@ button:active {
 	visibility: hidden;
 }
 
+.headerWrapper {
+	max-width: 80%;
+	position: relative;
+}
+.headerBG {
+	 position: absolute;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.8;
+}
+
+.menu, .alarmwindow, .headerBG {
+	background-color: var(--background-color);
+}
+.menu, .alarmwindow, .headerDiv { padding: 20px; }
 .menu, .alarmwindow { 
 	margin: 20vh auto;
-	background-color:white;
-	padding:20px;
 	z-index: 2;
 }
 
