@@ -38,9 +38,12 @@ function bodyLoad() {
 	}
 
 	appendText("cookies enabled? " + checkCookies(),"status");
-	if (checkCookies) { appendText(document.cookie); }
-	var testText = document.getElementById("testText01");
-	testText.value = "hello world";
+	if (checkCookies) { 
+		appendText(document.cookie); 
+
+		var testText = document.getElementById("testText01");
+		testText.value = getCookie("test1");
+	}
 
 	if (isLocal()) { initLocal(); }
 	msVisCheck();
@@ -63,22 +66,36 @@ function initLocal() {
 /* Cookies */
 
 function ttButton() {
+	function setCookie(cname,cvalue,exdays) {
+		var d = new Date();
+		d.setTime(d.getTime() + (exdays*24*60*60*1000));
+		var expires = "expires=" + d.toGMTString();
+
+		appendText("cookie saved: test1="+input);
+		appendText(expires,"status")
+
+		document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+	}
+	
+
 	var input = document.getElementById("testText01").value;
-
-
-	appendText("cookie saved: test2="+input);
-
-	setCookie("test2",input,1);
+	setCookie("test1",input,1);
 }
 
-function setCookie(cname,cvalue,exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	var expires = "expires=" + d.toGMTString();
-
-	appendText(expires,"status")
-
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+function getCookie(cname) {
+  var name = cname + "=";
+  var decodedCookie = decodeURIComponent(document.cookie);
+  var ca = decodedCookie.split(';');
+  for(var i = 0; i < ca.length; i++) {
+    var c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
 }
 
 /* Main Function */
