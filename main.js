@@ -5,7 +5,7 @@ var myVar = setInterval(mainLoop, 11);
 var msVisible;
 var timeStamps;
 
-//globals
+//variables
 var timerRunning = false;
 var timersRunning = 0;
 var windowState = false;
@@ -14,53 +14,36 @@ var activeTimers = [];
 var activeAlarms = [];
 var timerOrigin;
 
+/* Init */
 
+function bootUp() {
+	function load(script) {
+		var newScript = document.createElement('script');
+		newScript.src = script;
+		newScript.type = 'text/javascript';
+		document.getElementsByTagName('head')[0].appendChild(newScript);
+	}
 
-//sounds
-
-const sounds = [ 
-{ 
-	soundName: "eggsound",
-	src: "audio/eggsound1.mp3",
-	looping: false
-},
-
-
-{
-	soundName: "jingle",
-	src: "audio/jingle.mp3",
-	looping: false
-},
-
-
-{
-	soundName: "groove",
-	src: "audio/groove.mp3",
-	looping: true
+	load("debugtext.js");
+	load("audio/sounds.js")
 }
-];
 
-/* Cookies + Init */
-function checkCookies() {
-	var text = "";
-	appendText("bingo boingo","freeze")
-	if (navigator.cookieEnabled == true){
-		text = "cookies are enabled";
+function bodyLoad() {
+	function isLocal() {
+		return (window.location.href != "http://www.utamaru.com/");
 	}
-	else {
-		text = "cookies are disabled";
+
+	function checkCookies() {
+		return (navigator.cookieEnabled);
 	}
-	msVisCheck();
-	//debug stuff
-	appendText(text);
-	appendText("loaded from: " + window.location.href,"status");
-	appendText("isLocal " + isLocal());
+
+	appendText("cookies enabled? " + checkCookies(),"status");
+	if (checkCookies) { appendText(document.cookie); }
+	var testText = document.getElementById("testText01");
+	testText.value = "hello world";
+
 	if (isLocal()) { initLocal(); }
-}
-
-function isLocal() {
-	var url = window.location.href;
-	return (url != "http://www.utamaru.com/");
+	msVisCheck();
 }
 
 function initLocal() {
@@ -77,7 +60,29 @@ function initLocal() {
 	header.appendChild(span);
 }
 
+/* Cookies */
+
+function ttButton() {
+	var input = document.getElementById("testText01").value;
+
+
+	appendText("cookie saved: test2="+input);
+
+	setCookie("test2",input,1);
+}
+
+function setCookie(cname,cvalue,exdays) {
+	var d = new Date();
+	d.setTime(d.getTime() + (exdays*24*60*60*1000));
+	var expires = "expires=" + d.toGMTString();
+
+	appendText(expires,"status")
+
+	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
 /* Main Function */
+
 function mainLoop() {
 	var d = new Date();
 	if (timerRunning){
@@ -104,19 +109,19 @@ function mainLoop() {
 }
 
 
-/** EGGTIMER **/
+//New Timer Menu Function
 function newTimer() {
-	form = document.getElementById("newTimer");
+	var form = document.getElementById("newTimer");
 
-	h = form.h.value;
-	m = form.m.value;
-	s = form.s.value;
-	size = form.size.value;
-	text = form.text.value;
-	soundID = form.sound.value;
-	protected = form.protected.value;
+	var h = form.h.value;
+	var m = form.m.value;
+	var s = form.s.value;
+	var size = form.size.value;
+	var text = form.text.value;
+	var soundID = form.sound.value;
+	var protected = form.protected.value;
 
-	style = size;
+	var style = size;
 
 	if (form.countdown.checked){ style = "countdown " + style; }
 	if (form.inverted.checked){ style = "inverted " + style; }
@@ -129,10 +134,10 @@ function newTimer() {
 }
 
 function eggTimer(eS,eM,eH,style,text,sound) {
-	if (eH == undefined) 	{ eH = 0; }
-	if (eM == undefined) 	{ eM = 0; }
-	if (text == undefined) 	{ text = "eggtimer (undefined)"; }
-	if (!sound) 				{ sound = 0; }
+	if (eH == undefined) 	{ var eH = 0; }
+	if (eM == undefined) 	{ var eM = 0; }
+	if (text == undefined) 	{ var text = "eggtimer (undefined)"; }
+	if (!sound) 				{ var sound = 0; }
 	if (!style) { style = "normal"; }
 
 	var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
@@ -398,19 +403,6 @@ function renderBars() {
 	}
 }
 
-
-function button1() {
-	appendText("button pressed","alert");
-	eggTimer(0,21,4,"big countdown","bigtest",0);
-	eggTimer(5,0,0,"countdown","medium test",1);
-	eggTimer(15,0,0,"small","smalltest + looped sound",2);
-}
-
-function button2() {
-	appendText("button2 pressed");
-	eggTimer(1,0,0,"big","loop alarmspam",2)
-}
-
 function menuShow(i){
 	var bg = document.getElementById("menuBG");
 	var focus = document.getElementById(i);
@@ -471,64 +463,21 @@ function msVisCheck() {
 	}
 }
 
-/* Text Stuff */
-var iT = 0; /* Span ID for text */
 
-function clearText() {
-	while(maintext.firstChild){
-		maintext.removeChild(maintext.firstChild);
-	}
-	iT = 0;
-}
-
-function appendText(i,c) {
-	var text = i;
-	var textClass = evenOdd(iT);
-	if (c){	textClass = textClass + " " + c; }
-
-	var node = document.createElement("p");
-	var textnode = document.createTextNode(text);
-
-	node.setAttribute("id",iT);
-	node.setAttribute("class",textClass);
-
-	if (timeStamps){
-		var d = new Date();
-
-		hours = addZero(d.getHours());
-		minutes = addZero(d.getMinutes());
-		seconds = addZero(d.getSeconds());
-
-		ts = "[" + hours + ":" + minutes + ":" + seconds + "] ";
-
-		var tsText = document.createTextNode(ts);
-		var tsNode = document.createElement("span");
-		tsNode.appendChild(tsText);
-		tsNode.setAttribute("class","timestamp");
-
-		node.appendChild(tsNode)
-	}
-	node.appendChild(textnode);
-
-	document.getElementById("maintext").appendChild(node);
-
-	iT = iT + 1;
-}
 //Warning dialog if protected timer
 window.onbeforeunload = function() {
-	if (checkProtect()) {
-		return "Timers running, close?";
+
+	function checkProtect() {
+		for (var i = 0; i < activeTimers.length; i++) {
+			if (activeTimers[i].protected && activeTimers[i].active) { return true; }
+		}
+		return false;
 	}
+
+	if (checkProtect()) { return "Timers running, close?"; }	
 }
 
-function checkProtect() {
-	for (var i = 0; i < activeTimers.length; i++) {
-		if (activeTimers[i].protected && activeTimers[i].active) {
-			return true;
-		}
-	}
-	return false;
-}
+
 
 //Number Things for clocks etc.
 function renderTime(i) {
@@ -568,6 +517,20 @@ function addZeroMs(i) {
 	}
 	return i;
 }
+
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
+// Testing Junk
+
+function testButton1() {
+	appendText("testButton1 pressed","alert");
+	eggTimer(0,21,4,"big countdown","bigtest",0);
+	eggTimer(5,0,0,"countdown","medium test",1);
+	eggTimer(15,0,0,"small","smalltest + looped sound",2);
+}
+
+function testButton2() {
+	appendText("testButton2 pressed");
+	eggTimer(1,0,0,"big","loop alarmspam",2)
+}

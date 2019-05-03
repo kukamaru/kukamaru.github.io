@@ -1,14 +1,14 @@
 <html>
 	<head>
-		<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png" id="favicon">
+		<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
 		<title>Timers n shit</title>
 		<link rel="stylesheet" href="style.css">
 
-		<script src="main.js"></script>
+		<script src="main.js" type="text/javascript" onload="bootUp()"></script>
 	</head>
 
 
-	<body onload="checkCookies()">
+	<body onload="bodyLoad()">
 
 		<div class="headerdiv">
 			<h1 id="header">header1</h1>
@@ -17,6 +17,8 @@
 				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
 				<li><button onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
+				<li><input type="text" value="lol" id="testText01"></li>
+				<li><button onclick="javascript:ttButton();">ttButton</button></li>
 			</ul>
 
 			<input type="checkbox" id="msCheck" onclick="msVisCheck()">
@@ -26,8 +28,8 @@
 			<label for="tsCheck">Timestamps</label>
 
 
-			<button value="button1" id="button1" onclick="button1()">button1 :)</button>
-			<button value="button2" id="button2" onclick="button2()">button2</button>
+			<button value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
+			<button value="button2" id="button2" onclick="testButton2()">testButton2</button>
 			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
 		</div>
 
