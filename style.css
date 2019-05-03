@@ -206,6 +206,11 @@ div.alarmIcon {
 	background-color: lightgray;
 	text-decoration-color: darkgray;
 }
+button.edit, button.edit:hover {
+	border-right-color:transparent;
+	border-left-color:black;
+}
+
 button.delete:hover {
 	background-color: pink;
 	border-color: red;

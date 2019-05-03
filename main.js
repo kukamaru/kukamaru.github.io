@@ -448,20 +448,20 @@ function menuHide() {
 }
 
 function toggleOptions() {
-	// rework to use class.
-	var a = document.getElementById("edit");
-	var b = document.getElementById("delete");
-	
-	var width = (!optionState) ? optionButtonWidth : "0%";
+	var a = document.getElementsByClassName("edit");
+	var b = document.getElementsByClassName("delete");
 
-	a.style.width = width;
-	b.style.width = width;
+	function applyStyle(i,state) {
+		i.style.width = (!state) ? optionButtonWidth : "0%";
+		i.style.borderWidth = (!state) ? "1px" : "0px";
+		i.style.opacity = (!state) ? 1 : 0;
+	}
 
-	a.style.borderWidth = (!optionState) ? "1px" : "0px";
-	b.style.borderWidth = (!optionState) ? "1px" : "0px";
-
-	a.style.opacity = (!optionState) ? 1 : 0;
-	b.style.opacity = (!optionState) ? 1 : 0;
+	for (var x = 0 ; x < a.length ; x++){
+		applyStyle(a[x],optionState);
+		applyStyle(b[x],optionState);
+		document.getElementsByClassName("fave")[x].style.borderRightColor = (optionState) ? "black" : "transparent";
+	}
 
 	optionState = !optionState;	
 }
