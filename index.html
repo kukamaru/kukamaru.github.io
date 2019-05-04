@@ -62,13 +62,13 @@
 
 					<li class="timeInput">
 						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
-						oninput="newTimer.changed(this)"value="">
+						oninput="newTimer.changed(this)"value="" id="newTimerHours">
 						:
 						<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
 						oninput="newTimer.changed(this)"value="" id ="newTimerMinutes">
 						:
-						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
-						oninput="newTimer.changed(this)"value="10">
+						<input type="number" placeholder="37" max = "60" class="seconds timeInput" name="s" 
+						oninput="newTimer.changed(this)"value="" id="newTimerSeconds">
 					</li>
 
 					<li>
@@ -100,7 +100,7 @@
 				</select>
 			</li>
 			<li>
-				<button class="green" id="newTimerStartButton">start timer</button>
+				<button name="submit" class="green" id="newTimerStartButton">start timer</button>
 				<button id="newTimerAddFave" >add favorite</button>
 			</li>
 		</form>

@@ -127,8 +127,8 @@ function mainLoop() {
 			var bgsrc = "url(" + backgrounds[i.bg].src + ")";
 			var dbsrc = "url(" + backgrounds[i.debug].src + ")";
 
-			appendText(bgsrc);
-			appendText(dbsrc);
+			appendText(bgsrc,"debug");
+			appendText(dbsrc,"debug");
 
 			debugbg.style.background = dbsrc;
 			bg.style.background = bgsrc;
@@ -148,13 +148,23 @@ function mainLoop() {
 
 var newTimer = function() {
 	var aString = "things suck";
-	var oldform = document.getElementById("newTimerForm");
+
+	var form = document.getElementById("newTimerForm");
 
 
 	newTimer.changed = function(i) {
-		appendText("ping","debug");
-		appendText("value" + i.value + "from" + i.name);
-		console.log(i);
+		digits = numLength(i.value)
+		appendText("value: " + i.value + " from field name:" + i.name + ".... " + digits + "digits","debug");
+
+		if (digits == 2){
+			if (i.name == "h") {	form.m.focus(); appendText("1","debug blue"); }
+			else if  (i.name == "m") { form.s.focus(); appendText("2","debug blue");}
+			else if  (i.name == "s")	{ form.submit.focus(); appendText("3","debug blue");}					
+		}
+		else if (digits > 2){
+
+		}
+
 	}
 
 	newTimer.submitButton = function() {
@@ -165,7 +175,7 @@ var newTimer = function() {
 	}
 
 	function submit() {
-		var form = document.getElementById("newTimerForm");
+		//form = document.getElementById("newTimerForm");
 		
 		var h = form.h.value;
 		var m = form.m.value;
@@ -689,7 +699,7 @@ function addZeroMs(i) {
 	}
 	return i;
 }
-
+function numLength(x) { return x.toString().length; }
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
