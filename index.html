@@ -43,13 +43,13 @@
 	<div id="menuWrapper" class="menuWrapper">
 		<div id="menu" class="menu">
 			<ul id="menulist" class="nav">
-				<li><button class="green" onclick="javascript:menuShow('newTimerMenu')">New Timer</button></li>
+				<li><button onclick="javascript:menuShow('newTimerMenu')" class="green">New Timer</button></li>
 				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
 				<li id="prefav"><hr></li>
 				<ul id="favorites" class="nav">
 				</ul>
 				<li id="postfav"><div id="nofav">no favorites :(</div><hr></li>
-				<li><button onclick="javascript:menuShow('settings');">Settings</button></li>
+				<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
 				<li><button onclick="javascript:toggleOptions();">Edit faves</button></li>
 			</ul>
 		</div>
@@ -153,8 +153,15 @@
 			 position: relative;
 			 height: 0px;
 			 bottom: 0px;
-			 transition: height 1s;
-			"> hello </div>
+			 transition: height 0.5s ease-in-out;
+			"> hello <br>
+		<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> Render Stop <br>
+		<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> Bar Stop <br>
+
+
+
+
+	</div>
 
 </div> <!-- cornerdiv -->
 </body>

@@ -270,12 +270,12 @@ input[type=number] {
 		background-color: lightgreen;
 
 	}
-	.alarmWindow button.snoozeButton {
+	.alarmWindow button.snoozeButton, button.gray {
 		color: gray;
 		border-color: gray;
 	}
 
-	.alarmWindow button.snoozeButton:hover, button.edit:hover {
+	.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
 		color:black;
 		border-color: darkgray;
 		background-color: lightgray;

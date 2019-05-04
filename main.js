@@ -2,7 +2,7 @@
 var myVar = setInterval(mainLoop, 11);
 
 //faves (wip)
-var myFaves = 2;
+var myFaves = 5;
 
 //defaults
 var msVisible;
@@ -89,6 +89,9 @@ function initLocal() {
 /* Main Function */
 
 function mainLoop() {
+
+	if (debug1) { return; } //DEBUG
+
 	var d = new Date();
 	if (timerRunning){
 		document.getElementById("timediv").style.background = "var(--active-bar)";
@@ -384,6 +387,9 @@ function hideBar(ID) {
 	setTimeout(function(){parent.removeChild(div);},10000); 
 }
 function renderBars() {
+
+	if (debug2) { return; } //DEBUG
+
 	now = new Date().valueOf();
 	num = activeTimers.length;
 
@@ -695,9 +701,33 @@ function testButton2() {
 	eggTimer(1,0,0,"big","loop alarmspam",2)
 }
 
-function debugMenu() {
+// Debug Trigger and Menu
+
+debug = false;
+debug1 = false; //	time render stop
+debug2 = false; //	bar render stop
+
+var debugMenu = function(){
 	var div = document.getElementById("debug");
 	var hidden = (div.style.height == "0px");
+
+	debugMenu.check = function(i){
+		var checkbox = document.getElementById("debug" + i).checked;	
+		if (i == 1) { 
+			debug1 = (!debug1); 
+			appendText("debug1 = " + i + " = " + debug1);
+		}
+
+		if (i == 2) { 
+			debug2 = (!debug2);
+			appendText("debug2 = " + i + " = " + debug2);
+		}
+	}
+
+	if (!debug) { 
+		appendText("opening debug menu","alert"); 
+		appendText("debug = " + (debug = true),"status");
+	}
 
 	div.style.height = (hidden) ? "200px" : "0px";
 }
