@@ -107,20 +107,30 @@ div.menu {
 	background-color: var(--background-color);
 }
 .menu, .alarmWindow, .headerDiv { padding: 20px; }
-.menu, .alarmWindow { 
+#menu, .alarmWindow { 
 	margin: 20vh auto;
 	text-align: center;
 	max-width: 300px;
 }
 
-
+.menu#newTimerMenu {
+	margin: 20vh auto;
+	text-align: center;
+	width: 412px;
+}
+ul.newTimerList {
+	margin:auto;
+}
 
 .menu .nav {
-	width: 100%;
 	display: flex;
 	margin:0;
 	padding:0;
 	flex-direction: column; 
+}
+
+#menu .nav {
+		width: 100%;
 }
 
 .menu li 	  			{ 
@@ -201,7 +211,7 @@ ul#favorites li:last-child { padding-bottom: 10px; }
 	}
 
 /* Favorites spacer (total animationtime .5s/500ms) */
-	hr.dummyFave { padding: 0; width: 100%; height: 1px; margin: 0; }
+//*	hr.dummyFave { padding: 0; width: 100%; height: 1px; margin: 0; }*/
 	#prefav hr, #postfav hr {
 		transition: padding 0.5s ease-in;
 	}
@@ -220,16 +230,46 @@ ul#favorites li:last-child { padding-bottom: 10px; }
 
 li.timeInput {
 	font-family: unibody;
-	font-size:16px;
+	font-size:64px;
 	align-items: center;
+	text-align: right;
+	position: relative;
+	caret-color:yellow;
 }
 
-input[type=number] { 
-	color: red;
+input[type=number] {
+	text-align: right;
+	color: black;
 	font-family: unibody;
-	font-size:16px;
+	font-size:64px;
+	caret-color: lightyellow;
+
+	width:112px;
+	border:  transparent;
+   outline: transparent;
+
+
+
+}
+input[type=number]:focus { 
+	color: black;
+	background-color: lightgreen;
+	border:  transparent;
+	outline: transparent;
+   caret-color: fuschia;
 }
 
+input[type=number]:placeholder-shown {
+	color: lightgreen;
+}
+
+
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+  -webkit-appearance: none; 
+  margin: 0; 
+}
 
 /* AlarmWindow Stuff */
 	div.alarmWindow {

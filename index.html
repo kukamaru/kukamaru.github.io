@@ -54,18 +54,21 @@
 			</ul>
 		</div>
 		<div id="newTimerMenu" class="menu">
-			<ul class="nav"> 
+			<ul class="newTimerList"> 
 				<form id="newTimerForm">
 					<li>
 						<input type="text" name="text" value="timer00">
 					</li>
 
 					<li class="timeInput">
-						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" value="">
+						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
+						oninput="newTimer.changed(this)"value="">
 						:
-						<input type="number" placeholder="00" max ="999" class="minutes timeInput" name="m" value="" id ="newTimerMenuFocus">
+						<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
+						oninput="newTimer.changed(this)"value="" id ="newTimerMinutes">
 						:
-						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" value="10">
+						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
+						oninput="newTimer.changed(this)"value="10">
 					</li>
 
 					<li>
@@ -107,7 +110,19 @@
 <!-- Dummy Menus -->
 <div id="recipe" class="menu">
 	<p style="background-color: white">
-		recepie bois
+		400g flour<br>
+		230g water<br>
+		160g starter<br>
+		5g-7g salt<br>
+		<br>
+		let rise 3.5 hrs<br>
+		shape the dough<br>
+		second rise 2.5-3 hrs - or - fridge overnight<br>
+		preheat oven<br>
+		cook at 235-240 degrees<br>
+		32 minutes with lid<br>
+		18 minutes without, 50 minutes total<br>
+		let cool completely, then EAT<br>
 	</p>
 </div>
 <div id="settings" class="menu">
@@ -148,7 +163,7 @@
 	debug</button>
 
 
-<div id="debug"
+	<div id="debug"
 	style="background-color: red;
 	color: white;
 	position: relative;
@@ -160,9 +175,21 @@
 		<li>
 			<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> <label>Render Stop</label>
 		</li>
-		<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
+		<li>
+			<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
+		</li>
+		<li>
+			<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
+		</li>
+		<li>
+			<button onclick="setTheme(0)">Theme 0</button> <button onclick="setTheme(1)">Theme 1</button>
+		</li>
+		<li>
+			<button onclick="newTimer.changed();">TEST BUTTON</button>
+
+
 	</li>
-	</ul>
+</ul>
 
 
 

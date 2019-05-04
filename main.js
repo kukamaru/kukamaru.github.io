@@ -60,14 +60,13 @@ function bodyLoad() {
 
 	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
 		event.preventDefault();
-		newTimer();
+		newTimer.submit();
 	},false);
 
 	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
 		event.preventDefault();
-		addFave();
+		newTimer.addFave();
 	},false);
-
 }
 
 function initLocal() {
@@ -89,8 +88,7 @@ function initLocal() {
 /* Main Function */
 
 function mainLoop() {
-
-	if (debug1) { return; } //DEBUG
+	if (debug1) { return; } //DEBUG1 stops rendering
 
 	var d = new Date();
 	if (timerRunning){
@@ -148,16 +146,32 @@ function mainLoop() {
 //New Timer Menu Function
 
 
-function newTimer() {
+var newTimer = function() {
 	var form = document.getElementById("newTimerForm");
 
-	var h = form.h.value;
-	var m = form.m.value;
+	h: form.h.value;
+	m: form.m.value;
 	var s = form.s.value;
 	var size = form.size.value;
 	var text = form.text.value;
 	var soundID = form.sound.value;
 	var protected = form.protected.value;
+
+	newTimer.changed = function(i) {
+		appendText("ping","debug");
+		appendText("value" + i.value + "from" + i.name);
+		console.log(i);
+	}
+
+	newTimer.submit = function() {
+		appendText("submit.com","debug");
+		//eggTimer(s,m,h,style,text,soundID);
+		appendText(h);
+		appendText(m);
+		appendText(text);
+		console.log(form);
+
+	}
 
 	var style = size;
 
@@ -166,14 +180,14 @@ function newTimer() {
 	if (form.protected.checked){ style = "protected " + style; }
 
 
-	eggTimer(s,m,h,style,text,soundID);
+	//eggTimer(s,m,h,style,text,soundID);
 
 	form.reset();
 }
 
 
 
-//event listener for preventing submit
+
 
 function eggTimer(eS,eM,eH,style,text,sound) {
 	if (eH == undefined) 	{ var eH = 0; }
@@ -497,7 +511,8 @@ function menuShow(i){
 
 	windowState = i;
 	if (windowState == "newTimerMenu") { 
-		document.getElementById("newTimerMenuFocus").focus();
+		document.getElementById("newTimerMinutes").focus();
+		newTimer();
 	}
 }
 
@@ -725,9 +740,9 @@ function testButton2() {
 
 // Debug Trigger and Menu
 
-debug = false;
-debug1 = false; //	time render stop
-debug2 = false; //	bar render stop
+var debug = false;
+var debug1 = false; //	time render stop
+var debug2 = false; //	bar render stop
 
 var debugMenu = function(){
 	var div = document.getElementById("debug");
