@@ -1,18 +1,20 @@
 iT = 0;
 function appendText(i,c) {
-	if ((c == "debug") && (!debug)) { return; }
+	// terminates debug messages if debug
+	if (c){
+		var f = c.includes("debug");
+		if ((f) && (!debug)) { return; }
+	}
+
 	var text = i;
 	var textClass = evenOdd(iT);
-	if (c){	textClass = textClass + " " + c; }
+	if (c){ textClass = textClass + " " + c; }
 
 
 	
 	var node = document.createElement("p");
 	var textnode = document.createTextNode(text);
-
-	node.setAttribute("id",iT);
-	node.setAttribute("class",textClass);
-
+	var tsNode = document.createElement("span");
 
 	var d = new Date();
 
@@ -20,15 +22,15 @@ function appendText(i,c) {
 	var minutes = addZero(d.getMinutes());
    var seconds = addZero(d.getSeconds());
 
-	var ts = "[" + hours + ":" + minutes + ":" + seconds + "] ";
+	var tsText = document.createTextNode("[" + hours + ":" + minutes + ":" + seconds + "] ");
 
-	var tsText = document.createTextNode(ts);
-	var tsNode = document.createElement("span");
-	tsNode.appendChild(tsText);
+
+	node.setAttribute("id",iT);
+	node.setAttribute("class",textClass);
 	tsNode.setAttribute("class","timestamp");
 
+	tsNode.appendChild(tsText);
 	node.appendChild(tsNode)
-
 	node.appendChild(textnode);
 
 

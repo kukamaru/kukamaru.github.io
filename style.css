@@ -312,7 +312,7 @@ input[type=number]::-webkit-outer-spin-button {
 		border-color: green;
 		color: green;
 	}
-	.alarmWindow button.stopButton:hover , Button.green:hover {
+	.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
 		background-color: lightgreen;
 
 	}
