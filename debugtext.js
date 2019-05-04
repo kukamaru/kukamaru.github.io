@@ -1,5 +1,6 @@
 iT = 0;
 function appendText(i,c) {
+	if ((c == "debug") && (!debug)) { return; }
 	var text = i;
 	var textClass = evenOdd(iT);
 	if (c){	textClass = textClass + " " + c; }

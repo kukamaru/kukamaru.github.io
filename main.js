@@ -60,12 +60,12 @@ function bodyLoad() {
 
 	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
 		event.preventDefault();
-		newTimer.submit();
+		newTimer.submitButton();
 	},false);
 
 	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
 		event.preventDefault();
-		newTimer.addFave();
+		newTimer.faveButton();
 	},false);
 }
 
@@ -147,15 +147,9 @@ function mainLoop() {
 
 
 var newTimer = function() {
-	var form = document.getElementById("newTimerForm");
+	var aString = "things suck";
+	var oldform = document.getElementById("newTimerForm");
 
-	h: form.h.value;
-	m: form.m.value;
-	var s = form.s.value;
-	var size = form.size.value;
-	var text = form.text.value;
-	var soundID = form.sound.value;
-	var protected = form.protected.value;
 
 	newTimer.changed = function(i) {
 		appendText("ping","debug");
@@ -163,31 +157,37 @@ var newTimer = function() {
 		console.log(i);
 	}
 
-	newTimer.submit = function() {
-		appendText("submit.com","debug");
-		//eggTimer(s,m,h,style,text,soundID);
-		appendText(h);
-		appendText(m);
-		appendText(text);
-		console.log(form);
-
+	newTimer.submitButton = function() {
+		submit();	
+	}
+	newTimer.faveButton = function() { 
+		appendText("faves not working");
 	}
 
-	var style = size;
+	function submit() {
+		var form = document.getElementById("newTimerForm");
+		
+		var h = form.h.value;
+		var m = form.m.value;
+		var s = form.s.value;
+		var size = form.size.value;
+		var text = form.text.value;
+		var soundID = form.sound.value;
+		var protected = form.protected.value;
+		var style = size;
 
-	if (form.countdown.checked){ style = "countdown " + style; }
-	if (form.inverted.checked){ style = "inverted " + style; }
-	if (form.protected.checked){ style = "protected " + style; }
+		if (form.countdown.checked){ style = "countdown " + style; }
+		if (form.inverted.checked){ style = "inverted " + style; }
+		if (form.protected.checked){ style = "protected " + style; }
 
-
-	//eggTimer(s,m,h,style,text,soundID);
-
-	form.reset();
+		console.log("123");
+		console.log(form);
+		appendText("LAUNCH");
+		
+		eggTimer(s,m,h,style,text,soundID);
+		form.reset();
+	}
 }
-
-
-
-
 
 function eggTimer(eS,eM,eH,style,text,sound) {
 	if (eH == undefined) 	{ var eH = 0; }
