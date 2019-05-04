@@ -61,11 +61,11 @@
 					</li>
 
 					<li class="timeInput">
-						<input type="number" placeholder="00" class="hours timeInput" name="h" value="">
+						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" value="">
 						:
-						<input type="number" placeholder="00" class="minutes timeInput" name="m" value="" id ="newTimerMenuFocus">
+						<input type="number" placeholder="00" max ="999" class="minutes timeInput" name="m" value="" id ="newTimerMenuFocus">
 						:
-						<input type="number" placeholder="00" class="seconds timeInput" name="s" value="10">
+						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" value="10">
 					</li>
 
 					<li>
@@ -89,32 +89,32 @@
 						</li>
 					</ul>
 
-					</li>
-					<li><select name="sound">
-						<option value=0>sound 0</option>
-						<option value=1>sound 1</option>
-						<option value=2>sound 2 (looped)</option>
-					</select>
 				</li>
-				<li>
-					<button class="green" id="newTimerStartButton">start timer</button>
-					<button id="newTimerAddFave" >add favorite</button>
-				</li>
-			</form>
-		</ul>
-	</div>
+				<li><select name="sound">
+					<option value=0>sound 0</option>
+					<option value=1>sound 1</option>
+					<option value=2>sound 2 (looped)</option>
+				</select>
+			</li>
+			<li>
+				<button class="green" id="newTimerStartButton">start timer</button>
+				<button id="newTimerAddFave" >add favorite</button>
+			</li>
+		</form>
+	</ul>
+</div>
 
-	<!-- Dummy Menus -->
-	<div id="recipe" class="menu">
-		<p style="background-color: white">
-			recepie bois
-		</p>
-	</div>
-	<div id="settings" class="menu">
-		<p style="background-color: white">
-			settings will go here
-		</p>
-	</div>
+<!-- Dummy Menus -->
+<div id="recipe" class="menu">
+	<p style="background-color: white">
+		recepie bois
+	</p>
+</div>
+<div id="settings" class="menu">
+	<p style="background-color: white">
+		settings will go here
+	</p>
+</div>
 </div>
 
 
@@ -137,31 +137,37 @@
 	<div class="bars" id="bars"></div>
 	<div class="currenttime" id="timediv">
 		<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
-	<button style="
+		<button style="
 		position: relative;
 		float: right;
 		visibility: hidden;
 		height: 20px;
 		padding: 0 5px 2px;
 		margin: 0;
-		top: 4px;" onclick="debugMenu();" id="debugButan">debug</button>
-	</div>
+		top: 4px;" onclick="debugMenu();" id="debugButan">
+	debug</button>
 
-	<div id="debug"
+
+<div id="debug"
 	style="background-color: red;
-			 color: white;
-			 position: relative;
-			 height: 0px;
-			 bottom: 0px;
-			 transition: height 0.5s ease-in-out;
-			"> hello <br>
-		<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> Render Stop <br>
-		<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> Bar Stop <br>
+	color: white;
+	position: relative;
+	height: 0px;
+	bottom: 0px;
+	transition: height 0.5s ease-in-out;
+	">
+	<ul>
+		<li>
+			<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> <label>Render Stop</label>
+		</li>
+		<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
+	</li>
+	</ul>
 
 
 
 
-	</div>
+</div>
 
 </div> <!-- cornerdiv -->
 </body>

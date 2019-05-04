@@ -12,5 +12,8 @@ const backgrounds = [
 	src: "img/stressed_linen.png",
 },
 
-
+{
+	name: "inverted water",
+	src: "img/inverted_water.jpg"
+}
 ];

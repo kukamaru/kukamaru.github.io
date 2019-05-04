@@ -2,7 +2,7 @@
 var myVar = setInterval(mainLoop, 11);
 
 //faves (wip)
-var myFaves = 5;
+var myFaves = 3;
 
 //defaults
 var msVisible;
@@ -20,7 +20,6 @@ var windowState = false;
 var optionState = false;
 
 /* Init */
-
 function bootUp() {
 	function load(script) {
 		var newScript = document.createElement('script');
@@ -29,8 +28,10 @@ function bootUp() {
 		document.getElementsByTagName('head')[0].appendChild(newScript);
 	}
 
-	load("debugtext.js");
+	load("debugtext.js");					// SCRIPTS TO LOAD
 	load("audio/sounds.js");
+	load("img/backgrounds.js");
+	load("img/themes.js");
 	
 }
 
@@ -70,8 +71,7 @@ function bodyLoad() {
 }
 
 function initLocal() {
-	var body = document.getElementsByTagName("BODY")[0];
-	body.style.background = "url(img/water1_512.jpg)";
+	setTheme(0);
 	var header = document.getElementById("header");
 
 	var t = document.createTextNode(" (local version)");
@@ -118,10 +118,32 @@ function mainLoop() {
 
 //Favorite Timer
 
-function ttButton() {	
-	var input = document.getElementById("testText01").value;
-	setCookie("test1",input,1);
-}
+
+	function setTheme(themeid){
+		function setBg(i){
+			//input is a theme from themes.js
+
+			var debugbg = document.getElementById("debug");
+			var bg = document.getElementsByTagName("body")[0];
+
+			var bgsrc = "url(" + backgrounds[i.bg].src + ")";
+			var dbsrc = "url(" + backgrounds[i.debug].src + ")";
+
+			appendText(bgsrc);
+			appendText(dbsrc);
+
+			debugbg.style.background = dbsrc;
+			bg.style.background = bgsrc;
+		}
+
+		setBg(themes[themeid]);
+	}
+
+
+	function ttButton() {	
+		var input = document.getElementById("testText01").value;
+		setCookie("test1",input,1);
+	}
 
 //New Timer Menu Function
 
