@@ -52,6 +52,7 @@ function bodyLoad() {
 	}
 
 	if (isLocal()) { initLocal(); }
+
 	msVisCheck();
 	tsVisCheck();
 	loadFaves();
@@ -60,7 +61,7 @@ function bodyLoad() {
 		event.preventDefault();
 		newTimer();
 	},false);
-	
+
 	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
 		event.preventDefault();
 		addFave();
@@ -80,6 +81,8 @@ function initLocal() {
 	span.appendChild(t);
 
 	header.appendChild(span);
+
+	document.getElementById("debugButan").style.visibility = "visible";
 }
 
 
@@ -524,7 +527,7 @@ function deleteFaveButton(id) {
 
 	myFaves--;
 	if(myFaves == 0){ collapseSpacer(true); toggleOptions(); }
-	setTimeout(function(){ deleteIt(); },3000);
+	setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
 }
 
 function collapseSpacer(i) {
@@ -690,4 +693,11 @@ function testButton1() {
 function testButton2() {
 	appendText("testButton2 pressed");
 	eggTimer(1,0,0,"big","loop alarmspam",2)
+}
+
+function debugMenu() {
+	var div = document.getElementById("debug");
+	var hidden = (div.style.height == "0px");
+
+	div.style.height = (hidden) ? "200px" : "0px";
 }

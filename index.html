@@ -133,16 +133,30 @@
 <div id="maintext" class="maintext">
 	<p id="welcome">Hello :)</p>
 </div>
-
-<div class="currenttime" id="timediv">
-	<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span>
+<div class="cornerdiv">
 	<div class="bars" id="bars"></div>
+	<div class="currenttime" id="timediv">
+		<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
 	<button style="
+		position: relative;
 		float: right;
 		visibility: hidden;
+		height: 20px;
+		padding: 0 5px 2px;
+		margin: 0;
+		top: 4px;" onclick="debugMenu();" id="debugButan">debug</button>
+	</div>
 
-	" onclick="debugMenu();">debug</button>
-</div>
+	<div id="debug"
+	style="background-color: red;
+			 color: white;
+			 position: relative;
+			 height: 0px;
+			 bottom: 0px;
+			 transition: height 1s;
+			"> hello </div>
+
+</div> <!-- cornerdiv -->
 </body>
 
 </html>
