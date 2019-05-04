@@ -30,7 +30,8 @@ function bootUp() {
 	}
 
 	load("debugtext.js");
-	load("audio/sounds.js")
+	load("audio/sounds.js");
+	
 }
 
 function bodyLoad() {
@@ -54,6 +55,11 @@ function bodyLoad() {
 	msVisCheck();
 	tsVisCheck();
 	loadFaves();
+
+	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
+		event.preventDefault();
+		newTimer();
+	},false);
 }
 
 function initLocal() {
@@ -106,8 +112,10 @@ function ttButton() {
 }
 
 //New Timer Menu Function
+
+
 function newTimer() {
-	var form = document.getElementById("newTimer");
+	var form = document.getElementById("newTimerForm");
 
 	var h = form.h.value;
 	var m = form.m.value;
@@ -129,6 +137,10 @@ function newTimer() {
 	form.reset();
 }
 
+
+
+//event listener for preventing submit
+
 function eggTimer(eS,eM,eH,style,text,sound) {
 	if (eH == undefined) 	{ var eH = 0; }
 	if (eM == undefined) 	{ var eM = 0; }
@@ -149,6 +161,7 @@ var timerID = 0;
 function startTimer(T,text,soundID,style) {
 	var d = new Date(); 
 	var f = new Date(d.valueOf() + T);
+
 
 	if (!style) { style = "normal"; }
 
@@ -446,6 +459,9 @@ function menuShow(i){
 	focus.style.display = "flex";
 
 	windowState = i;
+	if (windowState == "newTimerMenu") { 
+		document.getElementById("newTimerMenuFocus").focus();
+	}
 }
 
 function menuHide() {

@@ -9,7 +9,7 @@ const backgrounds = [
 
 {
 	name: "linen",
-	src: "stressed_linen.png",
+	src: "img/stressed_linen.png",
 },
 
 

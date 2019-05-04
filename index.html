@@ -54,12 +54,12 @@
 			</ul>
 		</div>
 		<div id="newTimerMenu" class="menu">
-			<form id="newTimer" target="frame">
+			<form id="newTimerForm"> 
 				<input type="text" name="text" value="timer00">
 				<br>
 
 				<input type="number" name="h" value="0">
-				<input type="number" name="m" value="1">
+				<input type="number" name="m" value="1" id ="newTimerMenuFocus">
 				<input type="number" name="s" value="30">
 				<br>
 
@@ -79,7 +79,7 @@
 						<option value=1>1</option>
 						<option value=2>2</option>
 					</select>
-				<button class="green" onclick="javascript:newTimer()">start timer</button>
+				<button class="green" onclick="" id="newTimerStartButton">start timer</button>
 				</form>
 				<button>add favorite</button>
 			</div>
