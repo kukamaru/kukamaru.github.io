@@ -82,15 +82,15 @@ button:active {
 	width: 100%
 }
 .menuBG  { z-index: 1; }
-.alarmBG { z-index: 9; }
+.alarmBG { z-index: 8; }
 
 
 
-.menuWrapper {
+div.menuWrapper {
 	position: absolute;
 	left:0; top:0; bottom:0; right: 0;
 	width: 100%;
-	z-index: 2;
+	z-index: 4;
 
 	visibility: hidden;
 }
@@ -113,22 +113,24 @@ button:active {
 	z-index: 1;
 }
 
-.menu, .alarmwindow, .headerBG {
+div.menu {
+	position: relative;
+	visibility: hidden;
+	width: 80%;
+	display: none;
+	z-index: 6;
+}
+.menu, .alarmWindow, .headerBG {
 	background-color: var(--background-color);
 }
-.menu, .alarmwindow, .headerDiv { padding: 20px; }
-.menu, .alarmwindow { 
+.menu, .alarmWindow, .headerDiv { padding: 20px; }
+.menu, .alarmWindow { 
 	margin: 20vh auto;
 	text-align: center;
 	max-width: 300px;
 }
 
-div.menu {
-	visibility: hidden;
-	width: 80%;
-	display: none;
-	z-index: 2;
-}
+
 
 .menu ul.nav {
 	width: 100%;

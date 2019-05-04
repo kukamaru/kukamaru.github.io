@@ -1,3 +1,4 @@
+<!DOCTYPE html>
 <html>
 <head>
 	<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
@@ -14,7 +15,7 @@
 		<div class="headerDiv" id="headerDiv">
 			<h1 id="header">timers n shit</h1>
 
-			<ul id="nav" class="nav">
+			<ul>
 				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
 				<li><button class ="green" onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
@@ -26,7 +27,7 @@
 			<input type="checkbox" id="msCheck" onclick="msVisCheck()">
 			<label for="msCheck">Milliseconds</label>
 
-			<input type="checkbox" id="tsCheck" onclick="tsVisCheck()">
+			<input type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
 			<label for="tsCheck">Timestamps</label>
 
 
@@ -39,7 +40,7 @@
 
 
 
-	<div id="menuwrapper" class="menuwrapper">
+	<div id="menuWrapper" class="menuWrapper">
 		<div id="menu" class="menu">
 			<ul id="menulist" class="nav">
 				<li><button class="green" onclick="javascript:menuShow('newTimerMenu')">New Timer</button></li>
@@ -53,7 +54,7 @@
 			</ul>
 		</div>
 		<div id="newTimerMenu" class="menu">
-			<form id="newTimer">
+			<form id="newTimer" target="frame">
 				<input type="text" name="text" value="timer00">
 				<br>
 
@@ -78,11 +79,11 @@
 						<option value=1>1</option>
 						<option value=2>2</option>
 					</select>
+				<button class="green" type="submit" onclick="javascript:newTimer()">start timer</button>
 				</form>
 				<button>add favorite</button>
-				<button class="green" onclick="javascript:newTimer()">start timer</button>
 			</div>
-			<div id="recipe">
+			<div id="recipe" class="menu">
 				<p style="background-color: white">
 					recepie bois
 				</p>

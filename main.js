@@ -58,7 +58,7 @@ function bodyLoad() {
 
 function initLocal() {
 	var body = document.getElementsByTagName("BODY")[0];
-	body.style.background = "url(water1_512.jpg)";
+	body.style.background = "url(img/water1_512.jpg)";
 	var header = document.getElementById("header");
 
 	var t = document.createTextNode(" (local version)");
@@ -507,8 +507,6 @@ function deleteFaveButton(id) {
 
 function collapseSpacer(i) {
 	var collapse = i;
-
-	appendText("collapseSpacer running, reverse = " + reverse);
 
 	upper = document.getElementById("prefav");
 	lower = document.getElementById("postfav");
