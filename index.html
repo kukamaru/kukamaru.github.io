@@ -54,62 +54,95 @@
 			</ul>
 		</div>
 		<div id="newTimerMenu" class="menu">
-			<form id="newTimerForm"> 
-				<input type="text" name="text" value="timer00">
-				<br>
+			<ul class="nav"> 
+				<form id="newTimerForm">
+					<li>
+						<input type="text" name="text" value="timer00">
+					</li>
 
-				<input type="number" name="h" value="0">
-				<input type="number" name="m" value="1" id ="newTimerMenuFocus">
-				<input type="number" name="s" value="30">
-				<br>
+					<li class="timeInput">
+						<input type="number" placeholder="00" class="hours timeInput" name="h" value="">
+						:
+						<input type="number" placeholder="00" class="minutes timeInput" name="m" value="" id ="newTimerMenuFocus">
+						:
+						<input type="number" placeholder="00" class="seconds timeInput" name="s" value="10">
+					</li>
 
-				<input type="checkbox" name="countdown" checked>Countdown
-				<input type="checkbox" name="inverted">Inverted
-				<br>
-					<!-- <input type="checkbox" name="snooze">Snoozable	-->
-					<input type="checkbox" name="protected" checked>Protect window while active
-					<br>
+					<li>
+						<input type="checkbox" name="countdown" checked><label for="countdown">Countdown</label>
+					</li>
+					<li>
+						<input type="checkbox" name="inverted"><label for="inverted">Inverted</label>
+					</li>
+					<li>
+						<input type="checkbox" name="protected" checked><label for="protected">Protecc</label>
+					</li>
+					<ul class="subNavHorizontal">
+						<li>
+							<input type="radio" name="size" value="big"><label for="big">Big</label>
+						</li>
+						<li>
+							<input type="radio" name="size" value="medium" checked="true"><label for="medium">Medium</label>
+						</li>
+						<li>
+							<input type="radio" name="size" value="small"><label for="small">Small</label>
+						</li>
+					</ul>
 
-					<input type="radio" name="size" value="big">Big
-					<input type="radio" name="size" value="medium" checked="true">Medium
-					<input type="radio" name="size" value="small">Small
-					<br>
-					<select name="sound">
-						<option value=0>0</option>
-						<option value=1>1</option>
-						<option value=2>2</option>
+					</li>
+					<li><select name="sound">
+						<option value=0>sound 0</option>
+						<option value=1>sound 1</option>
+						<option value=2>sound 2 (looped)</option>
 					</select>
-				<button class="green" onclick="" id="newTimerStartButton">start timer</button>
-				</form>
-				<button>add favorite</button>
-			</div>
-			<div id="recipe" class="menu">
-				<p style="background-color: white">
-					recepie bois
-				</p>
-			</div>
-		</div>
+				</li>
+				<li>
+					<button class="green" id="newTimerStartButton">start timer</button>
+					<button id="newTimerAddFave" >add favorite</button>
+				</li>
+			</form>
+		</ul>
+	</div>
 
-		<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
+	<!-- Dummy Menus -->
+	<div id="recipe" class="menu">
+		<p style="background-color: white">
+			recepie bois
+		</p>
+	</div>
+	<div id="settings" class="menu">
+		<p style="background-color: white">
+			settings will go here
+		</p>
+	</div>
+</div>
 
-		<div id="alarmBG" class="alarmBG">
-			<div id="alarmWindow" class="alarmWindow">
-				<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
-				<div id="alarmContent" class="alarmContent">
-					<p id="alarmText" class="alarmText">						
-					</p>
-				</div>
-				<div id="alarmButtons" class="alarmButtons"></div>
-			</div>
-		</div>
-		<div id="maintext" class="maintext">
-			<p id="welcome">Hello :)</p>
-		</div>
 
-		<div class="currenttime" id="timediv">
-			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span>
-			<div class="bars" id="bars"></div>
-		</div>
-	</body>
+<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
 
-	</html>
+<div id="alarmBG" class="alarmBG">
+	<div id="alarmWindow" class="alarmWindow">
+		<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
+		<div id="alarmContent" class="alarmContent">
+			<p id="alarmText" class="alarmText">						
+			</p>
+		</div>
+		<div id="alarmButtons" class="alarmButtons"></div>
+	</div>
+</div>
+<div id="maintext" class="maintext">
+	<p id="welcome">Hello :)</p>
+</div>
+
+<div class="currenttime" id="timediv">
+	<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span>
+	<div class="bars" id="bars"></div>
+	<button style="
+		float: right;
+		visibility: hidden;
+
+	" onclick="debugMenu();">debug</button>
+</div>
+</body>
+
+</html>

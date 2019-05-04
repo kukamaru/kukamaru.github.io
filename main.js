@@ -60,6 +60,12 @@ function bodyLoad() {
 		event.preventDefault();
 		newTimer();
 	},false);
+	
+	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+		event.preventDefault();
+		addFave();
+	},false);
+
 }
 
 function initLocal() {
