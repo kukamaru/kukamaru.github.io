@@ -5,6 +5,8 @@ function appendText(i,c) {
 	var textClass = evenOdd(iT);
 	if (c){	textClass = textClass + " " + c; }
 
+
+	
 	var node = document.createElement("p");
 	var textnode = document.createTextNode(text);
 
@@ -28,6 +30,7 @@ function appendText(i,c) {
 	node.appendChild(tsNode)
 
 	node.appendChild(textnode);
+
 
 	document.getElementById("maintext").appendChild(node);
 

@@ -118,20 +118,26 @@ function mainLoop() {
 
 
 	function setTheme(themeid){
+
+		var getUrl = function(i){ 
+			o = "url(" + i + ")";
+			return o;
+		}
+
 		function setBg(i){
 			//input is a theme from themes.js
 
 			var debugbg = document.getElementById("debug");
 			var bg = document.getElementsByTagName("body")[0];
 
-			var bgsrc = "url(" + backgrounds[i.bg].src + ")";
-			var dbsrc = "url(" + backgrounds[i.debug].src + ")";
+			//var bgsrc = "url(" + backgrounds[i.bg].src + ")";
+			//var dbsrc = "url(" + backgrounds[i.debug].src + ")";
 
-			appendText(bgsrc);
-			appendText(dbsrc);
+			appendText(getUrl(backgrounds[i.bg].src),"debug");
+			appendText(getUrl(backgrounds[i.debug].src),"debug blue");
 
-			debugbg.style.background = dbsrc;
-			bg.style.background = bgsrc;
+			debugbg.style.background = getUrl(backgrounds[i.debug].src);
+			bg.style.background = getUrl(backgrounds[i.bg].src);
 		}
 
 		setBg(themes[themeid]);
