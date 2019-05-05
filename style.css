@@ -1,4 +1,7 @@
 @import url("font/unibody.css");
+@import url("lib/radio.css");
+@import url("lib/checkbox.css");
+
 
 :root {
 	--active-bar: blueviolet;
@@ -32,6 +35,11 @@ body {
 	font-size:8px;
 	margin:0;
 	overflow: hidden;
+}
+
+body * { 
+	font-family: unibody;
+	font-size: 8px;
 }
 
 h1 {
@@ -147,22 +155,37 @@ ul.newTimerList {
 .menu button  			{ width: 100%; height: 46px; padding: 0; 	overflow: hidden; }
 .menu hr 				{ width: 100%; margin: 0; color:var(--edit-color); }
 
-.menu li:last-child 		{ padding-bottom: 0 }
+.menu > li:last-child 		{ padding-bottom: 0 }
 ul#favorites li:last-child { padding-bottom: 10px; }
 
 .menu input, .menu select {
 	width:100%;
 }
 
-.subNavHorizontal {
+
+/* this is specific for the radios w regards to padding etc.*/
+ul.subNavHorizontal {
 	width: 100%;
    display: flex;
    margin: 0;
-   padding: 0;
+   padding: 7px 0;
    flex-direction: row;
 }
 
 .subNavHorizontal li {
+	width: auto;
+}
+
+.subNavHorizontal li label {
+	padding: 0 10px;
+}
+
+.subNavHorizontal > li:first-child {
+	padding-left: 0;
+}
+
+.subNavHorizontal > li:last-child {
+	padding-right: 0;
 }
 
 /* Buttons */
@@ -196,6 +219,12 @@ ul#favorites li:last-child { padding-bottom: 10px; }
 		border-color: red;
 	}
 
+	button#newTimerAddFave{
+		order:1;
+	}
+	button#newTimerStartButton{
+		order:2;
+	}
 	.menu button.delete, .menu button.edit	{ 
 		border-width: 0px; 
 		width: 0px; 
@@ -238,10 +267,15 @@ li.timeInput {
 	caret-color:transparent;
 }
 
+input[type=text], select {
+
+	background-color: lightpink;
+
+}
+
+
 input[type=number] {
 	text-align: right;
-	color: black;
-	font-family: unibody;
 	font-size:64px;
 	background:none;
 
@@ -258,12 +292,15 @@ input[type=number]:focus {
 	border:  transparent;
 	outline: transparent;
 }
-input[type=number]::placeholder {
-	color: lightblue;
+
+input[type=number]:focus::placeholder{
+	color: #F4F4F4;
 }
-input[type=number]:placeholder-shown {
+
+input[type=number]::placeholder {
 	color: lightgray;
 }
+
 
 
 

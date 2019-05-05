@@ -25,6 +25,7 @@
 				<li><button onclick="javascript:ttButton();">ttButton</button></li>
 			</ul>
 
+
 			<input type="checkbox" id="msCheck" onclick="msVisCheck()">
 			<label for="msCheck">Milliseconds</label>
 
@@ -68,25 +69,26 @@
 						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
 						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
 					</li>
-
+					<ul class="subNavHorizontal" id="newTimerCheckboxes">
 					<li>
-						<input type="checkbox" name="countdown" checked><label for="countdown">Countdown</label>
+						<input type="checkbox" name="countdown" id="countdown" checked><label for="countdown">Countdown</label>
 					</li>
 					<li>
-						<input type="checkbox" name="inverted"><label for="inverted">Inverted</label>
+						<input type="checkbox" name="inverted" id="inverted"><label for="inverted">Inverted</label>
 					</li>
 					<li>
-						<input type="checkbox" name="protected" checked><label for="protected">Protecc</label>
+						<input type="checkbox" name="protected" id="protected" checked><label for="protected">Protecc</label>
 					</li>
-					<ul class="subNavHorizontal">
+				</ul>
+					<ul class="subNavHorizontal" id="newTimerRadio">
 						<li>
-							<input type="radio" name="size" value="big"><label for="big">Big</label>
+							<input type="radio" name="size" id="big"><label for="big">Big</label>
 						</li>
 						<li>
-							<input type="radio" name="size" value="medium" checked="true"><label for="medium">Medium</label>
+							<input type="radio" name="size" id="medium" checked="true"><label for="medium">Medium</label>
 						</li>
 						<li>
-							<input type="radio" name="size" value="small"><label for="small">Small</label>
+							<input type="radio" name="size" id="small"><label for="small">Small</label>
 						</li>
 					</ul>
 
@@ -153,8 +155,7 @@
 	</div> <!-- maintext -->
 
 	<div draggable="true" id="notesdiv">
-		<textarea name="notes" id="notes" placeholder="notes" onInput="notes();">
-		</textarea>
+		<textarea name="notes" id="notes" placeholder="notes" onInput="notes();"></textarea>
 	</div> <!-- notes -->
 
 	<div class="cornerdiv">
@@ -175,9 +176,10 @@
 				<li>
 					<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
 				</li>
+				<!--
 				<li>
 					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
-				</li>
+				</li>	-->
 				<li>
 					<button onclick="setTheme(0);">Theme 0</button> <button onclick="setTheme(1);">Theme 1</button>
 				</li>

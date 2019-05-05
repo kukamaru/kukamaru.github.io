@@ -3,7 +3,8 @@ function notes() {
 	var n = document.getElementById("notes");
 
 	notes.show = function(){
-		div.style.right = "200px";
+		div.style.right = "3vw";
+		div.style.top = "40vh";
 	}
 
 	appendText(n.value,"debug yellow");

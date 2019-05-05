@@ -1,17 +1,23 @@
 div#notesdiv.[draggable=true] {
-    cursor: move;
+	cursor: move;
 }
 div#notesdiv {
-	transition: right 0.2s linear;
+	transition: 
+	right 	0.2s ease-in-out,
+	top 		0.2s ease-in-out,
+	bottom 	0.2s ease-in-out,
+	left 		0.2s ease-in-out;
 
 	position: absolute;
+
 	right: -200px;
 	top: 400px;
-    max-width: 800px;
-    max-height: 460px;
-    resize: both;
-    background-color: orange;
-    
+
+	max-width: 800px;
+	max-height: 460px;
+	resize: both;
+	background-color: orange;
+
 }
 
 textarea#notes {
@@ -26,8 +32,8 @@ textarea#notes {
 	font-style: italic;
 
 	height: 14px;
-   
-   resize: none;
+
+	resize: none;
 
 	background-color: lightyellow;
 	border: 1px orange solid;

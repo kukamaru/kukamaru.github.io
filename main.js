@@ -31,7 +31,7 @@ function bootUp() {
 		newScript.src = src;
 		newScript.type = 'text/javascript';
 
-		head.appendChild(newScript)
+		head.appendChild(newScript);
 	}
 
 	function style(href) {
@@ -41,7 +41,7 @@ function bootUp() {
 		if (arguments.length > 0) {
 			newStyle.id = arguments[1];
 		}
-		head.appendChild(newStyle)
+		head.appendChild(newStyle);
 	}
 
 	load("debugtext.js");					// SCRIPTS TO LOAD
@@ -51,8 +51,8 @@ function bootUp() {
 	load("notes.js");
 													// Stylesheets to load
 	style("notes.css","stylesheetForNotes");
-	style("style.css")
-	style("bars.css")
+	style("style.css");
+	style("bars.css");
 }
 
 
