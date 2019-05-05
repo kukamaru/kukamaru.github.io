@@ -4,6 +4,7 @@
 	<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
 	<title>Timers n shit</title>
 	<link rel="stylesheet" href="style.css">
+	<link rel="stylesheet" href="notes.css" id="stylesheetForNotes">
 
 	<script src="main.js" type="text/javascript" onload="bootUp()"></script>
 </head>
@@ -146,7 +147,15 @@
 	</div>
 </div>
 <div id="maintext" class="maintext">
-	<p id="welcome">Hello :)</p>
+	<p id="welcome">Hello :) these are utamarus dumb timers<br>this is a work in progress, <br>please do not count on this clock for youre daily operations. thanks</p>
+</div>
+
+
+<div draggable="true" id="notesdiv">
+	<textarea name="notes" id="notes" placeholder="notes" onInput="notes();"></textarea>
+</div>
+
+
 </div>
 <div class="cornerdiv">
 	<div class="bars" id="bars"></div>
@@ -182,14 +191,18 @@
 			<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
 		</li>
 		<li>
-			<button onclick="setTheme(0)">Theme 0</button> <button onclick="setTheme(1)">Theme 1</button>
+			<button onclick="setTheme(0);">Theme 0</button> <button onclick="setTheme(1);">Theme 1</button>
 		</li>
+
 		<li>
-			<button onclick="newTimer.changed();">TEST BUTTON</button>
+			<button onclick="eggTimer();">eggTimer();</button>
+		</li>
 
-
-	</li>
-</ul>
+		<li>
+			<button onclick="notes();">notes();</button>
+			<button onclick="notes.show();">notes.show();</button>
+		</li>
+	</ul>
 
 
 

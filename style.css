@@ -31,6 +31,7 @@ body {
 	font-family: unibody;
 	font-size:8px;
 	margin:0;
+	overflow: hidden;
 }
 
 h1 {
@@ -257,9 +258,11 @@ input[type=number]:focus {
 	border:  transparent;
 	outline: transparent;
 }
-
+input[type=number]::placeholder {
+	color: lightblue;
+}
 input[type=number]:placeholder-shown {
-	color: lightgreen;
+	color: lightgray;
 }
 
 
@@ -348,10 +351,11 @@ input[type=number]::-webkit-outer-spin-button {
 	div.maintext p.freeze { color:var(--freeze-color);  }
 	div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
 	div.maintext p.status { color:var(--status-color);  }
-	div.maintext p.debug { background:#631824; color:white; font-weight: bold; }
-	div.maintext p.debug .blue { background-color: navy; color:lightblue; }
-	div.maintext p.caps { font-family:unibody-caps; }
-	div.maintext p span.timestamp { font-weight: normal; }
+	div.maintext p.debug { background:#631824; color:white; }
+	div.maintext p.blue.debug { background-color: navy; color:lightblue; }
+	div.maintext p.yellow.debug { background-color: lightyellow; color:orange; }
+	div.maintext p.caps { font-family:unibody-caps; font-weight: normal; }
+	div.maintext p span.timestamp { font-weight: normal; font-family: unibody; }
 
 
 	div.timeHighlight {
@@ -446,6 +450,14 @@ input[type=number]::-webkit-outer-spin-button {
 		font-size: 8px;
 		font-weight: normal;
 	}
+
+	div.noStyle {
+		background-color: green;
+	}
+	div.noStyle div.bar {
+		background-color: pink;
+	}
+
 
 	div.cornerdiv {
 		/* background: rgb(20,20,20); */

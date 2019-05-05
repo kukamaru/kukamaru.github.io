@@ -19,6 +19,8 @@ var timerOrigin;
 var windowState = false;
 var optionState = false;
 
+
+
 /* Init */
 function bootUp() {
 	function load(script) {
@@ -32,6 +34,7 @@ function bootUp() {
 	load("audio/sounds.js");
 	load("img/backgrounds.js");
 	load("img/themes.js");
+	load("notes.js");
 	
 }
 
@@ -43,16 +46,20 @@ function bodyLoad() {
 	function checkCookies() {
 		return (navigator.cookieEnabled);
 	}
+	/* cookie shit
+		appendText("cookies enabled? " + checkCookies(),"status");
+		if (checkCookies) { 
+			appendText(document.cookie); 
 
-	appendText("cookies enabled? " + checkCookies(),"status");
-	if (checkCookies) { 
-		appendText(document.cookie); 
+			var testText = document.getElementById("testText01");
+			testText.value = getCookie("test1");
+		} 			
+	*/
 
-		var testText = document.getElementById("testText01");
-		testText.value = getCookie("test1");
+	if (isLocal()) { 
+		appendText("local file, executing initLocal();");
+		initLocal(); 
 	}
-
-	if (isLocal()) { initLocal(); }
 
 	msVisCheck();
 	tsVisCheck();
@@ -71,10 +78,10 @@ function bodyLoad() {
 
 function initLocal() {
 	setTheme(0);
+
 	var header = document.getElementById("header");
-
 	var t = document.createTextNode(" (local version)");
-
+	
 	var span = document.createElement("span");
 	span.style.color = "var(--alert-color)";
 	span.appendChild(t);
@@ -156,7 +163,7 @@ var newTimer = function() {
 
 	newTimer.changed = function(obj) {
 
-		digits = numLength(obj.value)
+		digits = numLength(obj.value);
 		appendText("value: " + obj.value + " from field name:" + obj.name + ".... " + digits + "digits","debug");
 
 		if (digits == 2){
@@ -165,12 +172,11 @@ var newTimer = function() {
 			else if  (obj.name == "s") { form.submit.focus(); }					
 		}
 		else if (digits > 2){ obj.value = ""; }
-
 	}
 
 	newTimer.submitButton = function() { submit(); }
 	newTimer.faveButton = function(){ 
-		appendText("faves not working");
+		appendText("faves not working","alert");
 	}
 
 	function submit(){
@@ -187,27 +193,28 @@ var newTimer = function() {
 		if (form.inverted.checked){ style = "inverted " + style; }
 		if (form.protected.checked){ style = "protected " + style; }
 
-		appendText("LAUNCH", "debug caps");		
+		appendText("running EGGTIMER from newTimer.submit", "debug caps");
+
 		eggTimer(s,m,h,style,text,soundID);
 
 		form.reset();
 	}
 }
 
-function eggTimer(eS,eM,eH,style,text,sound) {
-	if (eH == undefined) 	{ var eH = 0; }
-	if (eM == undefined) 	{ var eM = 0; }
-	if (text == undefined) 	{ var text = "eggtimer (undefined)"; }
-	if (!sound) 				{ var sound = 0; }
-	if (!style) { style = "normal"; }
+function eggTimer(eS,eM,eH,style = "noStyle",text = "no text ",sound = 0) {
 
-	var cookingTime = ( eS * 1000 ) + ( eM * 60 * 1000) + ( eH * 60 * 60 * 1000 );
+	var cookingTime = function(s = 10, m = 0, h = 0) {
+		return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
+	}
 
-	appendText(text + " starting (eggtimer), " + cookingTime + " milliseconds","status");
+	ms = cookingTime(eS,eM,eH);
 
-	startTimer(cookingTime,text,sound,style);
+	appendText(text + " starting (eggtimer), " + ms + " milliseconds","status");
+	startTimer(ms,text,sound,style);
 	menuHide();
+
 }
+
 
 var timerID = 0;
 
@@ -516,6 +523,7 @@ function menuShow(i){
 
 	windowState = i;
 	if (windowState == "newTimerMenu") { 
+		//bake into newtimer
 		document.getElementById("newTimerMinutes").focus();
 		newTimer();
 	}
@@ -694,6 +702,7 @@ function addZeroMs(i) {
 	}
 	return i;
 }
+
 function numLength(x) { return x.toString().length; }
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
