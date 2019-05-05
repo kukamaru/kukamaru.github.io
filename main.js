@@ -23,7 +23,9 @@ var optionState = false;
 
 /* Init */
 function bootUp() {
+
 	const head = document.getElementsByTagName('head')[0];
+
 	function load(src) {
 		var newScript = document.createElement('script');
 		newScript.src = src;
@@ -53,14 +55,15 @@ function bootUp() {
 	style("bars.css")
 }
 
+
+/* On Loaded */
 function bodyLoad() {
-	function isLocal() {
+	var isLocal = function() {
 		return (window.location.href != "http://www.utamaru.com/");
+		//return  (window.location.href != "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html");
 	}
 
-	function checkCookies() {
-		return (navigator.cookieEnabled);
-	}
+	function checkCookies() { return (navigator.cookieEnabled); }
 	/* cookie shit
 		appendText("cookies enabled? " + checkCookies(),"status");
 		if (checkCookies) { 
@@ -79,16 +82,6 @@ function bodyLoad() {
 	msVisCheck();
 	tsVisCheck();
 	loadFaves();
-
-	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
-		event.preventDefault();
-		newTimer.submitButton();
-	},false);
-
-	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
-		event.preventDefault();
-		newTimer.faveButton();
-	},false);
 }
 
 function initLocal() {
@@ -170,6 +163,17 @@ var newTimer = function() {
 	menuShow("newTimerMenu");
 	var form = document.getElementById("newTimerForm");
 	var div = document.getElementById("newTimerMenu");
+
+
+	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
+		event.preventDefault();
+		newTimer.submitButton();
+	},false);
+
+	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+		event.preventDefault();
+		newTimer.faveButton();
+	},false);
 
 
 	newTimer.clicked = function(obj) {
