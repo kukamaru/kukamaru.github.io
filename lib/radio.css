@@ -42,10 +42,28 @@
     -webkit-transition: all 0.2s ease;
     transition: all 0.2s ease;
 }
+.gray[type="radio"]:checked + label:after,
+.gray[type="radio"]:not(:checked) + label:after {
+    background: lightgray;
+    content: '';
+    width: 100%;
+    height: 20px;
+    position: absolute;
+    bottom:1px;
+    left:0;
+    z-index: -1;
+
+
+    border: none;
+
+
+    -webkit-transition: all 0.2s ease;
+    transition: all 0.2s ease;
+}
 /* UNCHECK */
 [type="radio"]:checked + label:before,
 [type="radio"]:not(:checked) + label:before {
-    background: transparent;
+    background: white;
     content: '';
     width: 100%;
     height: 20px;

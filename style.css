@@ -213,11 +213,14 @@ ul.subNavHorizontal {
 		border-right-color:transparent;
 		border-left-color:black;
 	}
+	
+	button.delete, button.red { color:var(--alert-color); outline-color:var(--alert-color) }
 
-	button.delete:hover {
+	button.red:hover,button.delete:hover {
 		background-color: pink;
 		border-color: red;
 	}
+
 
 	button#newTimerAddFave{
 		order:1;
@@ -225,12 +228,12 @@ ul.subNavHorizontal {
 	button#newTimerStartButton{
 		order:2;
 	}
+
 	.menu button.delete, .menu button.edit	{ 
 		border-width: 0px; 
 		width: 0px; 
 	}
 
-	.menu button.delete  { color:var(--alert-color); outline-color:var(--alert-color) }
 	.menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
 	.menu button {
 						transition: 
@@ -258,7 +261,7 @@ ul.subNavHorizontal {
 	}
 
 
-li.timeInput {
+li.timeInput, span.timeColon {
 	font-family: unibody;
 	font-size:64px;
 	align-items: center;
@@ -267,10 +270,20 @@ li.timeInput {
 	caret-color:transparent;
 }
 
+span.timeColon {
+	transition: color 0.2s ease-in-out;
+	color:lightgray;
+	position: relative;
+	left: -3px;
+}
+
 input[type=text], select {
-
 	background-color: lightpink;
+	border: 1px solid black;
+}
 
+input[type=text]:focus, select:focus {
+	outline: none;
 }
 
 
