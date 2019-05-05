@@ -117,14 +117,14 @@ function mainLoop() {
 //Favorite Timer
 
 
-	function setTheme(themeid){
+function setTheme(themeid){
 
-		var getUrl = function(i){ 
-			o = "url(" + i + ")";
-			return o;
-		}
+	var getUrl = function(i){ 
+		o = "url(" + i + ")";
+		return o;
+	}
 
-		function setBg(i){
+	function setBg(i){
 			//input is a theme from themes.js
 
 			var debugbg = document.getElementById("debug");
@@ -151,38 +151,38 @@ function mainLoop() {
 
 //New Timer Menu Function
 
-
 var newTimer = function() {
-	var aString = "things suck";
-
 	var form = document.getElementById("newTimerForm");
+	var div = document.getElementById("newTimerMenu");
 
 
-	newTimer.changed = function(i) {
-		digits = numLength(i.value)
-		appendText("value: " + i.value + " from field name:" + i.name + ".... " + digits + "digits","debug");
+	newTimer.clicked = function(obj) {
+		digits = numLength(obj.value);
+		if (digits >= 2){ obj.value = ""; }
+
+		changeHighlight(obj.name);
+	}
+
+	newTimer.changed = function(obj) {
+
+		digits = numLength(obj.value)
+		appendText("value: " + obj.value + " from field name:" + obj.name + ".... " + digits + "digits","debug");
 
 		if (digits == 2){
-			if (i.name == "h") {	form.m.focus(); appendText("1","debug blue"); }
-			else if  (i.name == "m") { form.s.focus(); appendText("2","debug blue");}
-			else if  (i.name == "s")	{ form.submit.focus(); appendText("3","debug blue");}					
+			if (obj.name == "h") {	form.m.focus(); changeHighlight("m"); }
+			else if  (obj.name == "m") { form.s.focus(); changeHighlight("s"); }
+			else if  (obj.name == "s") { form.submit.focus(); changeHighlight("hidden")}					
 		}
-		else if (digits > 2){
-
-		}
+		else if (digits > 2){ obj.value = ""; }
 
 	}
 
-	newTimer.submitButton = function() {
-		submit();	
-	}
-	newTimer.faveButton = function() { 
+	newTimer.submitButton = function() { submit(); }
+	newTimer.faveButton = function(){ 
 		appendText("faves not working");
 	}
 
-	function submit() {
-		//form = document.getElementById("newTimerForm");
-		
+	function submit(){
 		var h = form.h.value;
 		var m = form.m.value;
 		var s = form.s.value;
@@ -196,11 +196,9 @@ var newTimer = function() {
 		if (form.inverted.checked){ style = "inverted " + style; }
 		if (form.protected.checked){ style = "protected " + style; }
 
-		console.log("123");
-		console.log(form);
-		appendText("LAUNCH");
-		
+		appendText("LAUNCH", "debug caps");		
 		eggTimer(s,m,h,style,text,soundID);
+
 		form.reset();
 	}
 }
@@ -724,19 +722,19 @@ function setCookie(cname,cvalue,exdays) {
 }
 
 function getCookie(cname) {
-  var name = cname + "=";
-  var decodedCookie = decodeURIComponent(document.cookie);
-  var ca = decodedCookie.split(';');
-  for(var i = 0; i < ca.length; i++) {
-    var c = ca[i];
-    while (c.charAt(0) == ' ') {
-      c = c.substring(1);
-    }
-    if (c.indexOf(name) == 0) {
-      return c.substring(name.length, c.length);
-    }
-  }
-  return "";
+	var name = cname + "=";
+	var decodedCookie = decodeURIComponent(document.cookie);
+	var ca = decodedCookie.split(';');
+	for(var i = 0; i < ca.length; i++) {
+		var c = ca[i];
+		while (c.charAt(0) == ' ') {
+			c = c.substring(1);
+		}
+		if (c.indexOf(name) == 0) {
+			return c.substring(name.length, c.length);
+		}
+	}
+	return "";
 }
 
 

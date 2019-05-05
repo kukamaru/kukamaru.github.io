@@ -234,7 +234,7 @@ li.timeInput {
 	align-items: center;
 	text-align: right;
 	position: relative;
-	caret-color:yellow;
+	caret-color:transparent;
 }
 
 input[type=number] {
@@ -242,21 +242,20 @@ input[type=number] {
 	color: black;
 	font-family: unibody;
 	font-size:64px;
-	caret-color: lightyellow;
+	background:none;
+
+	caret-color: transparent;
 
 	width:112px;
 	border:  transparent;
    outline: transparent;
-
-
-
 }
+
 input[type=number]:focus { 
 	color: black;
 	background-color: lightgreen;
 	border:  transparent;
 	outline: transparent;
-   caret-color: fuschia;
 }
 
 input[type=number]:placeholder-shown {
@@ -350,7 +349,21 @@ input[type=number]::-webkit-outer-spin-button {
 	div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
 	div.maintext p.status { color:var(--status-color);  }
 	div.maintext p.debug { background:#631824; color:white; font-weight: bold; }
+	div.maintext p.debug .blue { background-color: navy; color:lightblue; }
+	div.maintext p.caps { font-family:unibody-caps; }
 	div.maintext p span.timestamp { font-weight: normal; }
+
+
+	div.timeHighlight {
+		transition: left 0.1s ease-in-out, opacity 0.3s linear;
+		position: absolute;
+	/* left: -142px;*/
+		width: 100%;
+		height: 100px;
+		z-index: -1;
+		background: rgb(255,255,255);
+		background: linear-gradient(90deg, rgba(255,255,255,0) 28%, rgba(141,253,79,0.6123728197674418) 40%, rgba(38,253,29,0.4495821220930233) 50%, rgba(141,253,79,0.61) 60%, rgba(255,255,255,0) 72%);
+	}
 
 /* Corner Clock + bars */
 	#text1, #text2, #text3 {

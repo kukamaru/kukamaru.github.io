@@ -61,14 +61,15 @@
 					</li>
 
 					<li class="timeInput">
+						<div class="timeHighlight" id="newTimerHighlight"></div>
 						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
-						oninput="newTimer.changed(this)"value="" id="newTimerHours">
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerHours">
 						:
 						<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
-						oninput="newTimer.changed(this)"value="" id ="newTimerMinutes">
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id ="newTimerMinutes">
 						:
-						<input type="number" placeholder="37" max = "60" class="seconds timeInput" name="s" 
-						oninput="newTimer.changed(this)"value="" id="newTimerSeconds">
+						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
 					</li>
 
 					<li>
