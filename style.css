@@ -91,11 +91,11 @@ div.menuWrapper {
 }
 
 .headerBG {
-	 position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: -1;
-    opacity: 0.8;
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	z-index: -1;
+	opacity: 0.8;
 }
 .headerDiv {
 	position: relative;
@@ -136,7 +136,7 @@ ul.newTimerList {
 }
 
 #menu .nav {
-		width: 100%;
+	width: 100%;
 }
 
 .menu li 	  			{ 
@@ -152,21 +152,20 @@ ul.newTimerList {
 .menu button  			{ width: 100%; height: 46px; padding: 0; 	overflow: hidden; }
 .menu hr 				{ width: 100%; margin: 0; color:var(--edit-color); }
 
-.menu > li:last-child 		{ padding-bottom: 0 }
+ul#menulist li:last-child 	{ padding-bottom: 0 }
 ul#favorites li:last-child { padding-bottom: 10px; }
 
 .menu input, .menu select {
 	width:100%;
 }
 
-
-/* this is specific for the radios w regards to padding etc.*/
+/* subnav */ 
 ul.subNavHorizontal {
 	width: 100%;
-   display: flex;
-   margin: 0;
-   padding: 7px 0;
-   flex-direction: row;
+	display: flex;
+	margin: 0;
+	padding: 7px 0;
+	flex-direction: row;
 }
 
 .subNavHorizontal li {
@@ -186,76 +185,76 @@ ul.subNavHorizontal {
 }
 
 /* Buttons */
-	button {
-		font-family: unibody-caps;
+button {
+	font-family: unibody-caps;
 
-		color: var(--buttonTextColor);
-		background: var(--buttonBackgroundColor);
+	color: var(--buttonTextColor);
+	background: var(--buttonBackgroundColor);
 
-		padding:3px 16px 4px;
-		border:solid 1px var(--buttonBorderColor);
-		font-size: 8px;
-		outline:none;
-	}
-	button:hover { 
-		color: var(--buttonHoverTextColor);  
-		border-color: var(--buttonHoverBorderColor);
-		background-color: var(--buttonHoverBackgroundColor);
-		text-decoration: underline;
-	}
-	button:active {
-		transform:scale(0.99);
-	}
-	button.edit, button.edit:hover {
-		border-right-color:transparent;
-		border-left-color:black;
-	}
-	
-	button.delete, button.red { color:var(--alert-color); outline-color:var(--alert-color) }
+	padding:3px 16px 4px;
+	border:solid 1px var(--buttonBorderColor);
+	font-size: 8px;
+	outline:none;
+}
+button:hover { 
+	color: var(--buttonHoverTextColor);  
+	border-color: var(--buttonHoverBorderColor);
+	background-color: var(--buttonHoverBackgroundColor);
+	text-decoration: underline;
+}
+button:active {
+	transform:scale(0.99);
+}
+button.edit, button.edit:hover {
+	border-right-color:transparent;
+	border-left-color:black;
+}
 
-	button.red:hover,button.delete:hover {
-		background-color: pink;
-		border-color: red;
-	}
+button.delete, button.red { color:var(--alert-color); outline-color:var(--alert-color) }
+
+button.red:hover,button.delete:hover {
+	background-color: pink;
+	border-color: red;
+}
 
 
-	button#newTimerAddFave{
-		order:1;
-	}
-	button#newTimerStartButton{
-		order:2;
-	}
+button#newTimerAddFave{
+	order:1;
+}
+button#newTimerStartButton{
+	order:2;
+}
 
-	.menu button.delete, .menu button.edit	{ 
-		border-width: 0px; 
-		width: 0px; 
-	}
+.menu button.delete, .menu button.edit	{ 
+	border-width: 0px; 
+	width: 0px; 
+}
 
-	.menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
-	.menu button {
-						transition: 
-						width 0.3s ease-out,
-						opacity 0.3s ease-in-out,
-						border-width 0.3s ease-out,
-						height 0.5s ease-in-out;
-	}
+.menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
+.menu button {
+	transition: 
+	width 0.3s ease-out,
+	opacity 0.3s ease-in-out,
+	border-width 0.3s ease-out,
+	height 0.5s ease-in-out;
+}
 
 /* Favorites spacer (total animationtime .5s/500ms) */
-//*	hr.dummyFave { padding: 0; width: 100%; height: 1px; margin: 0; }*/
-	#prefav hr, #postfav hr {
-		transition: padding 0.5s ease-in;
-	}
-	#postfav { position: relative; }
-	#nofav {
-		position: absolute;
-		font-style: italic;
-		color:var(--edit-color);
-		transition: opacity 0.2s ease-in-out 0.3s;
-		opacity: 0;
-		bottom: 7px;
-		width: 100%;
-		background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 35%, rgba(0,212,255,0) 98%);
-	}
+/*	hr.dummyFave { padding: 0; width: 100%; height: 1px; margin: 0; }*/
+#prefav hr, #postfav hr {
+	transition: padding 0.5s ease-in;
+}
+#postfav { position: relative; }
+#nofav {
+	position: absolute;
+	font-style: italic;
+	color:var(--edit-color);
+	transition: opacity 0.2s ease-in-out 0.3s;
+	opacity: 0;
+	bottom: 7px;
+	width: 100%;
+	background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(255,255,255,1) 35%, rgba(0,212,255,0) 98%);
+}
 
 
 li.timeInput, span.timeColon {
@@ -293,7 +292,7 @@ input[type=number] {
 
 	width:112px;
 	border:  transparent;
-   outline: transparent;
+	outline: transparent;
 }
 
 input[type=number]:focus { 
@@ -316,154 +315,154 @@ input[type=number]::placeholder {
 
 input[type=number]::-webkit-inner-spin-button, 
 input[type=number]::-webkit-outer-spin-button { 
-  -webkit-appearance: none; 
-  margin: 0; 
+	-webkit-appearance: none; 
+	margin: 0; 
 }
 
 /* AlarmWindow Stuff */
-	div.alarmWindow {
-		color:var(--alert-color);
+div.alarmWindow {
+	color:var(--alert-color);
 
-		padding:20px;
-		width:70%;	
-		outline: 1px solid var(--alert-color);
-		outline-offset: -8px;
-		z-index: 10;
-	}
+	padding:20px;
+	width:70%;	
+	outline: 1px solid var(--alert-color);
+	outline-offset: -8px;
+	z-index: 10;
+}
 
-	div.alarmIcon {
-		margin: auto;
-		width: 32px;
-		height: 32px;
-		background-image: var(--alert-icon);
-	}
+div.alarmIcon {
+	margin: auto;
+	width: 32px;
+	height: 32px;
+	background-image: var(--alert-icon);
+}
 
 
-	.alarmContent {
-		/*background: pink;*/
-	}
+.alarmContent {
+	/*background: pink;*/
+}
 
-	.alarmContent hr {
-		border-top-color: var(--alert-color);
-	}
-	.alarmButtons {
-		display: flex;
-		justify-content: space-around;
-	}
-	.alarmWindow button {
-		width:100%;
-		display: inline;
-		margin:5px;
-		padding: 7px 0px 8px;
-	}
+.alarmContent hr {
+	border-top-color: var(--alert-color);
+}
+.alarmButtons {
+	display: flex;
+	justify-content: space-around;
+}
+.alarmWindow button {
+	width:100%;
+	display: inline;
+	margin:5px;
+	padding: 7px 0px 8px;
+}
 
-	.alarmWindow button.stopButton, Button.green {
-		border-color: green;
-		color: green;
-	}
-	.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
-		background-color: lightgreen;
+.alarmWindow button.stopButton, Button.green {
+	border-color: green;
+	color: green;
+}
+.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
+	background-color: lightgreen;
 
-	}
-	.alarmWindow button.snoozeButton, button.gray {
-		color: gray;
-		border-color: gray;
-	}
+}
+.alarmWindow button.snoozeButton, button.gray {
+	color: gray;
+	border-color: gray;
+}
 
-	.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
-		color:black;
-		border-color: darkgray;
-		background-color: lightgray;
-		text-decoration-color: darkgray;
-	}
+.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
+	color:black;
+	border-color: darkgray;
+	background-color: lightgray;
+	text-decoration-color: darkgray;
+}
 
 /* Output Text Things */
 
-	div.maintext {
-		font-size:8px;
-		background: white;
-		bottom:0;
-		position:absolute;
-		left:2vw;
-	}
+div.maintext {
+	font-size:8px;
+	background: white;
+	bottom:0;
+	position:absolute;
+	left:2vw;
+}
 
-	div.maintext p {
-		margin: 0;
-		z-index: -2;
-	}
+div.maintext p {
+	margin: 0;
+	z-index: -2;
+}
 
-	div.maintext p.odd  {	background: rgb(245,245,245);   }
-	div.maintext p.even {	background: white; }
-	div.maintext #welcome { font-weight: bold; }
-	div.maintext p.freeze { color:var(--freeze-color);  }
-	div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
-	div.maintext p.status { color:var(--status-color);  }
-	div.maintext p.debug { background:#631824; color:white; }
-	div.maintext p.blue.debug { background-color: navy; color:lightblue; }
-	div.maintext p.yellow.debug { background-color: lightyellow; color:orange; }
-	div.maintext p.caps { font-family:unibody-caps; font-weight: normal; }
-	div.maintext p span.timestamp { font-weight: normal; font-family: unibody; }
+div.maintext p.odd  {	background: rgb(245,245,245);   }
+div.maintext p.even {	background: white; }
+div.maintext #welcome { font-weight: bold; }
+div.maintext p.freeze { color:var(--freeze-color);  }
+div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
+div.maintext p.status { color:var(--status-color);  }
+div.maintext p.debug { background:#631824; color:white; }
+div.maintext p.blue.debug { background-color: navy; color:lightblue; }
+div.maintext p.yellow.debug { background-color: lightyellow; color:orange; }
+div.maintext p.caps { font-family:unibody-caps; font-weight: normal; }
+div.maintext p span.timestamp { font-weight: normal; font-family: unibody; }
 
 
-	div.timeHighlight {
-		transition: left 0.1s ease-in-out, opacity 0.3s linear;
-		position: absolute;
+div.timeHighlight {
+	transition: left 0.1s ease-in-out, opacity 0.3s linear;
+	position: absolute;
 	/* left: -142px;*/
-		width: 100%;
-		height: 100px;
-		z-index: -1;
-		background: rgb(255,255,255);
-		background: linear-gradient(90deg, rgba(255,255,255,0) 28%, rgba(141,253,79,0.6123728197674418) 40%, rgba(38,253,29,0.4495821220930233) 50%, rgba(141,253,79,0.61) 60%, rgba(255,255,255,0) 72%);
-	}
+	width: 100%;
+	height: 100px;
+	z-index: -1;
+	background: rgb(255,255,255);
+	background: linear-gradient(90deg, rgba(255,255,255,0) 28%, rgba(141,253,79,0.6123728197674418) 40%, rgba(38,253,29,0.4495821220930233) 50%, rgba(141,253,79,0.61) 60%, rgba(255,255,255,0) 72%);
+}
 
 /* Corner Clock + bars */
-	#text1, #text2, #text3 {
-		font-size:16px;
-		font-weight: bold;
-	}
+#text1, #text2, #text3 {
+	font-size:16px;
+	font-weight: bold;
+}
 
-	#text4 {
-		font-size:8px;
-		transition: width color 0.2s;
-	    -webkit-transition: color 0.2s;
-	}
+#text4 {
+	font-size:8px;
+	transition: width color 0.2s;
+	-webkit-transition: color 0.2s;
+}
 
-	div.cornerdiv {
-		/* background: rgb(20,20,20); */
-		color:white;
-	   position:absolute;
-	   bottom: 0px;
-	   right: 2vw;
-	   overflow: hidden;
-	}
-	div.currenttime {
-		padding: 2px 6px 0;
-	}
-
-
+div.cornerdiv {
+	/* background: rgb(20,20,20); */
+	color:white;
+	position:absolute;
+	bottom: 0px;
+	right: 2vw;
+	overflow: hidden;
+}
+div.currenttime {
+	padding: 2px 6px 0;
+}
 
 
-	div#debug {
-		background-color: red;
-		color: white;
-		position: relative;
-		height: 0px;
-		bottom: -3px;
-		transition: height 0.5s ease-in-out;
-	}
 
-	button#debugbutton {
-		position: relative;
-		float: right;
-		visibility: hidden;
-		height: 20px;
-		padding: 0 5px 2px;
-		margin: 0;
-		top: 4px;
-	}
 
-	.local, .local * {
-			visibility: hidden;
-			opacity: 0;
-	}
+div#debug {
+	background-color: red;
+	color: white;
+	position: relative;
+	height: 0px;
+	bottom: -3px;
+	transition: height 0.5s ease-in-out;
+}
+
+button#debugbutton {
+	position: relative;
+	float: right;
+	visibility: hidden;
+	height: 20px;
+	padding: 0 5px 2px;
+	margin: 0;
+	top: 4px;
+}
+
+.local, .local * {
+	visibility: hidden;
+	opacity: 0;
+}
 

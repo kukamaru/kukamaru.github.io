@@ -42,61 +42,60 @@ function bootUp() {
 		head.appendChild(newStyle);
 	}	const head = document.getElementsByTagName('head')[0];
 
-
-
 	// SCRIPTS TO LOAD
 	load("debugtext.js");
 	load("audio/sounds.js");
 	load("img/backgrounds.js");
 	load("img/themes.js");
 	load("notes.js");
+
 	// Stylesheets to load
 	style("notes.css","stylesheetForNotes");
 	style("style.css");
 	style("bars.css");
 	style("lib/radio.css")
 	style("lib/checkbox.css")
+
+
 	bootUp.bodyLoad = function() {
 
-	var isLocal = function() {
-		return (window.location.href != "http://www.utamaru.com/");
-		//return  (window.location.href != "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html");
-	}
-	function initLocal() {
-
-		// check local
-		if (isLocal()) { 
-			appendText("local file, executing initLocal();");
-			initLocal(); 
+		var isLocal = function() {
+			return (window.location.href != "http://www.utamaru.com/");
 		}
+		function initLocal() {
+			
 
-		// check storage
-		if (typeof(Storage) !== "undefined") {
-			appendText("local storage exists");
-		} else {
-			appendText("no storage");
+			if (typeof(Storage) !== "undefined") {
+				appendText("local storage exists");
+			} 
+			else {
+				appendText("no storage");
+			}
+
+			setTheme(0);
+			style("local.css");
+			var header = document.getElementById("header");
+			var t = document.createTextNode(" (local version)");
+
+			var span = document.createElement("span");
+			span.style.color = "var(--alert-color)";
+			span.appendChild(t);
+
+			header.appendChild(span);
 		}
-
-
-		//execute
-		msVisCheck();
-		tsVisCheck();
-		loadFaves();
-	}
-		setTheme(0);
-		style("local.css");
-
-		var header = document.getElementById("header");
-		var t = document.createTextNode(" (local version)");
-		
-		var span = document.createElement("span");
-		span.style.color = "var(--alert-color)";
-		span.appendChild(t);
-
-		header.appendChild(span);
+			
+	if (isLocal()) { 
+		appendText("local file, executing initLocal();");
+		initLocal(); 
 	}
 
+	msVisCheck();
+	tsVisCheck();
+	loadFaves();
+
+	}
 }
+
 
 
 
