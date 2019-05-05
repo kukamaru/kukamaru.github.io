@@ -63,17 +63,6 @@ function bodyLoad() {
 		//return  (window.location.href != "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html");
 	}
 
-	function checkCookies() { return (navigator.cookieEnabled); }
-	/* cookie shit
-		appendText("cookies enabled? " + checkCookies(),"status");
-		if (checkCookies) { 
-			appendText(document.cookie); 
-
-			var testText = document.getElementById("testText01");
-			testText.value = getCookie("test1");
-		} 			
-	*/
-
 	if (isLocal()) { 
 		appendText("local file, executing initLocal();");
 		initLocal(); 

@@ -8,8 +8,9 @@
 	<!-- other scripts and styles loaded from main.js -->
 </head>
 
-
 <body onload="bodyLoad()">
+
+
 	<div class="headerWrapper">
 		<div class="headerBG" id="headerBG"></div>
 		<div class="headerDiv" id="headerDiv">
@@ -34,11 +35,8 @@
 			<button value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
 			<button value="button2" id="button2" onclick="testButton2()">testButton2</button>
 			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
-		</div>
-	</div>	
-
-
-
+		</div> <!-- headerdiv -->
+	</div> <!-- headerwrapper -->	
 
 	<div id="menuWrapper" class="menuWrapper">
 		<div id="menu" class="menu">
@@ -52,7 +50,7 @@
 				<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
 				<li><button onclick="javascript:toggleOptions();">Edit faves</button></li>
 			</ul>
-		</div>
+		</div> <!-- menu -->
 		<div id="newTimerMenu" class="menu">
 			<ul class="newTimerList"> 
 				<form id="newTimerForm">
@@ -106,7 +104,7 @@
 					</li>
 				</form>
 			</ul>
-		</div>
+		</div> <!-- newTimerMenu -->
 
 		<!-- Dummy Menus -->
 		<div id="recipe" class="menu">
@@ -125,16 +123,16 @@
 				18 minutes without, 50 minutes total<br>
 				let cool completely, then EAT<br>
 			</p>
-		</div>
+		</div> <!-- recipe -->
 		<div id="settings" class="menu">
 			<p style="background-color: white">
 				settings will go here
 			</p>
-		</div>
-	</div>
+		</div> <!-- settings -->
+	</div> <!-- menuWrapper -->
 
-
-	<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
+	<div id="menuBG" class="menuBG" onclick="menuHide();">		
+	</div> <!-- menuBG -->
 
 	<div id="alarmBG" class="alarmBG">
 		<div id="alarmWindow" class="alarmWindow">
@@ -142,21 +140,28 @@
 			<div id="alarmContent" class="alarmContent">
 				<p id="alarmText" class="alarmText">						
 				</p>
-			</div>
+			</div> <!-- alarmContent --> 
 			<div id="alarmButtons" class="alarmButtons"></div>
-		</div>
-	</div>
-	<div id="maintext" class="maintext">
-		<p id="welcome">Hello :) these are utamarus dumb timers<br>this is a work in progress, <br>please do not count on this clock for youre daily operations. thanks</p>
-	</div>
+		</div> <!-- alarmButtons -->
+	</div> <!-- alarmBG -->
 
+	<div id="maintext" class="maintext">
+		<p id="welcome">Hello :) these are utamarus dumb timers
+			<br>this is a work in progress,
+			<br>please do not count on this clock for youre daily operations. thanks
+		</p>
+	</div> <!-- maintext -->
 
 	<div draggable="true" id="notesdiv">
-		<textarea name="notes" id="notes" placeholder="notes" onInput="notes();"></textarea>
-	</div>
+		<textarea name="notes" id="notes" placeholder="notes" onInput="notes();">
+		</textarea>
+	</div> <!-- notes -->
 
 	<div class="cornerdiv">
-		<div class="bars" id="bars"></div>
+		<div class="bars" id="bars">
+
+		</div><!-- bars -->
+
 		<div class="currenttime" id="timediv">
 			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
 			<button onclick="debugMenu();" id="debugButan"> debug</button>
@@ -188,6 +193,8 @@
 			</ul>
 		</div> <!-- debug -->
 	</div> <!-- cornerdiv -->
+
+
 </body>
 
 </html>
