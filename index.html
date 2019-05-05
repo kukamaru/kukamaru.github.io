@@ -5,6 +5,7 @@
 	<title>Timers n shit</title>
 
 	<script src="main.js" type="text/javascript" onload="bootUp()"></script>
+	<!-- other scripts and styles loaded from main.js -->
 </head>
 
 
@@ -17,7 +18,7 @@
 			<ul>
 				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
 				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
-				<li><button class ="green" onclick="javascript:menuShow('newTimerMenu');">new timer</button></li>
+				<li><button class ="green" onclick="javascript:newTimer();">new timer</button></li>
 				<br>
 				<li><input type="text" value="lol" id="testText01"></li>
 				<li><button onclick="javascript:ttButton();">ttButton</button></li>
@@ -42,8 +43,8 @@
 	<div id="menuWrapper" class="menuWrapper">
 		<div id="menu" class="menu">
 			<ul id="menulist" class="nav">
-				<li><button onclick="javascript:menuShow('newTimerMenu')" class="green">New Timer</button></li>
-				<li><button onclick="javascript:eggTimer(10,4,0,'small inverted');">Coffee Timer (4min 10s)</button></li>
+				<li><button onclick="javascript:newTimer();" class="green">New Timer</button></li>
+				<li><button onclick="javascript:eggTimer(10,4,0);">Coffee Timer (4min 10s)</button></li>
 				<li id="prefav"><hr></li>
 				<ul id="favorites" class="nav">
 				</ul>

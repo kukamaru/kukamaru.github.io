@@ -166,6 +166,7 @@ function setTheme(themeid) {
 //New Timer Menu Function
 
 var newTimer = function() {
+	menuShow("newTimerMenu");
 	var form = document.getElementById("newTimerForm");
 	var div = document.getElementById("newTimerMenu");
 
@@ -531,7 +532,7 @@ function menuShow(i){
 	if (windowState == "newTimerMenu") { 
 		//bake into newtimer
 		document.getElementById("newTimerMinutes").focus();
-		newTimer();
+		// newTimer();
 	}
 }
 
@@ -748,14 +749,14 @@ function getCookie(cname) {
 
 function testButton1() {
 	appendText("testButton1 pressed","alert");
-	eggTimer(0,21,4,"big countdown","bigtest",0);
-	eggTimer(5,0,0,"countdown","medium test",1);
-	eggTimer(15,0,0,"small","smalltest + looped sound",2);
+	eggTimer(0,21,4,0,"big countdown","bigtest");
+	eggTimer(5,0,0,1,"countdown","medium test");
+	eggTimer(15,0,0,2,"small","smalltest + looped sound");
 }
 
 function testButton2() {
 	appendText("testButton2 pressed");
-	eggTimer(1,0,0,"big","loop alarmspam",2)
+	eggTimer(1,0,0,2,"big","loop alarmspam")
 }
 
 // Debug Trigger and Menu
