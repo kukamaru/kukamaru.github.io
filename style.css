@@ -1,20 +1,20 @@
 @import url("font/unibody.css");
 
 :root {
-	--active-bar: blueviolet;
-	--stopped-bar: indigo;
-	--bar-completing: green;
+	--active-bar: blueviolet; 				/* themed */
+	--stopped-bar: indigo;    				/* themed */
+	--bar-completing: green;  				/* themed */
 
 	--freeze-color: blue;
 	--alert-color: red;
 	--status-color: teal;
 	--edit-color:darkgray;
 
-	--background-color: white;
+	--background-color: white; 			/* themed */
 
 	--buttonTextColor: purple;
 	--buttonBorderColor: black;
-	--buttonBackgroundColor: white;
+	--buttonBackgroundColor: white;		/* themed */
 
 	--buttonHoverTextColor: blue;
 	--buttonHoverBorderColor: purple;

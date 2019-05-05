@@ -1,14 +1,15 @@
 <!DOCTYPE html>
 <html>
 <head>
+
 	<link rel="shortcut icon" href="icons/loudspeaker_rays_red-1.png">
 	<title>Timers n shit</title>
+	<script src="main.js" type="text/javascript" onload="init()"></script>
 
-	<script src="main.js" type="text/javascript" onload="bootUp()"></script>
-	<!-- other scripts and styles loaded from main.js -->
+bo	<!-- other scripts and styles loaded from main.js -->
 </head>
 
-<body onload="bootUp.bodyLoad()">
+<body onload="init.bodyOnLoad()">
 
 
 	<div class="headerWrapper">
@@ -48,12 +49,12 @@
 				</li>
 
 				<li>
-					<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
+		
 				</li>
 				<li>
 
 
-					<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
+
 				</li>
 				<li>
 					<button class="local" value="clear!!" id="clear" onclick="clearText()">clear</button>
@@ -207,6 +208,9 @@
 		<div class="currenttime" id="timediv">
 			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
 			<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
+			<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
+			<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
+
 		</div> <!-- timediv -->
 
 		<div id="debug">

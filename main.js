@@ -15,14 +15,13 @@ var timersRunning = 0;
 var canSnooze = true;
 var activeTimers = [];
 var activeAlarms = [];
-var timerOrigin;
 var windowState = false;
 var optionState = false;
-
-
+var clockExists;
 
 /* Init */
-function bootUp() {
+function init() {
+
 
 	function load(src) {
 		var newScript = document.createElement('script');
@@ -57,13 +56,19 @@ function bootUp() {
 	style("lib/checkbox.css")
 
 
-	bootUp.bodyLoad = function() {
+	init.bodyOnLoad = function() {
+
+		clockExists = (document.getElementById("timediv") != undefined);
+		if (!clockExists) { clearInterval(myVar); return; };
+		//kills timer 	 if clock doesnt exist, stops rendering.
+		//must be on load
+
 
 		var isLocal = function() {
 			return (window.location.href != "http://www.utamaru.com/");
 		}
 		function initLocal() {
-	
+			
 			if (typeof(Storage) !== "undefined") {
 				appendText("local storage exists");
 			} 
@@ -83,15 +88,12 @@ function bootUp() {
 
 			header.appendChild(span);
 		}
-			
-	
+		
+		if (isLocal()) { initLocal(); }
 
-
-	if (isLocal()) { initLocal(); }
-
-	msVisCheck();
-	tsVisCheck();
-	loadFaves();
+		msVisCheck();
+		tsVisCheck();
+		loadFaves();
 
 	}
 }
@@ -132,14 +134,11 @@ function mainLoop() {
 
 
 function setTheme(ID) {
-	var setCssVar = function(cssVariable,value){
+	function setCssVar(cssVariable,value){
 		let root = document.documentElement;
 		root.style.setProperty(cssVariable,value);
-
-
-		appendText("setting variable " + cssVariable + value,"debug blue")
-
 	}
+
 	function setBg(theme){
 		var debugbg = document.getElementById("debug");
 		var bg = document.getElementsByTagName("body")[0];
@@ -153,7 +152,7 @@ function setTheme(ID) {
 			setCssVar(theme.colors[i].css,theme.colors[i].val);
 		}
 
-   }
+	}
 
 	appendText("theme name:  " + themes[ID].name);
 	setBg(themes[ID]);
@@ -452,6 +451,7 @@ function hideBar(ID) {
 
 	setTimeout(function(){parent.removeChild(div);},10000); 
 }
+
 function renderBars() {
 
 	if (debug2) { return; } //DEBUG
