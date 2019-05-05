@@ -24,8 +24,6 @@ var optionState = false;
 /* Init */
 function bootUp() {
 
-	const head = document.getElementsByTagName('head')[0];
-
 	function load(src) {
 		var newScript = document.createElement('script');
 		newScript.src = src;
@@ -42,61 +40,64 @@ function bootUp() {
 			newStyle.id = arguments[1];
 		}
 		head.appendChild(newStyle);
-	}
+	}	const head = document.getElementsByTagName('head')[0];
 
-	load("debugtext.js");					// SCRIPTS TO LOAD
+
+
+	// SCRIPTS TO LOAD
+	load("debugtext.js");
 	load("audio/sounds.js");
 	load("img/backgrounds.js");
 	load("img/themes.js");
 	load("notes.js");
-													// Stylesheets to load
+	// Stylesheets to load
 	style("notes.css","stylesheetForNotes");
 	style("style.css");
 	style("bars.css");
-}
+	style("lib/radio.css")
+	style("lib/checkbox.css")
+	bootUp.bodyLoad = function() {
 
-
-/* On Loaded */
-function bodyLoad() {
 	var isLocal = function() {
 		return (window.location.href != "http://www.utamaru.com/");
 		//return  (window.location.href != "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html");
 	}
+	function initLocal() {
 
-	// check local
-	if (isLocal()) { 
-		appendText("local file, executing initLocal();");
-		initLocal(); 
+		// check local
+		if (isLocal()) { 
+			appendText("local file, executing initLocal();");
+			initLocal(); 
+		}
+
+		// check storage
+		if (typeof(Storage) !== "undefined") {
+			appendText("local storage exists");
+		} else {
+			appendText("no storage");
+		}
+
+
+		//execute
+		msVisCheck();
+		tsVisCheck();
+		loadFaves();
+	}
+		setTheme(0);
+		style("local.css");
+
+		var header = document.getElementById("header");
+		var t = document.createTextNode(" (local version)");
+		
+		var span = document.createElement("span");
+		span.style.color = "var(--alert-color)";
+		span.appendChild(t);
+
+		header.appendChild(span);
 	}
 
-	// check storage
-	if (typeof(Storage) !== "undefined") {
-	    appendText("local storage exists");
-	} else {
-	    appendText("no storage");
-	}
-
-
-	//execute
-	msVisCheck();
-	tsVisCheck();
-	loadFaves();
 }
 
-function initLocal() {
-	setTheme(0);
-
-	var header = document.getElementById("header");
-	var t = document.createTextNode(" (local version)");
-	
-	var span = document.createElement("span");
-	span.style.color = "var(--alert-color)";
-	span.appendChild(t);
-
-	header.appendChild(span);
-
-	document.getElementById("debugButan").style.visibility = "visible";
-}
 
 
 /* Main Function */

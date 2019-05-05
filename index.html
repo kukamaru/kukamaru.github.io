@@ -8,21 +8,36 @@
 	<!-- other scripts and styles loaded from main.js -->
 </head>
 
-<body onload="bodyLoad()">
+<body onload="bootUp.bodyLoad()">
 
 
 	<div class="headerWrapper">
 		<div class="headerBG" id="headerBG"></div>
 		<div class="headerDiv" id="headerDiv">
+
 			<h1 id="header">timers n shit</h1>
 
 			<ul>
-				<li><button onclick="javascript:menuShow('recipe');">show recipe</button></li>
-				<li><button onclick="javascript:menuShow('menu');">menu</button></li>
-				<li><button class ="green" onclick="javascript:newTimer();">new timer</button></li>
+				<li>
+					<button onclick="javascript:menuShow('recipe');">show recipe</button>
+				</li>
+
+				<li>
+					<button onclick="javascript:menuShow('menu');">menu</button>
+				</li>
+
+				<li>
+					<button class ="green" onclick="javascript:newTimer();">new timer</button>
+				</li>
+
 				<br>
-				<li><input type="text" value="lol" id="testText01"></li>
-				<li><button onclick="javascript:ttButton();">ttButton</button></li>
+
+				<li>
+					<button class="green" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
+					</button>
+				</li>
+
+
 			</ul>
 
 
@@ -33,9 +48,10 @@
 			<label for="tsCheck">Timestamps</label>
 
 
-			<button value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
-			<button value="button2" id="button2" onclick="testButton2()">testButton2</button>
+			<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
+			<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
 			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
+			<button value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
 		</div> <!-- headerdiv -->
 	</div> <!-- headerwrapper -->	
 
@@ -99,9 +115,9 @@
 
 					<li>
 						<select name="sound">
+							<option value=2>sound 2 (looped)</option>
 							<option value=0>sound 0</option>
 							<option value=1>sound 1</option>
-							<option value=2>sound 2 (looped)</option>
 						</select>
 					</li>
 					<li>
@@ -179,7 +195,7 @@
 
 		<div class="currenttime" id="timediv">
 			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
-			<button onclick="debugMenu();" id="debugButan"> debug</button>
+			<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
 		</div> <!-- timediv -->
 
 		<div id="debug">
@@ -205,6 +221,12 @@
 				<li>
 					<button onclick="notes();">notes();</button>
 					<button onclick="notes.show();">notes.show();</button>
+				</li>
+								<li>
+									<input type="text" value="lol" id="testText01">
+								</li>
+				<li>
+					<button onclick="javascript:ttButton();">ttButton</button>
 				</li>
 			</ul>
 		</div> <!-- debug -->
