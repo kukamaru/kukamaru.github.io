@@ -63,11 +63,21 @@ function bodyLoad() {
 		//return  (window.location.href != "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html");
 	}
 
+	// check local
 	if (isLocal()) { 
 		appendText("local file, executing initLocal();");
 		initLocal(); 
 	}
 
+	// check storage
+	if (typeof(Storage) !== "undefined") {
+	    appendText("local storage exists");
+	} else {
+	    appendText("no storage");
+	}
+
+
+	//execute
 	msVisCheck();
 	tsVisCheck();
 	loadFaves();
