@@ -38,9 +38,7 @@ function bootUp() {
 		newStyle.rel = 'stylesheet';
 		if (arguments.length > 0) {
 			newStyle.id = arguments[1];
-			console.log(arguments[1]);
 		}
-
 		head.appendChild(newStyle)
 	}
 
@@ -209,37 +207,29 @@ var newTimer = function() {
 		if (form.inverted.checked){ style = "inverted " + style; }
 		if (form.protected.checked){ style = "protected " + style; }
 
-		appendText("running EGGTIMER from newTimer.submit", "debug caps");
-
-		eggTimer(s,m,h,style,text,soundID);
+		eggTimer(s,m,h,soundID,style,text);
 
 		form.reset();
+		menuHide();
 	}
 }
 
-function eggTimer(eS,eM,eH,style = "noStyle",text = "no text ",sound = 0) {
-
+function eggTimer(eS,eM,eH,sound,style,text) {
 	var cookingTime = function(s = 10, m = 0, h = 0) {
+
 		return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
 	}
-
 	ms = cookingTime(eS,eM,eH);
 
 	appendText(text + " starting (eggtimer), " + ms + " milliseconds","status");
-	startTimer(ms,text,sound,style);
-	menuHide();
-
+	startTimer(ms,sound,style,text);
 }
 
 
 var timerID = 0;
-
-function startTimer(T,text,soundID,style) {
+function startTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 	var d = new Date(); 
 	var f = new Date(d.valueOf() + T);
-
-
-	if (!style) { style = "normal"; }
 
 	activeTimers.push(
 	{
@@ -256,7 +246,6 @@ function startTimer(T,text,soundID,style) {
 		inverted:   style.includes("inverted"),
 		countdown:  style.includes("countdown"),
 		protected:  style.includes("protected"), 
-
 	}
 	);
 
@@ -267,6 +256,7 @@ function startTimer(T,text,soundID,style) {
 	timerRunning = true;
 	timerID++;
 }
+
 /**ALARM CORE FUNCTION **/
 function setAlarm(ID,T,text,soundID) {
 	setTimeout(function(){alarm(ID);}
