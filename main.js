@@ -117,37 +117,30 @@ function mainLoop() {
 //Favorite Timer
 
 
-function setTheme(themeid){
+function setTheme(themeid) {
 
-	var getUrl = function(i){ 
+	var getUrl = function(i) { 
 		o = "url(" + i + ")";
 		return o;
 	}
 
 	function setBg(i){
-			//input is a theme from themes.js
+		//input is a theme from themes.js
 
-			var debugbg = document.getElementById("debug");
-			var bg = document.getElementsByTagName("body")[0];
+		var debugbg = document.getElementById("debug");
+		var bg = document.getElementsByTagName("body")[0];
 
-			//var bgsrc = "url(" + backgrounds[i.bg].src + ")";
-			//var dbsrc = "url(" + backgrounds[i.debug].src + ")";
+		appendText(getUrl(backgrounds[i.bg].src),"debug");
+		appendText(getUrl(backgrounds[i.debug].src),"debug blue");
 
-			appendText(getUrl(backgrounds[i.bg].src),"debug");
-			appendText(getUrl(backgrounds[i.debug].src),"debug blue");
-
-			debugbg.style.background = getUrl(backgrounds[i.debug].src);
-			bg.style.background = getUrl(backgrounds[i.bg].src);
-		}
-
-		setBg(themes[themeid]);
+		debugbg.style.background = getUrl(backgrounds[i.debug].src);
+		bg.style.background = getUrl(backgrounds[i.bg].src);
 	}
 
+	setBg(themes[themeid]);
+}
 
-	function ttButton() {	
-		var input = document.getElementById("testText01").value;
-		setCookie("test1",input,1);
-	}
+
 
 //New Timer Menu Function
 
@@ -159,8 +152,6 @@ var newTimer = function() {
 	newTimer.clicked = function(obj) {
 		digits = numLength(obj.value);
 		if (digits >= 2){ obj.value = ""; }
-
-		changeHighlight(obj.name);
 	}
 
 	newTimer.changed = function(obj) {
@@ -169,9 +160,9 @@ var newTimer = function() {
 		appendText("value: " + obj.value + " from field name:" + obj.name + ".... " + digits + "digits","debug");
 
 		if (digits == 2){
-			if (obj.name == "h") {	form.m.focus(); changeHighlight("m"); }
-			else if  (obj.name == "m") { form.s.focus(); changeHighlight("s"); }
-			else if  (obj.name == "s") { form.submit.focus(); changeHighlight("hidden")}					
+			if (obj.name == "h") {	form.m.focus(); }
+			else if  (obj.name == "m") { form.s.focus(); }
+			else if  (obj.name == "s") { form.submit.focus(); }					
 		}
 		else if (digits > 2){ obj.value = ""; }
 
