@@ -1,5 +1,4 @@
-const backgrounds = [
-
+var backgrounds = [
 
 { 
 	name: "water",
@@ -17,3 +16,8 @@ const backgrounds = [
 	src: "img/inverted_water.jpg"
 }
 ];
+
+
+backgrounds.url = function(i) { 
+	return "url(" + this[i].src + ")";
+}

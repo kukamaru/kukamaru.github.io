@@ -63,8 +63,7 @@ function bootUp() {
 			return (window.location.href != "http://www.utamaru.com/");
 		}
 		function initLocal() {
-			
-
+	
 			if (typeof(Storage) !== "undefined") {
 				appendText("local storage exists");
 			} 
@@ -72,8 +71,9 @@ function bootUp() {
 				appendText("no storage");
 			}
 
-			setTheme(0);
 			style("local.css");
+			setTheme(0);
+
 			var header = document.getElementById("header");
 			var t = document.createTextNode(" (local version)");
 
@@ -84,10 +84,10 @@ function bootUp() {
 			header.appendChild(span);
 		}
 			
-	if (isLocal()) { 
-		appendText("local file, executing initLocal();");
-		initLocal(); 
-	}
+	
+
+
+	if (isLocal()) { initLocal(); }
 
 	msVisCheck();
 	tsVisCheck();
@@ -131,27 +131,34 @@ function mainLoop() {
 //Favorite Timer
 
 
-function setTheme(themeid) {
+function setTheme(ID) {
+	var setCssVar = function(cssVariable,value){
+		let root = document.documentElement;
+		root.style.setProperty(cssVariable,value);
 
-	var getUrl = function(i) { 
-		o = "url(" + i + ")";
-		return o;
+
+		appendText("setting variable " + cssVariable + value,"debug blue")
+
 	}
-
-	function setBg(i){
-		//input is a theme from themes.js
-
+	function setBg(theme){
 		var debugbg = document.getElementById("debug");
 		var bg = document.getElementsByTagName("body")[0];
-
-		appendText(getUrl(backgrounds[i.bg].src),"debug");
-		appendText(getUrl(backgrounds[i.debug].src),"debug blue");
-
-		debugbg.style.background = getUrl(backgrounds[i.debug].src);
-		bg.style.background = getUrl(backgrounds[i.bg].src);
+		debugbg.style.background = backgrounds.url(theme.debug);
+		bg.style.background = backgrounds.url(theme.bg);
 	}
 
-	setBg(themes[themeid]);
+	function setColors(theme){
+		var x = theme.colors.length;
+		for (var i = 0; i < x; i++) {
+			setCssVar(theme.colors[i].css,theme.colors[i].val);
+		}
+
+   }
+
+	appendText("theme name:  " + themes[ID].name);
+	setBg(themes[ID]);
+	setColors(themes[ID]);
+
 }
 
 

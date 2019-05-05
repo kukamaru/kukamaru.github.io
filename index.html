@@ -17,7 +17,7 @@
 
 			<h1 id="header">timers n shit</h1>
 
-			<ul>
+			<ul class="subNavHorizontal">
 				<li>
 					<button onclick="javascript:menuShow('recipe');">show recipe</button>
 				</li>
@@ -36,22 +36,33 @@
 					<button class="green" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
 					</button>
 				</li>
+				<li>
+
+					<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
+					<label for="msCheck">Milliseconds</label>
+				</li>
+				<li>
+
+					<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
+					<label for="tsCheck">Timestamps</label>
+				</li>
+
+				<li>
+					<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
+				</li>
+				<li>
 
 
+					<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
+				</li>
+				<li>
+					<button class="local" value="clear!!" id="clear" onclick="clearText()">clear</button>
+				</li>
+				<li>
+					<button class="local" value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
+				</li>
 			</ul>
 
-
-			<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
-			<label for="msCheck">Milliseconds</label>
-
-			<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
-			<label for="tsCheck">Timestamps</label>
-
-
-			<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1 :)</button>
-			<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
-			<button value="clear!!" id="clear" onclick="clearText()">clear</button>
-			<button value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
 		</div> <!-- headerdiv -->
 	</div> <!-- headerwrapper -->	
 
@@ -222,9 +233,9 @@
 					<button onclick="notes();">notes();</button>
 					<button onclick="notes.show();">notes.show();</button>
 				</li>
-								<li>
-									<input type="text" value="lol" id="testText01">
-								</li>
+				<li>
+					<input type="text" value="lol" id="testText01">
+				</li>
 				<li>
 					<button onclick="javascript:ttButton();">ttButton</button>
 				</li>
