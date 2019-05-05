@@ -398,7 +398,7 @@ function newBar(ID) {
 
 	div.setAttribute('class',"bar" + " " + activeTimers[ID].style);
 	div.setAttribute('id',"bar" + ID);
-	bar.setAttribute('class',"progressbar");
+	bar.setAttribute('class',"progressbar" + " " + activeTimers[ID].style);
 	bar.setAttribute('id',"progress" + ID);
 
 	label.setAttribute('id',"barlabel" + ID);

@@ -92,123 +92,102 @@
 						</li>
 					</ul>
 
-				</li>
-				<li><select name="sound">
-					<option value=0>sound 0</option>
-					<option value=1>sound 1</option>
-					<option value=2>sound 2 (looped)</option>
-				</select>
-			</li>
-			<li>
-				<button name="submit" class="green" id="newTimerStartButton">start timer</button>
-				<button id="newTimerAddFave" >add favorite</button>
-			</li>
-		</form>
-	</ul>
-</div>
 
-<!-- Dummy Menus -->
-<div id="recipe" class="menu">
-	<p style="background-color: white">
-		400g flour<br>
-		230g water<br>
-		160g starter<br>
-		5g-7g salt<br>
-		<br>
-		let rise 3.5 hrs<br>
-		shape the dough<br>
-		second rise 2.5-3 hrs - or - fridge overnight<br>
-		preheat oven<br>
-		cook at 235-240 degrees<br>
-		32 minutes with lid<br>
-		18 minutes without, 50 minutes total<br>
-		let cool completely, then EAT<br>
-	</p>
-</div>
-<div id="settings" class="menu">
-	<p style="background-color: white">
-		settings will go here
-	</p>
-</div>
-</div>
+					<li>
+						<select name="sound">
+							<option value=0>sound 0</option>
+							<option value=1>sound 1</option>
+							<option value=2>sound 2 (looped)</option>
+						</select>
+					</li>
+					<li>
+						<button name="submit" class="green" id="newTimerStartButton">start timer</button>
+						<button id="newTimerAddFave" >add favorite</button>
+					</li>
+				</form>
+			</ul>
+		</div>
 
-
-<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
-
-<div id="alarmBG" class="alarmBG">
-	<div id="alarmWindow" class="alarmWindow">
-		<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
-		<div id="alarmContent" class="alarmContent">
-			<p id="alarmText" class="alarmText">						
+		<!-- Dummy Menus -->
+		<div id="recipe" class="menu">
+			<p style="background-color: white">
+				400g flour<br>
+				230g water<br>
+				160g starter<br>
+				5g-7g salt<br>
+				<br>
+				let rise 3.5 hrs<br>
+				shape the dough<br>
+				second rise 2.5-3 hrs - or - fridge overnight<br>
+				preheat oven<br>
+				cook at 235-240 degrees<br>
+				32 minutes with lid<br>
+				18 minutes without, 50 minutes total<br>
+				let cool completely, then EAT<br>
 			</p>
 		</div>
-		<div id="alarmButtons" class="alarmButtons"></div>
+		<div id="settings" class="menu">
+			<p style="background-color: white">
+				settings will go here
+			</p>
+		</div>
 	</div>
-</div>
-<div id="maintext" class="maintext">
-	<p id="welcome">Hello :) these are utamarus dumb timers<br>this is a work in progress, <br>please do not count on this clock for youre daily operations. thanks</p>
-</div>
 
 
-<div draggable="true" id="notesdiv">
-	<textarea name="notes" id="notes" placeholder="notes" onInput="notes();"></textarea>
-</div>
+	<div id="menuBG" class="menuBG" onclick="menuHide();"></div>
+
+	<div id="alarmBG" class="alarmBG">
+		<div id="alarmWindow" class="alarmWindow">
+			<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
+			<div id="alarmContent" class="alarmContent">
+				<p id="alarmText" class="alarmText">						
+				</p>
+			</div>
+			<div id="alarmButtons" class="alarmButtons"></div>
+		</div>
+	</div>
+	<div id="maintext" class="maintext">
+		<p id="welcome">Hello :) these are utamarus dumb timers<br>this is a work in progress, <br>please do not count on this clock for youre daily operations. thanks</p>
+	</div>
 
 
-</div>
-<div class="cornerdiv">
-	<div class="bars" id="bars"></div>
-	<div class="currenttime" id="timediv">
-		<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
-		<button style="
-		position: relative;
-		float: right;
-		visibility: hidden;
-		height: 20px;
-		padding: 0 5px 2px;
-		margin: 0;
-		top: 4px;" onclick="debugMenu();" id="debugButan">
-	debug</button>
+	<div draggable="true" id="notesdiv">
+		<textarea name="notes" id="notes" placeholder="notes" onInput="notes();"></textarea>
+	</div>
 
+	<div class="cornerdiv">
+		<div class="bars" id="bars"></div>
+		<div class="currenttime" id="timediv">
+			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
+			<button onclick="debugMenu();" id="debugButan"> debug</button>
+		</div> <!-- timediv -->
 
-	<div id="debug"
-	style="background-color: red;
-	color: white;
-	position: relative;
-	height: 0px;
-	bottom: 0px;
-	transition: height 0.5s ease-in-out;
-	">
-	<ul>
-		<li>
-			<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> <label>Render Stop</label>
-		</li>
-		<li>
-			<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
-		</li>
-		<li>
-			<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
-		</li>
-		<li>
-			<button onclick="setTheme(0);">Theme 0</button> <button onclick="setTheme(1);">Theme 1</button>
-		</li>
+		<div id="debug">
+			<ul>
+				<li>
+					<input id="debug1" type="checkbox" onclick="debugMenu.check(1);"> <label>Render Stop</label>
+				</li>
+				<li>
+					<input id="debug2" type="checkbox" onclick="debugMenu.check(2);"> <label>Bar Stop</label>
+				</li>
+				<li>
+					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
+				</li>
+				<li>
+					<button onclick="setTheme(0);">Theme 0</button> <button onclick="setTheme(1);">Theme 1</button>
+				</li>
 
-		<li>
-			<button onclick="eggTimer();">eggTimer();</button>
-		</li>
+				<li>
+					<button onclick="eggTimer();">eggTimer();</button>
+				</li>
 
-		<li>
-			<button onclick="notes();">notes();</button>
-			<button onclick="notes.show();">notes.show();</button>
-		</li>
-	</ul>
-
-
-
-
-</div>
-
-</div> <!-- cornerdiv -->
+				<li>
+					<button onclick="notes();">notes();</button>
+					<button onclick="notes.show();">notes.show();</button>
+				</li>
+			</ul>
+		</div> <!-- debug -->
+	</div> <!-- cornerdiv -->
 </body>
 
 </html>

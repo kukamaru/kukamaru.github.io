@@ -452,10 +452,14 @@ input[type=number]::-webkit-outer-spin-button {
 	}
 
 	div.noStyle {
-		background-color: green;
+		color:black;
+		background: rgb(56,56,56);
+		background: linear-gradient(0deg, rgba(56,56,56,0.7) 0%, rgba(149,149,149,0.7) 6%, rgba(163,163,163,0.7) 25%, rgba(101,101,101,0.7) 75%, rgba(106,106,106,0.7) 94%, rgba(181,181,181,0.7) 100%);
 	}
-	div.noStyle div.bar {
-		background-color: pink;
+
+	div.noStyle.progressbar {
+		background: rgb(71,92,59);
+		background: linear-gradient(0deg, rgba(71,92,59,1) 0%, rgba(107,173,71,1) 27%, rgba(195,255,135,1) 72%, rgba(141,253,79,1) 76%, rgba(141,253,79,1) 86%, rgba(206,255,179,1) 100%);
 	}
 
 
@@ -470,4 +474,23 @@ input[type=number]::-webkit-outer-spin-button {
 	div.currenttime {
 		padding: 2px 6px 0;
 	}
+	div#debug {
+		background-color: red;
+		color: white;
+		position: relative;
+		height: 0px;
+		bottom: 0px;
+		transition: height 0.5s ease-in-out;
+	}
+	button#debugbutton {
+		position: relative;
+		float: right;
+		visibility: hidden;
+		height: 20px;
+		padding: 0 5px 2px;
+		margin: 0;
+		top: 4px;
+	}
+
+
 
