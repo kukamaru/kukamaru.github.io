@@ -50,6 +50,7 @@ function bootUp() {
 													// Stylesheets to load
 	style("notes.css","stylesheetForNotes");
 	style("style.css")
+	style("bars.css")
 }
 
 function bodyLoad() {
@@ -766,8 +767,15 @@ var debug1 = false; //	time render stop
 var debug2 = false; //	bar render stop
 
 var debugMenu = function(){
+
 	var div = document.getElementById("debug");
-	var hidden = (div.style.height == "0px");
+	var hidden = !(div.style.height == "200px");
+	if (!debug) { 
+		appendText("opening debug menu","alert"); 
+		appendText("debug = " + (debug = true),"status");
+	}
+	div.style.height = (hidden) ? "200px" : "0px";
+
 
 	debugMenu.check = function(i){
 		var checkbox = document.getElementById("debug" + i).checked;	
@@ -780,12 +788,7 @@ var debugMenu = function(){
 			debug2 = (!debug2);
 			appendText("debug2 = " + i + " = " + debug2);
 		}
+		else { appendText(i); console.log(i); }
 	}
 
-	if (!debug) { 
-		appendText("opening debug menu","alert"); 
-		appendText("debug = " + (debug = true),"status");
-	}
-
-	div.style.height = (hidden) ? "200px" : "0px";
 }
