@@ -23,11 +23,25 @@ var optionState = false;
 
 /* Init */
 function bootUp() {
-	function load(script) {
+	const head = document.getElementsByTagName('head')[0];
+	function load(src) {
 		var newScript = document.createElement('script');
-		newScript.src = script;
+		newScript.src = src;
 		newScript.type = 'text/javascript';
-		document.getElementsByTagName('head')[0].appendChild(newScript);
+
+		head.appendChild(newScript)
+	}
+
+	function style(href) {
+		var newStyle = document.createElement('link');
+		newStyle.href = href;
+		newStyle.rel = 'stylesheet';
+		if (arguments.length > 0) {
+			newStyle.id = arguments[1];
+			console.log(arguments[1]);
+		}
+
+		head.appendChild(newStyle)
 	}
 
 	load("debugtext.js");					// SCRIPTS TO LOAD
@@ -35,7 +49,9 @@ function bootUp() {
 	load("img/backgrounds.js");
 	load("img/themes.js");
 	load("notes.js");
-	
+													// Stylesheets to load
+	style("notes.css","stylesheetForNotes");
+	style("style.css")
 }
 
 function bodyLoad() {
