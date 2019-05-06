@@ -52,9 +52,7 @@ function appendText() {
 	}
 
 	appendText.toggle = function(){
-		//isHidden = (maintext.style.visibility == "hidden");
 		isHidden = (!maintextHider.checked);
-
 		maintext.style.visibility = (isHidden) ? "visible" : "hidden";
 	}
 
