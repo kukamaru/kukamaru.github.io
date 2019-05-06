@@ -131,14 +131,19 @@ function init() {
 
 
 
-
+var timerRunning = function(){
+	for (var i = 0;i<activeTimers.length; i++){
+		if (activeTimers[i].active) return true;
+	}
+	return false;
+}
 /* Main Function */
 
 function mainLoop() {
 	if (debug1) { return; } //DEBUG1 stops rendering
 
 	var d = new Date();
-	if (timerRunning){
+	if (timerRunning()){
 		document.getElementById("timediv").style.background = "var(--active-bar)";
 	}
 	else {
@@ -150,9 +155,9 @@ function mainLoop() {
 	seconds = addZero(d.getSeconds());
 	ms = addZeroMs(d.getMilliseconds());
 
-	document.getElementById("text1").innerHTML = "" + hours;
-	document.getElementById("text2").innerHTML = ":" + minutes;
-	document.getElementById("text3").innerHTML = ":" + seconds;
+	text1.innerHTML = "" + hours;
+	text2.innerHTML = ":" + minutes;
+	text3.innerHTML = ":" + seconds;
 
 	if(msVisible == true){
 		document.getElementById("text4").innerHTML = "." + ms;
@@ -197,30 +202,28 @@ function newTimer(){
 
 
 
-	newTimer.clicked = function(obj) {
-		digits = numLength(obj.value);
-		if (digits >= 2){ obj.value = ""; }
+	newTimer.clicked = function(elem) {
+		digits = numLength(elem.value);
+		if (digits >= 2){ elem.value = ""; }
 	}
 
-	newTimer.changed = function(obj) {
+	newTimer.changed = function(elem) {
 
-		digits = numLength(obj.value);
-		appendText("value: " + obj.value + " from field name:" + obj.name + ".... " + digits + "digits","debug");
+		digits = numLength(elem.value);
+		appendText("value: " + elem.value + " from field name:" + elem.name + ".... " + digits + "digits","debug");
 
 		if (digits == 2){
-			if (obj.name == "h") {	form.m.focus(); }
-			else if  (obj.name == "m") { form.s.focus(); }
-			else if  (obj.name == "s") { form.submit.focus(); }					
+			if (elem.name == "h") {	form.m.focus(); }
+			else if  (elem.name == "m") { form.s.focus(); }
+			else if  (elem.name == "s") { form.submit.focus(); }					
 		}
-		else if (digits > 2){ obj.value = ""; }
+		else if (digits > 2){ elem.value = ""; }
 	}
 
 	newTimer.submitButton = function() { submit(); }
-	newTimer.faveButton = function(){ 
-		appendText("faves not working","alert");
-	}
 
-	var getForm = function(){
+
+	function getForm(){
 		var h = form.h.value;
 		var m = form.m.value;
 		var s = form.s.value;
@@ -234,59 +237,60 @@ function newTimer(){
 		if (form.inverted.checked){ style = "inverted " + style; }
 		if (form.protected.checked){ style = "protected " + style; }
 
-		var newFave = { 
+		var newTimerObject = { 
 			duration: timeToMs(s,m,h),
 			size: form.size.value,
 			text: form.text.value,
 			soundID: form.sound.value,
 			protected: form.protected.value,
 
-			countdown: countdown.checked,
-			inverted: inverted.checked,
+			countdown: form.countdown.checked,
+			inverted: form.inverted.checked,
 
 			style: style
 		};
 
-
-		//deprecate this line
-		eggTimer(s,m,h,soundID,style,text);
-
-
-		return newFave;
+		return newTimerObject;
 	}
+
+	newTimer.faveButton = function(){ 
+		appendText("faves not working","alert");
+		var i = getForm();
+
+		console.log(i);
+	}
+
 	function submit(){
-		launchTimerObject(getForm());
+		startTimer(getForm());
 
 		form.reset();
 		menuHide();
 	}
 }
 
-function launchTimerObject(){
-	console.log(arguments);
+
+
+function eggTimer(eS = 10,eM = 0,eH = 0,sound,style,text) {
+	x = {
+		duration: timeToMs(eS,eM,eH),
+		sound: sound,
+		style: style,
+		text: text
+	};
+	startTimer(x);
 }
 
-function timeToMs(s = 0,m = 0,h = 0) {
-	return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
-}
 
 
-function eggTimer(eS = 0,eM = 0,eH = 0,sound,style,text) {
-	ms = timeToMs(eS,eM,eH);
-	startTimer(ms,sound,style,text);
-}
 
-var testVariable;
-var timerID = 0; //replace with a counter function
 var newTimerID = (function() {
 	var counter = -1;
 
 	return function(){ counter++; return counter }
 })()
 
-function startTimer(ms,sound,style,text) {
-
-	return launchTimer(ms,sound,style,text);
+function startTimer(i) {
+	return launchTimer(i.duration,i.sound,i.style,i.text);
 
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 		var d = new Date(); 
@@ -295,10 +299,10 @@ function startTimer(ms,sound,style,text) {
 		function setAlarm(ID,T) {
 			return setTimeout(function(){alarm(ID);},T);
 		}
-		var timerID = newTimerID();
+		var ID = newTimerID();
 		var timerObject = 
 		{
-			ID: 		   timerID,
+			ID: 		   ID,
 			active: 		true,
 			text:  		text,
 
@@ -312,15 +316,11 @@ function startTimer(ms,sound,style,text) {
 			countdown:  style.includes("countdown"),
 			protected:  style.includes("protected"),
 
-			alarm: setAlarm(timerID,T)
+			alarm: setAlarm(ID,T)
 		};
 
 		activeTimers.push(timerObject);
 		newBar(timerObject.ID);
-		appendText("timerID" + timerObject.ID);
-
-		timersRunning++;
-
 		return timerObject;
 	}
 
@@ -331,26 +331,20 @@ function alarm(ID) {
 	var soundID = activeTimers[ID].soundID;
 	var isLooping = sounds[soundID].looping;
 
-	appendText(text,"alert");
-		//appendText("isLooping = " + isLooping);
-		//appendText("playing sound: " + sounds[soundID].src + " "+"("+soundID+")");
-		
-		var audio = new Audio(sounds[soundID].src);
-		if (isLooping){
-			audio.setAttribute("loop",true);
-			audio.play();
-			activeAlarms.push(audio);
+	appendText(text,"alert");		
+	var audio = new Audio(sounds[soundID].src);
+	if (isLooping){
+		audio.setAttribute("loop",true);
+		audio.play();
+		activeAlarms.push(audio);
 
-			alarmWindow(ID);
-		}
-		else { audio.play(); }
+		alarmWindow(ID);
+	}
+	else { audio.play(); }
 
-		hideBar(ID);
+	hideBar(ID);
 
-		activeTimers[ID].active = false;
-		timersRunning--;
-		if (timersRunning == 0) { timerRunning = false }
-		//appendText(timersRunning + " alarms remain","status")
+	activeTimers[ID].active = false;
 }
 
 function alarmWindow(ID) {
@@ -441,6 +435,20 @@ function alarmSnooze(){
 }
 
 /** BARS **/
+function clickedBar(ID) {
+	current = activeTimers[ID];
+	now = new Date().valueOf();
+
+	start = current.start.valueOf();
+	end = current.finish.valueOf();
+	elapsed = now-start;
+	total = end-start;
+	remainder = total-elapsed;
+
+	appendText("you clicked bar " + ID,"debug")
+	appendText("it has " + remainder + "ms left before alarm","debug")
+}
+
 function newBar(ID) {
 	var parent = document.getElementById('bars');
 	var div = document.createElement('div');
@@ -451,8 +459,10 @@ function newBar(ID) {
 	var msText = document.createElement('span');
 	var timeText = document.createElement('span');
 
+
 	div.setAttribute('class',"bar" + " " + activeTimers[ID].style);
 	div.setAttribute('id',"bar" + ID);
+	div.setAttribute('onclick',"clickedBar("+ID+")");
 	bar.setAttribute('class',"progressbar" + " " + activeTimers[ID].style);
 	bar.setAttribute('id',"progress" + ID);
 
@@ -810,6 +820,10 @@ function addZeroMs(i) {
 		i = "0" + i;
 	}
 	return i;
+}
+
+function timeToMs(s = 0,m = 0,h = 0) {
+	return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
 }
 
 function numLength(x) { return x.toString().length; }

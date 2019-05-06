@@ -15,22 +15,53 @@ function appendText() {
 
 
 	function load(){
-		if (maintext == undefined) {
-				// create maintext
+		if (document.getElementById("maintext") == undefined) {
+			let body = document.getElementsByTagName("body")[0];
+			var input = document.createElement("input");
+			var label = document.createElement("label");
+			var wrapper = document.createElement("div");
+			var div =	document.createElement("div");
+
+			var hiderdiv = document.createElement("div");
+			var hidertext = document.createTextNode("<");
+
+			wrapper.id = "maintextwrapper";
+			div.id = "maintext";
+			div.className = "maintext";
+
+			hiderdiv.id = "maintextHiderDiv"
+			hiderdiv.className = "local"
+
+			input.type = "checkbox";
+			input.id = "maintextHider";
+			input.checked = true;
+
+			label.setAttribute("for","maintextHider");
+			label.setAttribute("onClick","appendText.toggle();");
+			label.appendChild(hidertext);
+
+			wrapper.appendChild(div);
+			hiderdiv.appendChild(input);
+			hiderdiv.appendChild(label);
+			body.appendChild(hiderdiv);
+			body.appendChild(wrapper);
+
 		}
 		maintext.style.visibility = "visible";
 		init.style("debugtext.css");
 	}
 
 	appendText.toggle = function(){
-		isHidden = (maintext.style.visibility == "hidden");
+		//isHidden = (maintext.style.visibility == "hidden");
+		isHidden = (!maintextHider.checked);
+
 		maintext.style.visibility = (isHidden) ? "visible" : "hidden";
 	}
 
 
 	if (document.getElementById("maintext") == undefined) {
 		console.log("no div, aborting")
-		return;
+		//return;
 	}
 
 	if (debug) { console.log(arguments); }
