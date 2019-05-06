@@ -72,7 +72,7 @@ function init() {
 			 myVar = setInterval(mainLoop, 11);
 		};
 
-		const isLocal = (window.location.href == "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html")
+		const isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
 
 		function initLocal() {
 			
