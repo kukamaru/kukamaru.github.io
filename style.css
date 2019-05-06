@@ -385,30 +385,6 @@ div.alarmIcon {
 
 /* Output Text Things */
 
-div.maintext {
-	font-size:8px;
-	background: white;
-	bottom:0;
-	position:absolute;
-	left:2vw;
-}
-
-div.maintext p {
-	margin: 0;
-	z-index: -2;
-}
-
-div.maintext p.odd  {	background: rgb(245,245,245);   }
-div.maintext p.even {	background: white; }
-div.maintext #welcome { font-weight: bold; }
-div.maintext p.freeze { color:var(--freeze-color);  }
-div.maintext p.alert  { color:var(--alert-color); font-weight: bold; }
-div.maintext p.status { color:var(--status-color);  }
-div.maintext p.debug { background:#631824; color:white; }
-div.maintext p.blue.debug { background-color: navy; color:lightblue; }
-div.maintext p.yellow.debug { background-color: lightyellow; color:orange; }
-div.maintext p.caps { font-family:var(--font-family-emphasis); font-weight: normal; }
-div.maintext p span.timestamp { font-weight: normal; font-family: var(--font-family); }
 
 
 div.timeHighlight {

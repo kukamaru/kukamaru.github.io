@@ -22,7 +22,7 @@ var clockExists;
 /* Init */
 function init() {
 
-
+	init.style = function(i) { style(i); }
 	function load(src) {
 		var newScript = document.createElement('script');
 		newScript.src = src;

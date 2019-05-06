@@ -1,5 +1,15 @@
 iT = 0;
 function appendText(i,c) {
+	var div = document.getElementById("maintext");
+
+	div.style.visibility = "visible";
+	init.style("debugtext.css")
+
+	appendText.toggle = function(){
+		isHidden = (div.style.visibility == "hidden");
+		div.style.visibility = (isHidden) ? "visible" : "hidden";
+	}
+
 	// terminates debug messages if debug
 	if (c){
 		var f = c.includes("debug");
@@ -35,6 +45,10 @@ function appendText(i,c) {
 
 
 	document.getElementById("maintext").appendChild(node);
+
+	setTimeout(function(){
+		node.setAttribute("class","faded");
+	},15000) // fade after 15 secs
 
 	iT = iT + 1;
 }
