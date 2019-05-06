@@ -1,11 +1,17 @@
 function notes() {
-	var div = document.getElementById("notesdiv");
-	var n = document.getElementById("notes");
 
 	notes.show = function(){
-		div.style.right = "3vw";
-		div.style.top = "40vh";
+		notesDiv.style.right = "3vw";
+		notesDiv.style.top = "40vh";
+
+		appendText("localstorage " + localStorage.getItem('notes'));
+		notesInput.value = localStorage.getItem('notes');
+
+	}
+	notes.changed = function(){
+		appendText(notesInput.value,"debug yellow");
+
+		localStorage.setItem('notes', notesInput.value);
 	}
 
-	appendText(n.value,"debug yellow");
 }

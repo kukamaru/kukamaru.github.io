@@ -1,7 +1,7 @@
-div#notesdiv.[draggable=true] {
+div#notesDiv.[draggable=true] {
 	cursor: move;
 }
-div#notesdiv {
+div#notesDiv {
 	transition: 
 	right 	0.2s ease-in-out,
 	top 		0.2s ease-in-out,
@@ -20,7 +20,7 @@ div#notesdiv {
 
 }
 
-textarea#notes {
+textarea#notesInput {
 	transition: height 0.3s linear;
 
 	position: relative;
@@ -39,10 +39,10 @@ textarea#notes {
 	background-color: lightyellow;
 	border: 1px orange solid;
 }
-textarea#notes:focus {
+textarea#notesInput:focus {
 	height: 200px;
 	outline: transparent;
 }
-textarea#notes::placeholder {
+textarea#notesInput::placeholder {
 	color: orange;
 }

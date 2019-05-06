@@ -251,41 +251,46 @@ function eggTimer(eS,eM,eH,sound,style,text) {
 }
 
 
-var timerID = 0;
-function startTimer(T,soundID = 0,style = "noStyle",text = "noText") {
-	var d = new Date(); 
-	var f = new Date(d.valueOf() + T);
+var timerID = 0; //replace with a counter function
 
-	activeTimers.push(
-	{
-		ID: 			timerID,
-		active: 		true,
-		text:  		text,
+function startTimer(ms,sound,style,text) {
+	launchTimer(ms,sound,style,text);
 
-		start: 		d,
-		finish: 		f,
-		duration: 	T,
+	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
+		var d = new Date(); 
+		var f = new Date(d.valueOf() + T);
 
-		style: 		style,
-		soundID: 	soundID,
-		inverted:   style.includes("inverted"),
-		countdown:  style.includes("countdown"),
-		protected:  style.includes("protected"), 
+		activeTimers.push(
+		{
+			ID: 			timerID,
+			active: 		true,
+			text:  		text,
+
+			start: 		d,
+			finish: 		f,
+			duration: 	T,
+
+			style: 		style,
+			soundID: 	soundID,
+			inverted:   style.includes("inverted"),
+			countdown:  style.includes("countdown"),
+			protected:  style.includes("protected"), 
+		}
+		);
+
+		newBar(timerID);
+		setAlarm(timerID,T,text,soundID);
+
+		timersRunning++;
+		timerRunning = true;
+		timerID++;
 	}
-	);
 
-	newBar(timerID);
-	setAlarm(timerID,T,text,soundID);
-
-	timersRunning++;
-	timerRunning = true;
-	timerID++;
-}
-
-/**ALARM CORE FUNCTION **/
-function setAlarm(ID,T,text,soundID) {
-	setTimeout(function(){alarm(ID);}
-		,T)
+	/**ALARM CORE FUNCTION **/
+	function setAlarm(ID,T) {
+		setTimeout(function(){alarm(ID);}
+			,T)
+	}
 }
 
 function alarm(ID) {
