@@ -178,7 +178,7 @@ function setTheme(ID) {
 
 //New Timer Menu Function
 
-var newTimer = function() {
+function newTimer(){
 	menuShow("newTimerMenu");
 	var form = newTimerForm;
 	var div = newTimerMenu;
@@ -250,12 +250,13 @@ function eggTimer(eS,eM,eH,sound,style,text) {
 	startTimer(ms,sound,style,text);
 }
 
-
+var testVariable;
 var timerID = 0; //replace with a counter function
 
 function startTimer(ms,sound,style,text) {
 	launchTimer(ms,sound,style,text);
 
+	/*
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 		var d = new Date(); 
 		var f = new Date(d.valueOf() + T);
@@ -274,7 +275,7 @@ function startTimer(ms,sound,style,text) {
 			soundID: 	soundID,
 			inverted:   style.includes("inverted"),
 			countdown:  style.includes("countdown"),
-			protected:  style.includes("protected"), 
+			protected:  style.includes("protected"),
 		}
 		);
 
@@ -285,12 +286,42 @@ function startTimer(ms,sound,style,text) {
 		timerRunning = true;
 		timerID++;
 	}
+	*/
 
-	/**ALARM CORE FUNCTION **/
-	function setAlarm(ID,T) {
-		setTimeout(function(){alarm(ID);}
-			,T)
-	}
+	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
+	var d = new Date(); 
+	var f = new Date(d.valueOf() + T);
+		function setAlarm(ID,T) {
+			var a = setTimeout(function(){alarm(ID);},T);
+			return a;
+		}
+
+	var timerObject = 
+	{
+		ID: 			timerID,
+		active: 		true,
+		text:  		text,
+
+		start: 		d,
+		finish: 		f,
+		duration: 	T,
+
+		style: 		style,
+		soundID: 	soundID,
+		inverted:   style.includes("inverted"),
+		countdown:  style.includes("countdown"),
+		protected:  style.includes("protected"),
+
+		alarm: setAlarm(timerID,T)
+	};
+
+	activeTimers.push(timerObject);
+
+	newBar(timerID);
+	timersRunning++;
+	timerRunning = true;
+	timerID++;
+	}	
 }
 
 function alarm(ID) {
