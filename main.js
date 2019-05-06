@@ -26,7 +26,8 @@ var KnownElement = false;
 /* Init */
 function init() {
 
-	init.style = function(i) { style(i); }
+	const head = document.getElementsByTagName('head')[0];
+
 	function load(src) {
 		var newScript = document.createElement('script');
 		newScript.src = src;
@@ -43,7 +44,9 @@ function init() {
 			newStyle.id = arguments[1];
 		}
 		head.appendChild(newStyle);
-	}	const head = document.getElementsByTagName('head')[0];
+	}	
+
+	init.style = function(i) { style(i); }
 
 	// SCRIPTS TO LOAD
 	load("debugtext.js");
@@ -61,18 +64,15 @@ function init() {
 
 
 	init.bodyOnLoad = function() {
-		var body = document.getElementsByTagName("body")[0];
+		const body = document.getElementsByTagName("body")[0];
 
-
+		//start main loop if clock exists
 		clockExists = (document.getElementById("timediv") != undefined);
 		if (clockExists) { 
 			 myVar = setInterval(mainLoop, 11);
 		};
 
-
-		var isLocal = function() {
-			return (window.location.href != "http://www.utamaru.com/");
-		}
+		const isLocal = (window.location.href == "file:///C:/Users/utamaru/workspace/kukamaru.github.io/index.html")
 
 		function initLocal() {
 			
@@ -106,7 +106,7 @@ function init() {
 			KnownElement = true;
 		}
 		
-		if (isLocal()) { initLocal(); }
+		if (isLocal) { initLocal(); }
 		if (KnownElement) {
 
 			msVisCheck();
@@ -179,8 +179,8 @@ function setTheme(ID) {
 
 var newTimer = function() {
 	menuShow("newTimerMenu");
-	var form = document.getElementById("newTimerForm");
-	var div = document.getElementById("newTimerMenu");
+	var form = newTimerForm;
+	var div = newTimerMenu;
 
 
 	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
@@ -318,62 +318,59 @@ function alarmWindow(ID) {
 	alarmShow();
 	firstAlarm = (activeAlarms.length == 1);
 
-	var div = document.getElementById('alarmWindow');
-	var buttondiv = document.getElementById('alarmButtons');
-	var bg = document.getElementById('alarmBG');
-	var content = document.getElementById('alarmContent');
+	//create buttons if first
+	if (firstAlarm){ 						
 
-		if (firstAlarm){ 						//create buttons if first
+		var newStopButton = document.createElement('button');
+		newStopButton.setAttribute("onclick","alarmStop()");
+		newStopButton.setAttribute("id","stopButton");
+		newStopButton.setAttribute("class","stopButton");
+		newStopButton.innerHTML = "-- Stop Alarm --";
 
-			var stopButton = document.createElement('button');
-			stopButton.setAttribute("onclick","alarmStop()");
-			stopButton.setAttribute("id","stopButton");
-			stopButton.setAttribute("class","stopButton");
-			stopButton.innerHTML = "-- Stop Alarm --";
-
-			if (canSnooze){
-				var snoozeButton = document.createElement('button');
-				snoozeButton.setAttribute("onclick",'alarmSnooze()');
-				snoozeButton.setAttribute("id","snoozeButton");
-				snoozeButton.setAttribute("class","snoozeButton");
-				snoozeButton.innerHTML = "Snooze Alarm <br> (5 minutes)";
-			}
-
-			icon = document.createElement('div');
-			icon.setAttribute("class","alarmIcon");
-
-			content.appendChild(icon);
-
-			buttondiv.appendChild(stopButton);
-			buttondiv.appendChild(snoozeButton);
-
-		}
-		else {
-			var stopButton = document.getElementById('stopButton');
-			var snoozeButton = document.getElementById('snoozeButton');
-
-			stopButton.innerHTML = "-- Stop Alarms (" + activeAlarms.length + ") --";
-			if (snoozeButton) { snoozeButton.innerHTML = "Snooze Alarms <br> (5 minutes)"; }
-			
-			var hr = document.createElement('hr');
-			content.appendChild(hr);
+		if (canSnooze){
+			var newSnoozeButton = document.createElement('button');
+			newSnoozeButton.setAttribute("onclick",'alarmSnooze()');
+			newSnoozeButton.setAttribute("id","snoozeButton");
+			newSnoozeButton.setAttribute("class","snoozeButton");
+			newSnoozeButton.innerHTML = "Snooze Alarm <br> (5 minutes)";
 		}
 
-		var p = document.createElement('p');
-		p.innerHTML = activeTimers[ID].text;
-		p.setAttribute("id","alarmText"+ID);
-		content.appendChild(p);
+		icon = document.createElement('div');
+		icon.setAttribute("class","alarmIcon");
 
-		div.style.opacity = 1;
+		alarmContent.appendChild(icon);
+
+		alarmButtons.appendChild(newStopButton);
+		alarmButtons.appendChild(newSnoozeButton);
+	}
+	//modify text on buttons if there are more alarms
+	//and add a <hr>
+	else {
+		stopButton.innerHTML = "-- Stop Alarms (" + activeAlarms.length + ") --";
+		if (document.getElementById('snoozeButton')) { 
+			snoozeButton.innerHTML = "Snooze Alarms <br> (5 minutes)"; 
+		}
+
+		var hr = document.createElement('hr');
+		alarmContent.appendChild(hr);
 	}
 
-	function alarmStop() {
-		for(let i=0; i < activeAlarms.length; i++) {
-			activeAlarms[i].pause();
-		}
-		activeAlarms = [];
-		alarmHide();
-	} 
+	//text to window
+	var p = document.createElement('p');
+	p.innerHTML = activeTimers[ID].text;
+	p.setAttribute("id","alarmText"+ID);
+	alarmContent.appendChild(p);
+
+	alarmWindowDiv.style.opacity = 1;
+}
+
+function alarmStop() {
+	for(let i=0; i < activeAlarms.length; i++) {
+		activeAlarms[i].pause();
+	}
+	activeAlarms = [];
+	alarmHide();
+} 
 
 //alarm window manip
 function alarmShow(){
@@ -383,23 +380,17 @@ function alarmShow(){
 	bg.style.visibility = "visible";
 }
 function alarmHide(){
-	var bg = 		document.getElementById("alarmBG");
-	var div = 			document.getElementById('alarmWindow');
-	var buttondiv = 	document.getElementById('alarmButtons');
-	var content = 		document.getElementById('alarmContent');
-	var stopButton = 	document.getElementById("stopButton");
-
-	while(content.firstChild) {
-		content.removeChild(content.firstChild);
+	while(alarmContent.firstChild) {
+		alarmContent.removeChild(alarmContent.firstChild);
 	}
-	while(buttondiv.firstChild) {
-		buttondiv.removeChild(buttondiv.firstChild);
+	while(alarmButtons.firstChild) {
+		alarmButtons.removeChild(alarmButtons.firstChild);
 	}
 
-	div.style.opacity = 0;
-	bg.style.background = "rgba(0,0,0,0)";
+	alarmWindowDiv.style.opacity = 0;
+	alarmBG.style.background = "rgba(0,0,0,0)";
 
-	setTimeout(function(){bg.style.visibility = "hidden";}, 250);
+	setTimeout(function(){alarmBG.style.visibility = "hidden";}, 250);
 }
 
 function alarmSnooze(){
