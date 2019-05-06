@@ -6,35 +6,40 @@ const themes = [
 
 	bg: 0,
 	debug: 2,
-	colors: [ 
+	css: [ 
 		{
-			css: "--background-color",
+			field: "--background-color",
 			val: "white"
 		},
 
 		{
-			css: "--buttonBackgroundColor",
+			field: "--buttonBackgroundColor",
 			val: "white"
 		},
 
 		{
-			css: "--active-bar",
+			field: "--active-bar",
 			val: "blueviolet"
 		},
 
 		{
-			css: "--stopped-bar",
+			field: "--stopped-bar",
 			val: "indigo"
 		},
 
 		{
-			css:"--bar-completing",
+			field:"--bar-completing",
 			val:"green"
 		},
 
 		{
-			css:"--font-family",
+			field:"--font-family",
 			val:"unibody"
+		},
+
+		{
+			field:"--font-family-emphasis",
+			val:"unibody-caps"
 		}
 	]
 
@@ -47,73 +52,83 @@ const themes = [
 
 	bg: 1,
 	debug: 0,
-	colors: [ 
+	css: [ 
 		{
-			css: "--background-color",
+			field: "--background-color",
 			val: "black"
 		},
 
 		{
-			css: "--buttonBackgroundColor",
+			field: "--buttonBackgroundColor",
 			val: "black"
 		},
 
 		{
-			css: "--active-bar",
+			field: "--active-bar",
 			val: "red"
 		},
 
 		{
-			css: "--stopped-bar",
+			field: "--stopped-bar",
 			val: "darkred"
 		},
 
 		{
-			css:"--bar-completing",
+			field:"--bar-completing",
 			val:"orange"
 		},
 
 		{
-			css:"--font-family",
+			field:"--font-family",
 			val:"unibody"
+		},
+
+		{
+			field:"--font-family-emphasis",
+			val:"unibody-black"
 		}
 		]
 	},
 
 	{
 
-	name: "dark",
+	name: "vintage classic",
 
 	bg: 1,
 	debug: 0,
-	colors: [ 
+	css: [ 
 		{
-			css: "--background-color",
+			field: "--background-color",
 			val: "lightyellow"
 		},
 
 		{
-			css: "--buttonBackgroundColor",
+			field: "--buttonBackgroundColor",
 			val: "yellow"
 		},
 
 		{
-			css: "--active-bar",
+			field: "--active-bar",
 			val: "orange"
 		},
 
 		{
-			css: "--stopped-bar",
+			field: "--stopped-bar",
 			val: "black"
 		},
 
 		{
-			css:"--bar-completing",
+			field:"--bar-completing",
 			val:"green"
 		},
 
 		{
-			css:"--font-family",
+			field:"--font-family",
+			val:"times new roman"
+		},
+
+		{
+			field:"--font-family-emphasis",
 			val:"times new roman"
 		}
 		]

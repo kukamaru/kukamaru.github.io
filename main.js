@@ -1,5 +1,5 @@
-// loops Main function at 11ms rate
-var myVar = setInterval(mainLoop, 11);
+// loops Main function at 11ms rate, initialised on body load
+var myvar
 
 //faves (wip)
 var myFaves = 3;
@@ -18,6 +18,10 @@ var activeAlarms = [];
 var windowState = false;
 var optionState = false;
 var clockExists;
+
+
+var KnownElement = false;
+
 
 /* Init */
 function init() {
@@ -57,16 +61,19 @@ function init() {
 
 
 	init.bodyOnLoad = function() {
+		var body = document.getElementsByTagName("body")[0];
+
 
 		clockExists = (document.getElementById("timediv") != undefined);
-		if (!clockExists) { clearInterval(myVar); return; };
-		//kills timer 	 if clock doesnt exist, stops rendering.
-		//must be on load
+		if (clockExists) { 
+			 myVar = setInterval(mainLoop, 11);
+		};
 
 
 		var isLocal = function() {
 			return (window.location.href != "http://www.utamaru.com/");
 		}
+
 		function initLocal() {
 			
 			if (typeof(Storage) !== "undefined") {
@@ -75,26 +82,38 @@ function init() {
 			else {
 				appendText("no storage");
 			}
+			appendText("KnownElement " + KnownElement);
 
 			style("local.css");
 			setTheme(0);
 
-			var header = document.getElementById("header");
 			var t = document.createTextNode(" (local version)");
-
 			var span = document.createElement("span");
 			span.style.color = "var(--alert-color)";
 			span.appendChild(t);
 
 			header.appendChild(span);
 		}
+
+		if (!document.getElementById("header")){
+			header = document.createElement("h1");
+			text = document.createTextNode("404 header not found");
+			header.appendChild(text);
+			header.id="header";
+			body.appendChild(header);
+		}	
+		else {
+			KnownElement = true;
+		}
 		
 		if (isLocal()) { initLocal(); }
+		if (KnownElement) {
 
-		msVisCheck();
-		tsVisCheck();
-		loadFaves();
+			msVisCheck();
+			tsVisCheck();
+			loadFaves();
 
+		}
 	}
 }
 
@@ -130,33 +149,27 @@ function mainLoop() {
 	renderBars();
 }
 
-//Favorite Timer
-
-
+//Themes
 function setTheme(ID) {
-	function setCssVar(cssVariable,value){
-		let root = document.documentElement;
-		root.style.setProperty(cssVariable,value);
-	}
-
 	function setBg(theme){
-		var debugbg = document.getElementById("debug");
-		var bg = document.getElementsByTagName("body")[0];
-		debugbg.style.background = backgrounds.url(theme.debug);
-		bg.style.background = backgrounds.url(theme.bg);
+		var body = document.getElementsByTagName("body")[0];
+		body.style.background = backgrounds.url(theme.bg);
+		if (document.getElementById("debugDiv") != undefined){
+			debugDiv.style.background = backgrounds.url(theme.debug);
+		}
 	}
 
-	function setColors(theme){
-		var x = theme.colors.length;
-		for (var i = 0; i < x; i++) {
-			setCssVar(theme.colors[i].css,theme.colors[i].val);
+	function setCSSVars(theme){
+		let root = document.documentElement;
+		let x = theme.css.length;
+		for (let i = 0; i < x; i++) {
+			root.style.setProperty(theme.css[i].field,theme.css[i].val);
 		}
-
 	}
 
 	appendText("theme name:  " + themes[ID].name);
 	setBg(themes[ID]);
-	setColors(themes[ID]);
+	setCSSVars(themes[ID]);
 
 }
 
@@ -607,20 +620,20 @@ function deleteFaveButton(id) {
 function collapseSpacer(i) {
 	var collapse = i;
 
-	upper = document.getElementById("prefav");
-	lower = document.getElementById("postfav");
-	label = document.getElementById("nofav");
+	//upper = document.getElementById("prefav");
+	//lower = document.getElementById("postfav");
+	//label = document.getElementById("nofav");
 
 	if (collapse) {
-		upper.style.padding = "2px 0 2px";
-		lower.style.padding = "0 0 12px";
-		label.style.opacity = 1;
+		prefav.style.padding = "2px 0 2px";
+		postfav.style.padding = "0 0 12px";
+		nofav.style.opacity = 1;
 		faveSpacerCollapsed = true;
 	}
 	else {
-		upper.style.padding = "10px 0";
-		lower.style.padding = "10px 0";
-		label.style.opacity = 0;
+		prefav.style.padding = "10px 0";
+		postfav.style.padding = "10px 0";
+		nofav.style.opacity = 0;
 		faveSpacerCollapsed = false;		
 	}
 }
@@ -682,6 +695,52 @@ window.onbeforeunload = function() {
 
 
 
+// Testing Junk
+
+function testButton1() {
+	appendText("testButton1 pressed","alert");
+	eggTimer(0,21,4,0,"big countdown","bigtest");
+	eggTimer(5,0,0,1,"countdown","medium test");
+	eggTimer(15,0,0,2,"small","smalltest + looped sound");
+}
+
+function testButton2() {
+	appendText("testButton2 pressed");
+	eggTimer(1,0,0,2,"big","loop alarmspam")
+}
+
+// Debug Trigger and Menu
+
+var debug = false;
+var debug1 = false; //	time render stop
+var debug2 = false; //	bar render stop
+
+var debugMenu = function(){
+
+	var hidden = !(debugDiv.style.height == "200px");
+	if (!debug) { 
+		appendText("opening debug menu","alert"); 
+		appendText("debug = " + (debug = true),"status");
+	}
+	debugDiv.style.height = (hidden) ? "200px" : "0px";
+
+
+	debugMenu.check = function(){
+		debug1 = debugCheck1.checked;
+		debug2 = debugCheck2.checked;
+
+			appendText("debug1 = " + i + " = " + debug1);
+
+			appendText("debug2 = " + i + " = " + debug2);
+
+	}
+
+}
+
+
+
+
+
 //Number Things for clocks etc.
 function renderTime(i) {
 	var d = new Date(i);
@@ -724,81 +783,3 @@ function addZeroMs(i) {
 function numLength(x) { return x.toString().length; }
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
-
-/* Cookies */
-
-/* use LocalStorage instead */
-function setCookie(cname,cvalue,exdays) {
-	var d = new Date();
-	d.setTime(d.getTime() + (exdays*24*60*60*1000));
-	var expires = "expires=" + d.toGMTString();
-
-	appendText("cookie saved:" + cname + "=" + cvalue);
-	appendText(expires,"status")
-
-	document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
-}
-
-function getCookie(cname) {
-	var name = cname + "=";
-	var decodedCookie = decodeURIComponent(document.cookie);
-	var ca = decodedCookie.split(';');
-	for(var i = 0; i < ca.length; i++) {
-		var c = ca[i];
-		while (c.charAt(0) == ' ') {
-			c = c.substring(1);
-		}
-		if (c.indexOf(name) == 0) {
-			return c.substring(name.length, c.length);
-		}
-	}
-	return "";
-}
-
-
-// Testing Junk
-
-function testButton1() {
-	appendText("testButton1 pressed","alert");
-	eggTimer(0,21,4,0,"big countdown","bigtest");
-	eggTimer(5,0,0,1,"countdown","medium test");
-	eggTimer(15,0,0,2,"small","smalltest + looped sound");
-}
-
-function testButton2() {
-	appendText("testButton2 pressed");
-	eggTimer(1,0,0,2,"big","loop alarmspam")
-}
-
-// Debug Trigger and Menu
-
-var debug = false;
-var debug1 = false; //	time render stop
-var debug2 = false; //	bar render stop
-
-var debugMenu = function(){
-
-	var div = document.getElementById("debug");
-	var hidden = !(div.style.height == "200px");
-	if (!debug) { 
-		appendText("opening debug menu","alert"); 
-		appendText("debug = " + (debug = true),"status");
-	}
-	div.style.height = (hidden) ? "200px" : "0px";
-
-
-	debugMenu.check = function(i){
-		var checkbox = document.getElementById("debug" + i).checked;	
-		if (i == 1) { 
-			debug1 = (!debug1); 
-			appendText("debug1 = " + i + " = " + debug1);
-		}
-
-		if (i == 2) { 
-			debug2 = (!debug2);
-			appendText("debug2 = " + i + " = " + debug2);
-		}
-		else { appendText(i); console.log(i); }
-	}
-
-}

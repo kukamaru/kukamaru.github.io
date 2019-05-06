@@ -14,9 +14,9 @@ div.maintext p {
 	z-index: -2;
 }
 
-div.maintext p, div.maintext p * {
+div.maintext p.faded, div.maintext p.faded * {
 	transition-property: opacity, background-color;
-	transition-duration: 5s;
+	transition-duration: 10s;
 	transition-timing-function: ease-in-out;
 }
 
@@ -32,4 +32,4 @@ div.maintext p.yellow.debug { background-color: lightyellow; color:orange; }
 div.maintext p.caps { font-family:var(--font-family-emphasis); font-weight: normal; }
 div.maintext p span.timestamp { font-weight: normal; font-family: var(--font-family); }
 div.maintext p.faded, div.maintext p.faded *
-{ opacity: 0.4; background-color: rgba(255,255,255,0.4); }
+{ opacity: 0; }

@@ -1,60 +1,91 @@
-iT = 0;
-function appendText(i,c) {
-	var div = document.getElementById("maintext");
+var linenumber = (function() {
+	var counter = 0;
 
-	div.style.visibility = "visible";
-	init.style("debugtext.css")
+	return function(){ counter++; return counter }
+})()
+
+
+function appendText() {
+
+	appendText.clear = function() {
+		while(maintext.firstChild){
+			maintext.removeChild(maintext.firstChild);
+		}
+	}
+
+
+	function load(){
+		if (maintext == undefined) {
+				// create maintext
+		}
+		maintext.style.visibility = "visible";
+		init.style("debugtext.css");
+	}
 
 	appendText.toggle = function(){
-		isHidden = (div.style.visibility == "hidden");
-		div.style.visibility = (isHidden) ? "visible" : "hidden";
+		isHidden = (maintext.style.visibility == "hidden");
+		maintext.style.visibility = (isHidden) ? "visible" : "hidden";
 	}
 
-	// terminates debug messages if debug
-	if (c){
-		var f = c.includes("debug");
-		if ((f) && (!debug)) { return; }
+
+	if (document.getElementById("maintext") == undefined) {
+		console.log("no div, aborting")
+		return;
 	}
 
-	var text = i;
-	var textClass = evenOdd(iT);
-	if (c){ textClass = textClass + " " + c; }
+	if (debug) { console.log(arguments); }
 
+
+	printtext(arguments[0],arguments[1]);
 
 	
-	var node = document.createElement("p");
-	var textnode = document.createTextNode(text);
-	var tsNode = document.createElement("span");
 
-	var d = new Date();
+	function printtext(i,c){
+		var iT = linenumber();
 
-	var hours = addZero(d.getHours());
-	var minutes = addZero(d.getMinutes());
-   var seconds = addZero(d.getSeconds());
-
-	var tsText = document.createTextNode("[" + hours + ":" + minutes + ":" + seconds + "] ");
+		//run load if first line
+		if (iT == 1) { load(); }
 
 
-	node.setAttribute("id",iT);
-	node.setAttribute("class",textClass);
-	tsNode.setAttribute("class","timestamp");
+		// terminates debug messages if debug isnt active
+		if (c){
+			var check = c.includes("debug");
+			if ((check) && (!debug)) { return; }
+		}
 
-	tsNode.appendChild(tsText);
-	node.appendChild(tsNode)
-	node.appendChild(textnode);
+		// the node generation.
+	
+		var text = i;
+		var textClass = evenOdd(iT);
+		if (c){ textClass = textClass + " " + c; }
+
+		
+		var node = document.createElement("p");
+		var textnode = document.createTextNode(text);
+		var tsNode = document.createElement("span");
+
+		var d = new Date();
+
+		var hours = addZero(d.getHours());
+		var minutes = addZero(d.getMinutes());
+	   var seconds = addZero(d.getSeconds());
+
+		var tsText = document.createTextNode("[" + hours + ":" + minutes + ":" + seconds + "] ");
 
 
-	document.getElementById("maintext").appendChild(node);
+		node.setAttribute("id",iT);
+		node.setAttribute("class",textClass);
+		tsNode.setAttribute("class","timestamp");
 
-	setTimeout(function(){
-		node.setAttribute("class","faded");
-	},15000) // fade after 15 secs
+		tsNode.appendChild(tsText);
+		node.appendChild(tsNode)
+		node.appendChild(textnode);
 
-	iT = iT + 1;
-}
 
-function clearText() {
-	while(maintext.firstChild){
-		maintext.removeChild(maintext.firstChild);
+		maintext.appendChild(node);
+
+		setTimeout(function(){
+			node.setAttribute("class",textClass + " faded");
+		},15000) // fade after 15 secs
 	}
 }
