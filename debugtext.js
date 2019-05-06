@@ -1,9 +1,8 @@
 var linenumber = (function() {
-	var counter = 0;
+	var counter = 0; //counter starts at 1...
 
 	return function(){ counter++; return counter }
 })()
-
 
 function appendText() {
 
