@@ -115,6 +115,17 @@ function init() {
 
 		}
 		appendText("loaded...","status");
+
+		document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
+		event.preventDefault();
+		newTimer.submitButton();
+		},false);
+
+		document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+			event.preventDefault();
+			newTimer.faveButton();
+		},false);
+
 	}
 }
 
@@ -184,15 +195,6 @@ function newTimer(){
 	var div = newTimerMenu;
 
 
-	document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
-		event.preventDefault();
-		newTimer.submitButton();
-	},false);
-
-	document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
-		event.preventDefault();
-		newTimer.faveButton();
-	},false);
 
 
 	newTimer.clicked = function(obj) {
@@ -218,7 +220,7 @@ function newTimer(){
 		appendText("faves not working","alert");
 	}
 
-	function submit(){
+	var getForm = function(){
 		var h = form.h.value;
 		var m = form.m.value;
 		var s = form.s.value;
@@ -226,44 +228,77 @@ function newTimer(){
 		var text = form.text.value;
 		var soundID = form.sound.value;
 		var protected = form.protected.value;
-		var style = size;
-
+		
+		var style = form.size.value;
 		if (form.countdown.checked){ style = "countdown " + style; }
 		if (form.inverted.checked){ style = "inverted " + style; }
 		if (form.protected.checked){ style = "protected " + style; }
 
+		var newFave = { 
+			duration: timeToMs(s,m,h),
+			size: form.size.value,
+			text: form.text.value,
+			soundID: form.sound.value,
+			protected: form.protected.value,
+
+			countdown: countdown.checked,
+			inverted: inverted.checked,
+
+			style: style
+		};
+
+
+		//deprecate this line
 		eggTimer(s,m,h,soundID,style,text);
+
+
+		return newFave;
+	}
+	function submit(){
+		launchTimerObject(getForm());
 
 		form.reset();
 		menuHide();
 	}
 }
 
-function eggTimer(eS,eM,eH,sound,style,text) {
-	var cookingTime = function(s = 10, m = 0, h = 0) {
+function launchTimerObject(){
+	console.log(arguments);
+}
 
-		return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
-	}
-	ms = cookingTime(eS,eM,eH);
+function timeToMs(s = 0,m = 0,h = 0) {
+	return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
+}
 
-	appendText(text + " starting (eggtimer), " + ms + " milliseconds","status");
+
+function eggTimer(eS = 0,eM = 0,eH = 0,sound,style,text) {
+	ms = timeToMs(eS,eM,eH);
 	startTimer(ms,sound,style,text);
 }
 
 var testVariable;
 var timerID = 0; //replace with a counter function
+var newTimerID = (function() {
+	var counter = -1;
+
+	return function(){ counter++; return counter }
+})()
 
 function startTimer(ms,sound,style,text) {
-	launchTimer(ms,sound,style,text);
 
-	/*
+	return launchTimer(ms,sound,style,text);
+
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 		var d = new Date(); 
 		var f = new Date(d.valueOf() + T);
 
-		activeTimers.push(
+		function setAlarm(ID,T) {
+			return setTimeout(function(){alarm(ID);},T);
+		}
+		var timerID = newTimerID();
+		var timerObject = 
 		{
-			ID: 			timerID,
+			ID: 		   timerID,
 			active: 		true,
 			text:  		text,
 
@@ -276,52 +311,19 @@ function startTimer(ms,sound,style,text) {
 			inverted:   style.includes("inverted"),
 			countdown:  style.includes("countdown"),
 			protected:  style.includes("protected"),
-		}
-		);
 
-		newBar(timerID);
-		setAlarm(timerID,T,text,soundID);
+			alarm: setAlarm(timerID,T)
+		};
+
+		activeTimers.push(timerObject);
+		newBar(timerObject.ID);
+		appendText("timerID" + timerObject.ID);
 
 		timersRunning++;
-		timerRunning = true;
-		timerID++;
+
+		return timerObject;
 	}
-	*/
 
-	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
-	var d = new Date(); 
-	var f = new Date(d.valueOf() + T);
-		function setAlarm(ID,T) {
-			var a = setTimeout(function(){alarm(ID);},T);
-			return a;
-		}
-
-	var timerObject = 
-	{
-		ID: 			timerID,
-		active: 		true,
-		text:  		text,
-
-		start: 		d,
-		finish: 		f,
-		duration: 	T,
-
-		style: 		style,
-		soundID: 	soundID,
-		inverted:   style.includes("inverted"),
-		countdown:  style.includes("countdown"),
-		protected:  style.includes("protected"),
-
-		alarm: setAlarm(timerID,T)
-	};
-
-	activeTimers.push(timerObject);
-
-	newBar(timerID);
-	timersRunning++;
-	timerRunning = true;
-	timerID++;
-	}	
 }
 
 function alarm(ID) {
