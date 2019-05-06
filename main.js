@@ -114,6 +114,7 @@ function init() {
 			loadFaves();
 
 		}
+		appendText("loaded...","status");
 	}
 }
 
@@ -380,6 +381,7 @@ function alarmShow(){
 	bg.style.visibility = "visible";
 }
 function alarmHide(){
+	//delete content and buttons
 	while(alarmContent.firstChild) {
 		alarmContent.removeChild(alarmContent.firstChild);
 	}
@@ -387,9 +389,10 @@ function alarmHide(){
 		alarmButtons.removeChild(alarmButtons.firstChild);
 	}
 
+
+	//hide window
 	alarmWindowDiv.style.opacity = 0;
 	alarmBG.style.background = "rgba(0,0,0,0)";
-
 	setTimeout(function(){alarmBG.style.visibility = "hidden";}, 250);
 }
 
