@@ -6,7 +6,7 @@
 	<title>Timers n shit</title>
 	<script src="main.js" type="text/javascript" onload="init()"></script>
 
-bo	<!-- other scripts and styles loaded from main.js -->
+	<!-- other scripts and styles loaded from main.js -->
 </head>
 
 <body onload="init.bodyOnLoad()">
@@ -17,6 +17,7 @@ bo	<!-- other scripts and styles loaded from main.js -->
 		<div class="headerDiv" id="headerDiv">
 
 			<h1 id="header">timers n shit</h1>
+			<ul class="nav">
 
 			<ul class="subNavHorizontal">
 				<li>
@@ -37,25 +38,21 @@ bo	<!-- other scripts and styles loaded from main.js -->
 					<button class="green" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
 					</button>
 				</li>
+			</ul>
+			<ul class="subNavHorizontal">
 				<li>
 
 					<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
 					<label for="msCheck">Milliseconds</label>
 				</li>
+
 				<li>
 
 					<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
 					<label for="tsCheck">Timestamps</label>
 				</li>
-
-				<li>
-		
-				</li>
-				<li>
-
-
-
-				</li>
+			</ul>
+			<ul class="subNavHorizontal">
 				<li>
 					<button class="local" value="clear!!" id="clear" onclick="clearText()">clear</button>
 				</li>
@@ -63,6 +60,7 @@ bo	<!-- other scripts and styles loaded from main.js -->
 					<button class="local" value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
 				</li>
 			</ul>
+		</ul>
 
 		</div> <!-- headerdiv -->
 	</div> <!-- headerwrapper -->	
@@ -81,8 +79,8 @@ bo	<!-- other scripts and styles loaded from main.js -->
 			</ul>
 		</div> <!-- menu -->
 		<div id="newTimerMenu" class="menu">
-			<ul class="newTimerList"> 
-				<form id="newTimerForm">
+			<form id="newTimerForm">
+				<ul id="newTimerList" class="nav"> 
 					<li>
 						<input type="text" name="text" placeholder="New Timer">
 					</li>
@@ -123,8 +121,6 @@ bo	<!-- other scripts and styles loaded from main.js -->
 							<input type="radio" name="size" id="small"><label for="small">Small</label>
 						</li>
 					</ul>
-
-
 					<li>
 						<select name="sound">
 							<option value=2>sound 2 (looped)</option>
@@ -132,12 +128,17 @@ bo	<!-- other scripts and styles loaded from main.js -->
 							<option value=1>sound 1</option>
 						</select>
 					</li>
-					<li>
-						<button name="submit" class="green" id="newTimerStartButton">start timer</button>
-						<button id="newTimerAddFave" >add favorite</button>
-					</li>
-				</form>
-			</ul>
+					<ul class="subNavHorizontal stretch">
+						<li>
+							<button name="submit" class="green" id="newTimerStartButton">start timer</button>
+						</li>
+						<li>
+							<button id="newTimerAddFave" >add favorite</button>
+						</li>
+					</ul>
+				</ul>
+			</form>
+
 		</div> <!-- newTimerMenu -->
 
 		<!-- Dummy Menus -->
@@ -189,7 +190,12 @@ bo	<!-- other scripts and styles loaded from main.js -->
 		</div> <!-- alarmButtons -->
 	</div> <!-- alarmBG -->
 
+	<div id="maintextHiderDiv" class="local">
+		<input type="checkbox" id="maintextHider">
+		<label for="maintextHider">&lsaquo;</label>
+	</div>
 	<div id="maintext" class="maintext">
+
 		<p id="welcome">Hello :) these are utamarus dumb timers
 			<br>this is a work in progress,
 			<br>please do not count on this clock for youre daily operations. thanks
@@ -226,7 +232,9 @@ bo	<!-- other scripts and styles loaded from main.js -->
 					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
 				</li>	-->
 				<li>
-					<button onclick="setTheme(0);">Theme 0</button> <button onclick="setTheme(1);">Theme 1</button>
+					<button onclick="setTheme(0);">Theme 0</button> 
+					<button onclick="setTheme(1);">Theme 1</button>
+					<button onclick="setTheme(2);">Theme 2</button>
 				</li>
 
 				<li>

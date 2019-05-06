@@ -30,6 +30,11 @@ const themes = [
 		{
 			css:"--bar-completing",
 			val:"green"
+		},
+
+		{
+			css:"--font-family",
+			val:"unibody"
 		}
 	]
 
@@ -66,8 +71,52 @@ const themes = [
 		{
 			css:"--bar-completing",
 			val:"orange"
+		},
+
+		{
+			css:"--font-family",
+			val:"unibody"
 		}
-	]
+		]
+	},
+
+	{
+
+	name: "dark",
+
+	bg: 1,
+	debug: 0,
+	colors: [ 
+		{
+			css: "--background-color",
+			val: "lightyellow"
+		},
+
+		{
+			css: "--buttonBackgroundColor",
+			val: "yellow"
+		},
+
+		{
+			css: "--active-bar",
+			val: "orange"
+		},
+
+		{
+			css: "--stopped-bar",
+			val: "black"
+		},
+
+		{
+			css:"--bar-completing",
+			val:"green"
+		},
+
+		{
+			css:"--font-family",
+			val:"times new roman"
+		}
+		]
 }
 
 ];
