@@ -22,6 +22,21 @@ var clockExists;
 
 var KnownElement = false;
 
+var dummyFaves = [
+{
+	name: "steamed eggs",
+	soundID: 2,
+	duration: 450000,
+	style: "big noStyle"
+},
+{
+	name: "10 minutes",
+	soundID: 1,
+	duration: timeToMs(0,10),
+	style: "countdown protected"
+}
+];
+
 
 /* Init */
 function init() {
@@ -53,10 +68,10 @@ function init() {
 	load("audio/sounds.js");
 	load("img/backgrounds.js");
 	load("img/themes.js");
-	load("styles/notes.js");
+	load("notes.js");
 
 	// Stylesheets to load
-	style("notes.css","stylesheetForNotes");
+	style("styles/notes.css","stylesheetForNotes");
 	style("style.css");
 	style("styles/bars.css");
 	style("styles/radio.css")
