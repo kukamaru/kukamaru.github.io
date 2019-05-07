@@ -53,14 +53,14 @@ function init() {
 	load("audio/sounds.js");
 	load("img/backgrounds.js");
 	load("img/themes.js");
-	load("notes.js");
+	load("styles/notes.js");
 
 	// Stylesheets to load
 	style("notes.css","stylesheetForNotes");
 	style("style.css");
-	style("bars.css");
-	style("lib/radio.css")
-	style("lib/checkbox.css")
+	style("styles/bars.css");
+	style("styles/radio.css")
+	style("styles/checkbox.css")
 
 
 	init.bodyOnLoad = function() {

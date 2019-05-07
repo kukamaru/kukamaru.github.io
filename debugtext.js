@@ -47,7 +47,7 @@ function appendText() {
 
 		}
 		maintext.style.visibility = "visible";
-		init.style("debugtext.css");
+		init.style("styles/debugtext.css");
 	}
 
 	appendText.toggle = function(){
