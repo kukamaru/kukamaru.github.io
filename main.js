@@ -203,21 +203,17 @@ function setTheme(ID) {
 	setCSSVars(themes[ID]);
 }
 
-//New Timer Menu function
-
+//New Timer Menu
 function newTimer(){
 	menuShow("newTimerMenu");
 	var form = newTimerForm;
 	var div = newTimerMenu;
-
-
-
+	var faveButtonStatus;
 
 	newTimer.clicked = function(elem) {
 		digits = numLength(elem.value);
 		if (digits >= 2){ elem.value = ""; }
 	}
-
 	newTimer.changed = function(elem) {
 		if (!faveButtonStatus) { faveReactivate(); }
 
@@ -232,17 +228,11 @@ function newTimer(){
 		else if (digits > 2){ elem.value = ""; }
 	}
 
-	newTimer.submitButton = function() { submit(); }
-
 
 	function getForm(){
 		var h = form.h.value;
 		var m = form.m.value;
 		var s = form.s.value;
-		var size = form.size.value;
-		var text = form.text.value;
-		var soundID = form.sound.value;
-		var protected = form.protected.value;
 		
 		var style = form.size.value;
 		if (form.countdown.checked){ style = "countdown " + style; }
@@ -264,7 +254,15 @@ function newTimer(){
 
 		return newTimerObject;
 	}
-	var faveButtonStatus;
+
+	newTimer.submitButton = function() { submit(); }
+	function submit(){
+		startTimer(getForm());
+
+		form.reset();
+		menuHide();
+		faveReactivate();
+	}
 
 	newTimer.faveButton = function(){ 
 		var nto = getForm();
@@ -278,14 +276,6 @@ function newTimer(){
 		faveButtonStatus = false;
 	}
 
-	function submit(){
-		startTimer(getForm());
-
-		form.reset();
-		menuHide();
-		faveReactivate();
-	}
-
 	function faveReactivate(){
 		newTimerAddFave.className = undefined;
 		newTimerAddFave.innerHTML = "add favorite";
@@ -296,7 +286,7 @@ function newTimer(){
 }
 
 
-
+//Eggtimer creates a barebones timer object.
 function eggTimer(eS = 10,eM = 0,eH = 0,soundID,style,text) {
 	x = {
 		duration: timeToMs(eS,eM,eH),
