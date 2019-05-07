@@ -297,10 +297,10 @@ function newTimer(){
 
 
 
-function eggTimer(eS = 10,eM = 0,eH = 0,sound,style,text) {
+function eggTimer(eS = 10,eM = 0,eH = 0,soundID,style,text) {
 	x = {
 		duration: timeToMs(eS,eM,eH),
-		sound: sound,
+		soundID: soundID,
 		style: style,
 		text: text
 	};
