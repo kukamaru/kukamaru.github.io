@@ -108,13 +108,14 @@ div.menuWrapper {
 div.menu {
 	position: relative;
 	visibility: hidden;
-	width: 80%;
 	display: none;
 	z-index: 6;
 }
+
 .menu, .alarmWindow, .headerBG {
 	background-color: var(--background-color);
 }
+
 .menu, .alarmWindow, .headerDiv { padding: 20px; }
 div#menu, div.alarmWindow { 
 	margin: 20vh auto;
@@ -125,7 +126,14 @@ div#menu, div.alarmWindow {
 div#newTimerMenu {
 	margin: 20vh auto;
 	text-align: center;
-	width: 412px;
+
+	width: fit-content;
+
+	left: unset;
+	right: unset;
+	top:unset;
+	bottom:unset;
+
 }
 
 .menu .nav {
