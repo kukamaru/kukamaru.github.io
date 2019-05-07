@@ -150,7 +150,7 @@ const themes = [
 
 	name:"public",
 
-	bg: 3,
+	bg: 4,
 	debug: 0,
 	css: [ 
 		{

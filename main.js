@@ -23,7 +23,7 @@ var dummyFaves = [
 {
 	text: "steamed eggs",
 	soundID: 2,
-	duration: 450000,
+	duration: timeToMs(30,8),
 	style: "big noStyle countdown",
 },
 {
@@ -89,6 +89,12 @@ function init() {
 		const isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
 
 		function initLocal() {
+			if (localStorage.getItem('trigger','trigger')){
+				appendText("trigger detected.");
+				localStorage.clear();
+				return;
+			}
+
 			
 			if (typeof(Storage) !== "undefined") {
 				appendText("local storage exists");
@@ -99,7 +105,7 @@ function init() {
 			appendText("KnownElement " + KnownElement);
 
 			style("local.css");
-			setTheme(0);
+			setTheme(3);
 
 			var t = document.createTextNode(" (local version)");
 			var span = document.createElement("span");
@@ -119,8 +125,8 @@ function init() {
 		else {
 			KnownElement = true;
 		}
-		
-		if (isLocal) { initLocal(); }
+		setTheme(0);
+		if (isLocal) { initLocal(); } 
 		if (KnownElement) {
 
 			msVisCheck();
@@ -311,7 +317,7 @@ var newTimerID = (function() {
 function startTimer(nto){
 	console.log(nto);
 
-	
+
 	// active timer object
 	function makeAto(){
 		var newObj = {};
@@ -379,7 +385,7 @@ function startTimer(nto){
 	ato.alarm = setAlarm(ato);
 	ato.active = true;
 	
-	activeTimers.push(ato);
+	activeTimers.push(ato); //important.
 	newBar(ato);
 	return ato;
 }
@@ -872,7 +878,7 @@ function testButton2() {
 
 var debug = false;
 var debug1 = false; //	time render stop
-var debug2 = false; //	bar render stop
+var debug2 = false; //	emulate online.
 
 var debugMenu = function(){
 
@@ -891,6 +897,9 @@ var debugMenu = function(){
 			appendText("debug1 = " + i + " = " + debug1);
 
 			appendText("debug2 = " + i + " = " + debug2);
+		if (debug2) {
+			localStorage.setItem('trigger','trigger');
+		}
 
 	}
 }

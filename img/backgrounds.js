@@ -14,7 +14,17 @@ var backgrounds = [
 {
 	name: "inverted water",
 	src: "img/inverted_water.jpg"
+},
+{
+	name: "slabs annie spratt",
+	src: "img/slabs.jpg"
+},
+{
+	name: "curved",
+	src: "img/curved.jpg"
 }
+
+
 ];
 
 
