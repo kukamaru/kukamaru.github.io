@@ -1,9 +1,6 @@
 // loops Main function at 11ms rate, initialised on body load
 var myvar
 
-//faves (wip)
-var myFaves = 3;
-
 //defaults
 var msVisible;
 var timeStamps;
@@ -21,7 +18,7 @@ var clockExists;
 
 
 var KnownElement = false;
-
+var favesArray = []
 var dummyFaves = [
 {
 	text: "steamed eggs",
@@ -268,10 +265,9 @@ function newTimer(){
 	}
 
 	newTimer.faveButton = function(){ 
-		appendText("faves not working","alert");
-		var i = getForm();
-
-		dummyFaves.push(i);
+		var nto = getForm();
+		favesArray.push(nto);
+		fave.saveFaves();
 	}
 
 	function submit(){
@@ -624,7 +620,7 @@ function fave(){
 		}
 	}
 	// fills list in menu
-	function loadFaves(){
+	function populateFaves(){
 		function newFaveButton(fave,id){
 			//console.log(fave);
 
@@ -657,11 +653,10 @@ function fave(){
 			return li;
 		}
 
-		collapseSpacer((dummyFaves.length == 0));
-		myFaves = dummyFaves.length; //* deprecate this *//
+		collapseSpacer((favesArray.length == 0));
 
-		for (var i = 0; i < myFaves;i++){
-			favorites.appendChild(newFaveButton(dummyFaves[i],i));
+		for (var i = 0; i < favesArray.length;i++){
+			favorites.appendChild(newFaveButton(favesArray[i],i));
 		}
 	}
 
@@ -669,8 +664,8 @@ function fave(){
 	fave.delete = function(id) {
 		function notDeleted(){
 			var n = 0;
-			for (var i = 0; i < dummyFaves.length; i++){
-				if (!dummyFaves[i].deleted) n++
+			for (var i = 0; i < favesArray.length; i++){
+				if (!favesArray[i].deleted) n++
 			}
 			return n;
 		}
@@ -687,8 +682,9 @@ function fave(){
 		}
 		li.style.padding = 0;
 
-		dummyFaves[id].deleted = true;
+		favesArray[id].deleted = true;
 
+		fave.saveFaves();
 		if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
 		setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
 	}
@@ -712,7 +708,7 @@ function fave(){
 		optionState = !optionState;	
 	}
 	fave.launch = function(id) {
-		newTimerObject = dummyFaves[id];
+		newTimerObject = favesArray[id];
 		console.log(newTimerObject);
 		startTimer(newTimerObject);
 	}
@@ -722,36 +718,37 @@ function fave(){
 		clearFaves();
 
 		var cleanArray = [];
-		for (var i = 0;i < dummyFaves.length;i++){
-			if (!dummyFaves[i].deleted){
-				cleanArray.push(dummyFaves[i]);
+		for (var i = 0;i < favesArray.length;i++){
+			if (!favesArray[i].deleted){
+				cleanArray.push(favesArray[i]);
 			}
 		}
 
-		dummyFaves = cleanArray;
+		favesArray = cleanArray;
 
-		loadFaves();
+		populateFaves();
 	}
 
+
+	//retrieve faves from local storages
 	function storedFaves(){
 		var stringified = localStorage.getItem('faves');
-		return JSON.parse(stringified)
+		console.log(stringified);
+		return (stringified) ? JSON.parse(stringified) : dummyFaves;
 	}
 
-	//test line
-	fave.test = function(){ saveFaves(); }
-
-	function saveFaves(){
-		var stringified = JSON.stringify(dummyFaves);
+	//save faves to local storage
+	fave.saveFaves = function(){
+		var stringified = JSON.stringify(favesArray);
 
 		localStorage.setItem('faves',stringified)
 
-		console.log("dummyFaves");
+		console.log("favesArray");
 		console.log(JSON.stringify(stringified));
 	}
 
-	getLocal();
-	loadFaves();
+	favesArray = storedFaves();
+	populateFaves();
 }
 
 /* Timestamp Checkbox */
