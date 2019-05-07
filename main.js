@@ -75,6 +75,8 @@ function init() {
 	style("styles/bars.css");
 	style("styles/radio.css")
 	style("styles/checkbox.css")
+	style("styles/buttons.css")
+	style("styles/menus.css")
 
 
 	init.bodyOnLoad = function() {

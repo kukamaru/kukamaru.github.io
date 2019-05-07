@@ -17,4 +17,5 @@ div#maintextHiderDiv {
 #maintextHiderDiv * {
 	width: 100%;
 	text-align: center;
+	z-index: 0;
 } 

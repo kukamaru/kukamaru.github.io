@@ -1,7 +1,5 @@
 @import url("font/unibody.css");
 
-@import url("styles/menus.css");
-
 :root {
 	--font-family: unibody;
 	--font-family-emphasis: unibody-caps;
@@ -83,88 +81,6 @@ ul {
 
 
 
-
-
-
-
-/* Buttons */
-button {
-	font-family: var(--font-family-emphasis);
-
-	color: var(--buttonTextColor);
-	background: var(--buttonBackgroundColor);
-
-	padding:3px 16px 4px;
-	border:solid 1px var(--buttonBorderColor);
-	font-size: 8px;
-	outline:none;
-}
-button:hover { 
-	color: var(--buttonHoverTextColor);  
-	border-color: var(--buttonHoverBorderColor);
-	background-color: var(--buttonHoverBackgroundColor);
-	text-decoration: underline;
-}
-button:active {
-	transform:scale(0.99);
-}
-button.edit, button.edit:hover {
-	border-right-color:transparent;
-	border-left-color:black;
-}
-
-button.delete, button.red { color:var(--alert-color); outline-color:var(--alert-color) }
-
-button.red:hover,button.delete:hover {
-	background-color: pink;
-	border-color: red;
-}
-
-
-button:disabled:hover {
-	background-color: transparent;
-	text-decoration: none;
-}
-
-.menu button.delete, .menu button.edit	{ 
-	border-width: 0px; 
-	width: 0px; 
-}
-
-.menu button.edit		{ color:var(--edit-color); outline-color:var(--edit-color) }
-.menu button {
-	transition: 
-	width 0.3s ease-out,
-	opacity 0.3s ease-in-out,
-	border-width 0.3s ease-out,
-	height 0.5s ease-in-out;
-}
-.alarmWindow button {
-	width:100%;
-	display: inline;
-	margin:5px;
-	padding: 7px 0px 8px;
-}
-
-.alarmWindow button.stopButton, Button.green {
-	border-color: green;
-	color: green;
-}
-.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
-	background-color: lightgreen;
-
-}
-.alarmWindow button.snoozeButton, button.gray {
-	color: gray;
-	border-color: gray;
-}
-
-.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
-	color:black;
-	border-color: darkgray;
-	background-color: lightgray;
-	text-decoration-color: darkgray;
-}
 
 
 
