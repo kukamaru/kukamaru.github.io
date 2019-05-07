@@ -143,11 +143,12 @@ function mainLoop() {
 	if (debug1) { return; } //DEBUG1 stops rendering
 
 	var d = new Date();
+
 	if (timerRunning()){
-		document.getElementById("timediv").style.background = "var(--active-bar)";
+		timediv.style.background = "var(--active-bar)";
 	}
 	else {
-		document.getElementById("timediv").style.background = "var(--stopped-bar)";
+		timediv.style.background = "var(--stopped-bar)";
 	}
 
 	hours = addZero(d.getHours());
@@ -549,8 +550,6 @@ function renderBars() {
 }
 
 function loadFaves(){
-	var ul = document.getElementById("favorites")
-
 	function newFaveButton(id){
 		li = document.createElement("li");
 
@@ -572,11 +571,10 @@ function loadFaves(){
 		return li;
 	}
 
-	if (myFaves == 0) {
-		collapseSpacer(false);
-	}
+	collapseSpacer((myFaves == 0));
+	
 	for (var i = 0 ; i < myFaves ; i++){
-		ul.appendChild(newFaveButton(i));
+		favorites.appendChild(newFaveButton(i));
 	}
 }
 
@@ -667,7 +665,7 @@ function collapseSpacer(i) {
 	//label = document.getElementById("nofav");
 
 	if (collapse) {
-		prefav.style.padding = "2px 0 2px";
+		prefav.style.padding = "12px 0 2px";
 		postfav.style.padding = "0 0 12px";
 		nofav.style.opacity = 1;
 		faveSpacerCollapsed = true;

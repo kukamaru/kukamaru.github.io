@@ -157,7 +157,7 @@ ul.nav > :last-child 	{ padding-bottom: 0 }
 
 
 
-ul#favorites li:last-child { padding-bottom: 10px; }
+/* ul#favorites li:last-child { padding-bottom: 10px; } */ 
 
 .menu input, .menu select {
 	width:100%;
@@ -190,6 +190,10 @@ ul.subNavHorizontal {
 }
 .subNavHorizontal.stretch > li {
 	flex-grow: 1;
+}
+
+ul.subNavVertical > li:last-child {
+	padding-bottom: 0;
 }
 
 /* Buttons */
