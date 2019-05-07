@@ -4,6 +4,9 @@
 	--font-family: unibody;
 	--font-family-emphasis: unibody-caps;
 
+	--text-color: black;
+	--clock-text-color: white;
+
 	--active-bar: blueviolet; 				/* themed */
 	--stopped-bar: indigo;    				/* themed */
 	--bar-completing: green;  				/* themed */
@@ -32,6 +35,7 @@
 
 body {
 	font-family: var(--font-family);
+	color: var(--text-color);
 	font-size:8px;
 	margin:0;
 	overflow: hidden;
@@ -39,6 +43,7 @@ body {
 
 body * { 
 	font-family: var(--font-family);
+	color: var(--text-color);
 	font-size: 8px;
 }
 
@@ -119,17 +124,19 @@ div.alarmIcon {
 #text1, #text2, #text3 {
 	font-size:16px;
 	font-weight: bold;
+	color:var(--clock-text-color);
+
 }
 
 #text4 {
 	font-size:8px;
 	transition: width color 0.2s;
 	-webkit-transition: color 0.2s;
+	color:var(--clock-text-color);
 }
 
 div.cornerdiv {
 	/* background: rgb(20,20,20); */
-	color:white;
 	position:absolute;
 	bottom: 0px;
 	right: 2vw;

@@ -217,7 +217,7 @@ input[type=number] {
 }
 
 input[type=number]:focus { 
-	color: black;
+	color: var(--text-color);
 	background-color: lightgreen;
 	border:  transparent;
 	outline: transparent;

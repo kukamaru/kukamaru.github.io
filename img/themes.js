@@ -38,6 +38,11 @@ const themes = [
 		},
 
 		{
+			field:"--text-color",
+			val:"black"
+		},
+
+		{
 			field:"--font-family-emphasis",
 			val:"unibody-caps"
 		}
@@ -81,6 +86,11 @@ const themes = [
 		{
 			field:"--font-family",
 			val:"unibody"
+		},
+
+		{
+			field:"--text-color",
+			val:"white"
 		},
 
 		{

@@ -1,3 +1,7 @@
+div.bar * {
+	color:var(--clock-text-color);
+}
+
 div.bars {
 	padding:0; margin:0;
 	margin-bottom: 0px;
@@ -31,14 +35,6 @@ div.progressbar {
 	transition: height 0.5s ease-out, background-color 1s;
 }
 
-/*
-
-inverted div.progressbar {
-	right: 0;
-	left: auto; 
-}
-
-*/
 
 div.big, div.big div.progressbar{
 	height: 40px;
@@ -77,9 +73,12 @@ div.bar p {
 }
 
 /* Gradients */
- 
+
+div.noStyle * {
+	color: black;
+}
+
 div.noStyle {
-	color:black;
 	background: rgb(56,56,56);
 	background: linear-gradient(0deg, rgba(56,56,56,0.7) 0%, rgba(149,149,149,0.7) 6%, rgba(163,163,163,0.7) 25%, rgba(101,101,101,0.7) 75%, rgba(106,106,106,0.7) 94%, rgba(181,181,181,0.7) 100%);
 }

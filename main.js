@@ -24,15 +24,13 @@ var dummyFaves = [
 	text: "steamed eggs",
 	soundID: 2,
 	duration: 450000,
-	style: "big noStyle",
-	deleted: false
+	style: "big noStyle countdown",
 },
 {
 	text: "10 minutes",
 	soundID: 1,
 	duration: timeToMs(0,10),
 	style: "countdown protected",
-	deleted: false
 },
 ];
 
@@ -927,15 +925,24 @@ function msToString(ms) {
 	ms = ms - m*60*1000
 	var s = Math.floor(ms/1000);
 
-	if ( h > 0 ) { 
-		return h + " hours, " + m + " minutes " + s + "seconds";
+	var string = "";
+	var substr = "";
+
+	if ( h > 0 ) {
+		substr = (h==1) ? " hour" : " hours";
+		string = h+substr;
 	}
-	else if ( m > 0 ) { 
-		return m + " minutes " + s + " seconds";
+	if ( m > 0 ) { 
+		if (string!="") { string = string + " "; }
+		substr = (m==1) ? " minute" : " minutes";
+		string = string + m + substr;
 	}
-	else { 
-		return s + " seconds";
+	if ( s > 0 ) { 
+		if (string!="") { string = string + " "; }
+		substr = (s==1) ? " second" : " seconds";
+		string = string + s + substr;
 	}
+	return string;
 }
 
 function numLength(x) { return x.toString().length; }
