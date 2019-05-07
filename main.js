@@ -24,17 +24,19 @@ var KnownElement = false;
 
 var dummyFaves = [
 {
-	name: "steamed eggs",
+	text: "steamed eggs",
 	soundID: 2,
 	duration: 450000,
-	style: "big noStyle"
+	style: "big noStyle",
+	deleted: false
 },
 {
-	name: "10 minutes",
+	text: "10 minutes",
 	soundID: 1,
 	duration: timeToMs(0,10),
-	style: "countdown protected"
-}
+	style: "countdown protected",
+	deleted: false
+},
 ];
 
 
@@ -126,7 +128,7 @@ function init() {
 
 			msVisCheck();
 			tsVisCheck();
-			loadFaves();
+			fave();
 
 		}
 		appendText("loaded...","status");
@@ -564,35 +566,6 @@ function renderBars() {
 	}
 }
 
-function loadFaves(){
-	function newFaveButton(id){
-		li = document.createElement("li");
-
-		function make(text,c,id){
-			var i = document.createElement("button");
-			var t = document.createTextNode(text);
-			i.setAttribute("class",c);
-			i.setAttribute("id",c+id);
-			i.setAttribute("onclick","javascript:" + c + "FaveButton(" + id + ")")
-			i.appendChild(t);
-			return i;
-		}
-
-		li.appendChild(make("NAME OF BUTAN"	,"fave"		,id));
-		li.appendChild(make("EDIT"				,"edit"		,id));
-		li.appendChild(make("DEL"				,"delete"	,id));
-
-		li.setAttribute("id","faveli"+id)
-		return li;
-	}
-
-	collapseSpacer((myFaves == 0));
-	
-	for (var i = 0 ; i < myFaves ; i++){
-		favorites.appendChild(newFaveButton(i));
-	}
-}
-
 function menuShow(i){
 	if (windowState) { 
 		var current = document.getElementById(windowState);
@@ -630,67 +603,110 @@ function menuHide() {
 	if (optionState){ toggleOptions(); }
 }
 
-function toggleOptions() {
-	var a = document.getElementsByClassName("edit");
-	var b = document.getElementsByClassName("delete");
+//executed on body loaded.
+function fave(){
+	function collapseSpacer(i) {
+		var collapse = i;
 
-	function applyStyle(i,state) {
-		i.style.width = (!state) ? optionButtonWidth : "0%";
-		i.style.borderWidth = (!state) ? "1px" : "0px";
-		i.style.opacity = (!state) ? 1 : 0;
+		if (collapse) {
+			prefav.style.padding = "12px 0 2px";
+			postfav.style.padding = "0 0 12px";
+			nofav.style.opacity = 1;
+		}
+		else {
+			prefav.style.padding = "10px 0";
+			postfav.style.padding = "10px 0";
+			nofav.style.opacity = 0;
+		}
+	}
+	function notDeleted(){
+		var n = 0;
+		for (var i = 0; i < dummyFaves.length; i++){
+			if (!dummyFaves[i].deleted) n++
+		}
+		return n;
 	}
 
-	for (var x = 0 ; x < a.length ; x++ ){
-		applyStyle(a[x],optionState);
-		applyStyle(b[x],optionState);
-		document.getElementsByClassName("fave")[x].style.borderRightColor = (optionState) ? "black" : "transparent";
+	fave.delete = function(id) {
+		var li = document.getElementById("faveli" + id);
+		var x = li.children;
+
+		function deleteIt() {
+			favorites.removeChild(li);
+		}
+
+		for (var i = 0 ; i < x.length ; i++ ) {
+			x[i].style.opacity = 0;
+			x[i].style.height = "0px";
+			x[i].style.borderWidth = "0px";
+		}
+		li.style.padding = 0;
+
+		dummyFaves[id].deleted = true;
+
+		if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
+		setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
+	}
+	function loadFaves(){
+		function newFaveButton(fave,id){
+			console.log(fave);
+
+			li = document.createElement("li");
+			
+			function make(text,c,id){
+				var btn = document.createElement("button");
+				var txt = document.createTextNode(text);
+				btn.setAttribute("class",c);
+				btn.setAttribute("id",c+id);
+				btn.setAttribute("onclick","javascript:fave."+c+"("+id+")")
+				btn.appendChild(txt);
+				return btn;
+			}
+
+			var faveButton = make(fave.text,"launch",id);
+
+			var br = document.createElement("br");
+			var duration = document.createTextNode(fave.duration);
+
+			faveButton.appendChild(br);
+			faveButton.appendChild(duration);
+
+
+			li.appendChild(faveButton);
+			li.appendChild(make("EDIT"				,"edit"		,id));
+			li.appendChild(make("DEL"				,"delete"	,id));
+
+			li.setAttribute("id","faveli"+id)
+			return li;
+		}
+
+		collapseSpacer((dummyFaves.length == 0));
+		myFaves = dummyFaves.length; //* deprecate this *//
+
+		for (var i = 0; i < myFaves;i++){
+			favorites.appendChild(newFaveButton(dummyFaves[i],i));
+		}
+	}
+	fave.toggleOptions = function() {
+		var a = document.getElementsByClassName("edit");
+		var b = document.getElementsByClassName("delete");
+
+		function applyStyle(i,state) {
+			i.style.width = (!state) ? optionButtonWidth : "0%";
+			i.style.borderWidth = (!state) ? "1px" : "0px";
+			i.style.opacity = (!state) ? 1 : 0;
+		}
+
+		for (var x = 0 ; x < a.length ; x++ ){
+			applyStyle(a[x],optionState);
+			applyStyle(b[x],optionState);
+			document.getElementsByClassName("launch")[x].style.borderRightColor = (optionState) ? "black" : "transparent";
+		}
+
+		optionState = !optionState;	
 	}
 
-	optionState = !optionState;	
-}
-
-function deleteFaveButton(id) {
-	var par = document.getElementById("favorites");
-	var li = document.getElementById("faveli" + id);
-	var x = li.children;
-
-	function deleteIt() {
-		par.removeChild(li);
-	}
-
-	for (var i = 0 ; i < x.length ; i++ ) {
-		x[i].style.opacity = 0;
-		x[i].style.height = "0px";
-		x[i].style.borderWidth = "0px";
-	}
-
-	li.style.padding = 0;
-
-
-	myFaves--;
-	if(myFaves == 0){ collapseSpacer(true); toggleOptions(); }
-	setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
-}
-
-function collapseSpacer(i) {
-	var collapse = i;
-
-	//upper = document.getElementById("prefav");
-	//lower = document.getElementById("postfav");
-	//label = document.getElementById("nofav");
-
-	if (collapse) {
-		prefav.style.padding = "12px 0 2px";
-		postfav.style.padding = "0 0 12px";
-		nofav.style.opacity = 1;
-		faveSpacerCollapsed = true;
-	}
-	else {
-		prefav.style.padding = "10px 0";
-		postfav.style.padding = "10px 0";
-		nofav.style.opacity = 0;
-		faveSpacerCollapsed = false;		
-	}
+	loadFaves();
 }
 
 /* Timestamp Checkbox */
