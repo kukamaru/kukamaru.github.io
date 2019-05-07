@@ -172,10 +172,10 @@
 						</p>
 					</li>
 					<li>
-						<input type="checkbox" class="danger" id="danger"><label for="danger">Delete all local data</label>
+						<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
 					</li>
 					<li>
-						<button class="red">Delete</button>
+						<button id="deleteDataButton" class="red" disabled="true" onclick="clearLocalStorage();">Delete</button>
 					</li>
 				</ul>
 			</div> <!-- settings -->

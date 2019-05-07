@@ -777,6 +777,16 @@ var debugMenu = function(){
 
 }
 
+function clearEnable() {
+	var check = danger.checked;
+	deleteDataButton.disabled = (check);
+	appendText("button enabled = " + check, "debug");
+}
+
+function clearLocalStorage() {
+	localStorage.clear();
+	appendText("local storage cleared", "alert");
+}
 
 
 
