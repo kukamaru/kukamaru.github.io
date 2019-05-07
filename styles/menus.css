@@ -152,8 +152,11 @@ li#faveButtonLi{
 	50%	{background-color: lightgreen; 	border-color: rgba(0,0,0,0.5);}
 	100%	{background-color: white; 			border-color: rgba(0,0,0,0.2);}
 }
+#faveButtonLi button {
+	transition: all 0.5s;
+}
 #faveButtonLi button.saved {
-	color: gray;
+	color: lightgray;
 	border-color: ;
 	border-radius: 0px;
 	animation-name: example;

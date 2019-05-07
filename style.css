@@ -80,16 +80,6 @@ ul {
 }
 
 
-
-
-
-
-
-
-
-
-
-
 /* AlarmWindow Stuff */
 div.alarmWindow {
 	color:var(--alert-color);
@@ -123,6 +113,8 @@ div.alarmIcon {
 
 
 
+
+
 /* Corner Clock + bars */
 #text1, #text2, #text3 {
 	font-size:16px;
@@ -146,6 +138,7 @@ div.cornerdiv {
 div.currenttime {
 	padding: 2px 6px 0;
 }
+
 
 
 
