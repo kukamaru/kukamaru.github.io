@@ -136,7 +136,8 @@ ul.subNavVertical > li:last-child {
 
 
 li#faveButtonLi{
-	width: 50%;
+   width: 100%;
+	flex: auto;
 
 
 	margin-right:5px;
@@ -145,8 +146,27 @@ li#faveButtonLi{
 
 	order:1;
 }
+
+@keyframes example {
+	0% 	{background-color: white; 			border-color: rgba(0,0,0,1);}
+	50%	{background-color: lightgreen; 	border-color: rgba(0,0,0,0.5);}
+	100%	{background-color: white; 			border-color: rgba(0,0,0,0.2);}
+}
+#faveButtonLi button.saved {
+	color: gray;
+	border-color: ;
+	border-radius: 0px;
+	animation-name: example;
+	animation-duration: 1s;
+	border-color: rgba(0,0,0,0.2);
+}
+
+#faveButtonLi.saved {
+}
+
 li#startButtonLi{
-	width: 50%;
+   width: 100%;
+	flex: auto;
 
 
 	padding:0;

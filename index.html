@@ -27,6 +27,10 @@
 					<li>
 						<button onclick="javascript:menuShow('menu');">menu</button>
 					</li>
+					<li>
+						<button onclick="javascript:menuShow('settings');" class="gray">Settings</button>
+					</li>
+
 
 					<li>
 						<button class ="green" onclick="javascript:newTimer();">new timer</button>
@@ -75,151 +79,151 @@
 				<ul id="favorites" class="nav">
 				</ul>
 				<li id="postfav"><div id="nofav">no favorites :(</div><hr></li>
-				<ul>
-					<ul id="postfavButtons" class="subNavVertical">
-						<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
-						<li><button onclick="javascript:fave.toggleOptions();">Edit faves</button></li>
+				
+				<ul id="postfavButtons" class="subNavVertical">
+					<li><button onclick="javascript:fave.toggleOptions();">Edit faves</button></li>
+					<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
+				</ul>
+			</ul>
+		</div> <!-- menu -->
+		<div id="newTimerMenu" class="menu">
+			<form id="newTimerForm">
+				<ul id="newTimerList" class="nav"> 
+					<li>
+						<input type="text" name="text" placeholder="New Timer">
+					</li>
+
+					<li class="timeInput">
+						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerHours">
+
+						<span class="timeColon" id="timeColon1">:</span>
+
+						<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id ="newTimerMinutes">
+
+						<span class="timeColon" id="timeColon2">:</span>
+
+						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
+						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
+					</li>
+					<ul class="subNavHorizontal" id="newTimerCheckboxes">
+						<li>
+							<input type="checkbox" name="countdown" id="countdown" checked><label for="countdown">Countdown</label>
+						</li>
+						<li>
+							<input type="checkbox" name="inverted" id="inverted"><label for="inverted">Inverted</label>
+						</li>
+						<li>
+							<input type="checkbox" name="protected" id="protected" checked><label for="protected">Protecc</label>
+						</li>
+					</ul>
+					<ul class="subNavHorizontal" id="newTimerRadio">
+						<li>
+							<input type="radio" name="size" id="big" value="big"><label for="big">Big</label>
+						</li>
+						<li>
+							<input type="radio" name="size" id="medium" checked="true" value="medium"><label for="medium">Medium</label>
+						</li>
+						<li>
+							<input type="radio" name="size" id="small" value="small"><label for="small">Small</label>
+						</li>
+					</ul>
+					<li>
+						<select name="sound">
+							<option value=2>sound 2 (looped)</option>
+							<option value=0>sound 0</option>
+							<option value=1>sound 1</option>
+						</select>
+					</li>
+					<ul class="subNavHorizontal stretch">
+						<li id="startButtonLi">
+							<button name="submit" class="green" id="newTimerStartButton">start timer</button>
+						</li>
+						<li id="faveButtonLi">
+							<button id="newTimerAddFave" >add favorite</button>
+						</li>
 					</ul>
 				</ul>
-			</div> <!-- menu -->
-			<div id="newTimerMenu" class="menu">
-				<form id="newTimerForm">
-					<ul id="newTimerList" class="nav"> 
-						<li>
-							<input type="text" name="text" placeholder="New Timer">
-						</li>
+			</form>
 
-						<li class="timeInput">
-							<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
-							oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerHours">
+		</div> <!-- newTimerMenu -->
 
-							<span class="timeColon" id="timeColon1">:</span>
-
-							<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
-							oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id ="newTimerMinutes">
-
-							<span class="timeColon" id="timeColon2">:</span>
-
-							<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
-							oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
-						</li>
-						<ul class="subNavHorizontal" id="newTimerCheckboxes">
-							<li>
-								<input type="checkbox" name="countdown" id="countdown" checked><label for="countdown">Countdown</label>
-							</li>
-							<li>
-								<input type="checkbox" name="inverted" id="inverted"><label for="inverted">Inverted</label>
-							</li>
-							<li>
-								<input type="checkbox" name="protected" id="protected" checked><label for="protected">Protecc</label>
-							</li>
-						</ul>
-						<ul class="subNavHorizontal" id="newTimerRadio">
-							<li>
-								<input type="radio" name="size" id="big" value="big"><label for="big">Big</label>
-							</li>
-							<li>
-								<input type="radio" name="size" id="medium" checked="true" value="medium"><label for="medium">Medium</label>
-							</li>
-							<li>
-								<input type="radio" name="size" id="small" value="small"><label for="small">Small</label>
-							</li>
-						</ul>
-						<li>
-							<select name="sound">
-								<option value=2>sound 2 (looped)</option>
-								<option value=0>sound 0</option>
-								<option value=1>sound 1</option>
-							</select>
-						</li>
-						<ul class="subNavHorizontal stretch">
-							<li id="startButtonLi">
-								<button name="submit" class="green" id="newTimerStartButton">start timer</button>
-							</li>
-							<li id="faveButtonLi">
-								<button id="newTimerAddFave" >add favorite</button>
-							</li>
-						</ul>
-					</ul>
-				</form>
-
-			</div> <!-- newTimerMenu -->
-
-			<!-- Dummy Menus -->
-			<div id="recipe" class="menu">
-				<p style="background-color: white">
-					400g flour<br>
-					230g water<br>
-					160g starter<br>
-					5g-7g salt<br>
-					<br>
-					let rise 3.5 hrs<br>
-					shape the dough<br>
-					second rise 2.5-3 hrs - or - fridge overnight<br>
-					preheat oven<br>
-					cook at 235-240 degrees<br>
-					32 minutes with lid<br>
-					18 minutes without, 50 minutes total<br>
-					let cool completely, then EAT<br>
-				</p>
-			</div> <!-- recipe -->
-			<div id="settings" class="menu">
-				<ul>
-					<li>
-						<p style="background-color: white">
-							settings will go here
-						</p>
-					</li>
-					<li>
-						<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
-					</li>
-					<li>
-						<button id="deleteDataButton" class="red" disabled="true" onclick="clearLocalStorage();">Delete</button>
-					</li>
-				</ul>
-			</div> <!-- settings -->
-		</div> <!-- menuWrapper -->
-
-		<div id="menuBG" class="menuBG" onclick="menuHide();">		
-		</div> <!-- menuBG -->
-
-		<div id="alarmBG" class="alarmBG">
-			<div id="alarmWindowDiv" class="alarmWindow">
-				<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
-				<div id="alarmContent" class="alarmContent">
-					<p id="alarmText" class="alarmText">						
+		<!-- Dummy Menus -->
+		<div id="recipe" class="menu">
+			<p style="background-color: white">
+				400g flour<br>
+				230g water<br>
+				160g starter<br>
+				5g-7g salt<br>
+				<br>
+				let rise 3.5 hrs<br>
+				shape the dough<br>
+				second rise 2.5-3 hrs - or - fridge overnight<br>
+				preheat oven<br>
+				cook at 235-240 degrees<br>
+				32 minutes with lid<br>
+				18 minutes without, 50 minutes total<br>
+				let cool completely, then EAT<br>
+			</p>
+		</div> <!-- recipe -->
+		<div id="settings" class="menu">
+			<ul>
+				<li>
+					<p style="background-color: white">
+						settings will go here
 					</p>
-				</div> <!-- alarmContent --> 
-				<div id="alarmButtons" class="alarmButtons"></div>
-			</div> <!-- alarmButtons -->
-		</div> <!-- alarmBG -->
+				</li>
+				<li>
+					<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
+				</li>
+				<li>
+					<button id="deleteDataButton" class="red" disabled="true" onclick="clearLocalStorage();">Delete</button>
+				</li>
+			</ul>
+		</div> <!-- settings -->
+	</div> <!-- menuWrapper -->
+
+	<div id="menuBG" class="menuBG" onclick="menuHide();">		
+	</div> <!-- menuBG -->
+
+	<div id="alarmBG" class="alarmBG">
+		<div id="alarmWindowDiv" class="alarmWindow">
+			<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
+			<div id="alarmContent" class="alarmContent">
+				<p id="alarmText" class="alarmText">						
+				</p>
+			</div> <!-- alarmContent --> 
+			<div id="alarmButtons" class="alarmButtons"></div>
+		</div> <!-- alarmButtons -->
+	</div> <!-- alarmBG -->
 
 
-		<div draggable="true" id="notesDiv">
-			<textarea id="notesInput" placeholder="notes" onInput="notes.changed();"></textarea>
-		</div> <!-- notes -->
+	<div draggable="true" id="notesDiv">
+		<textarea id="notesInput" placeholder="notes" onInput="notes.changed();"></textarea>
+	</div> <!-- notes -->
 
-		<div class="cornerdiv">
-			<div class="bars" id="bars">
+	<div class="cornerdiv">
+		<div class="bars" id="bars">
 
-			</div><!-- bars -->
+		</div><!-- bars -->
 
-			<div class="currenttime" id="timediv">
-				<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
-				<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
-				<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1</button>
-				<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
+		<div class="currenttime" id="timediv">
+			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
+			<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
+			<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1</button>
+			<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
 
-			</div> <!-- timediv -->
+		</div> <!-- timediv -->
 
-			<div id="debugDiv">
-				<ul>
-					<li>
-						<input class="gray" id="debugCheck1" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck1"> Render Stop </label>
-					</li>
-					<li>
-						<input class="gray" id="debugCheck2" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck2"> Bar Stop </label>
-					</li>
+		<div id="debugDiv">
+			<ul>
+				<li>
+					<input class="gray" id="debugCheck1" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck1"> Render Stop </label>
+				</li>
+				<li>
+					<input class="gray" id="debugCheck2" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck2"> Bar Stop </label>
+				</li>
 				<!--
 				<li>
 					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>

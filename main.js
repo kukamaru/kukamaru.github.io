@@ -219,6 +219,7 @@ function newTimer(){
 	}
 
 	newTimer.changed = function(elem) {
+		if (!faveButtonStatus) { faveReactivate(); }
 
 		digits = numLength(elem.value);
 		appendText("value: " + elem.value + " from field name:" + elem.name + ".... " + digits + "digits","debug");
@@ -263,11 +264,18 @@ function newTimer(){
 
 		return newTimerObject;
 	}
+	var faveButtonStatus;
 
 	newTimer.faveButton = function(){ 
 		var nto = getForm();
 		favesArray.push(nto);
 		fave.saveFaves();
+
+		newTimerAddFave.className = "saved";
+		newTimerAddFave.innerHTML = nto.text + " SAVED";
+		newTimerAddFave.disabled = true;
+
+		faveButtonStatus = false;
 	}
 
 	function submit(){
@@ -275,6 +283,15 @@ function newTimer(){
 
 		form.reset();
 		menuHide();
+		faveReactivate();
+	}
+
+	function faveReactivate(){
+		newTimerAddFave.className = undefined;
+		newTimerAddFave.innerHTML = "add favorite";
+		newTimerAddFave.disabled = false;
+
+		faveButtonStatus = true;
 	}
 }
 
@@ -300,7 +317,6 @@ var newTimerID = (function() {
 })()
 
 function startTimer(nto){
-	console.log(nto);
 	return launchTimer(nto.duration,nto.soundID,nto.style,nto.text);
 
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
@@ -623,7 +639,6 @@ function fave(){
 	// fills list in menu
 	function populateFaves(){
 		function newFaveButton(fave,id){
-			//console.log(fave);
 
 			li = document.createElement("li");
 			
@@ -710,7 +725,6 @@ function fave(){
 	}
 	fave.launch = function(id) {
 		newTimerObject = favesArray[id];
-		console.log(newTimerObject);
 		startTimer(newTimerObject);
 	}
 
@@ -731,21 +745,18 @@ function fave(){
 	}
 
 
-	//retrieve faves from local storages
+	//retrieve faves from local storages, or dummy faves if no local file.
 	function storedFaves(){
 		var stringified = localStorage.getItem('faves');
-		console.log(stringified);
 		return (stringified) ? JSON.parse(stringified) : dummyFaves;
 	}
 
 	//save faves to local storage
 	fave.saveFaves = function(){
 		var stringified = JSON.stringify(favesArray);
-
 		localStorage.setItem('faves',stringified)
 
-		console.log("favesArray");
-		console.log(JSON.stringify(stringified));
+		appendText("saving faves","debug2");
 	}
 
 	favesArray = storedFaves();

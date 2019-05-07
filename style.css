@@ -1,4 +1,5 @@
 @import url("font/unibody.css");
+
 @import url("styles/menus.css");
 
 :root {
@@ -86,9 +87,6 @@ ul {
 
 
 
-
-
-
 /* Buttons */
 button {
 	font-family: var(--font-family-emphasis);
@@ -123,7 +121,10 @@ button.red:hover,button.delete:hover {
 }
 
 
-
+button:disabled:hover {
+	background-color: transparent;
+	text-decoration: none;
+}
 
 .menu button.delete, .menu button.edit	{ 
 	border-width: 0px; 
@@ -138,6 +139,38 @@ button.red:hover,button.delete:hover {
 	border-width 0.3s ease-out,
 	height 0.5s ease-in-out;
 }
+.alarmWindow button {
+	width:100%;
+	display: inline;
+	margin:5px;
+	padding: 7px 0px 8px;
+}
+
+.alarmWindow button.stopButton, Button.green {
+	border-color: green;
+	color: green;
+}
+.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
+	background-color: lightgreen;
+
+}
+.alarmWindow button.snoozeButton, button.gray {
+	color: gray;
+	border-color: gray;
+}
+
+.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
+	color:black;
+	border-color: darkgray;
+	background-color: lightgray;
+	text-decoration-color: darkgray;
+}
+
+
+
+
+
+
 
 
 
@@ -171,34 +204,6 @@ div.alarmIcon {
 	display: flex;
 	justify-content: space-around;
 }
-.alarmWindow button {
-	width:100%;
-	display: inline;
-	margin:5px;
-	padding: 7px 0px 8px;
-}
-
-.alarmWindow button.stopButton, Button.green {
-	border-color: green;
-	color: green;
-}
-.alarmWindow button.stopButton:hover , Button.green:hover, Button.green:focus {
-	background-color: lightgreen;
-
-}
-.alarmWindow button.snoozeButton, button.gray {
-	color: gray;
-	border-color: gray;
-}
-
-.alarmWindow button.snoozeButton:hover, button.edit:hover, button.gray:hover {
-	color:black;
-	border-color: darkgray;
-	background-color: lightgray;
-	text-decoration-color: darkgray;
-}
-
-
 
 
 
