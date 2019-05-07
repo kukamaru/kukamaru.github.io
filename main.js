@@ -299,8 +299,9 @@ var newTimerID = (function() {
 	return function(){ counter++; return counter }
 })()
 
-function startTimer(nto) {
-	return launchTimer(nto.duration,nto.sound,nto.style,nto.text);
+function startTimer(nto){
+	console.log(nto);
+	return launchTimer(nto.duration,nto.soundID,nto.style,nto.text);
 
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 		var d = new Date(); 
