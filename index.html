@@ -70,7 +70,6 @@
 			<ul id="menulist" class="nav">
 				<ul id="prefavButtons" class="subNavVertical">
 					<li><button onclick="javascript:newTimer();" class="green">New Timer</button></li>
-					<li><button onclick="javascript:eggTimer(10,4,0);">Coffee Timer (4min 10s)</button></li>
 				</ul>
 				<li id="prefav"><hr></li>
 				<ul id="favorites" class="nav">
@@ -134,10 +133,10 @@
 							</select>
 						</li>
 						<ul class="subNavHorizontal stretch">
-							<li>
+							<li id="startButtonLi">
 								<button name="submit" class="green" id="newTimerStartButton">start timer</button>
 							</li>
-							<li>
+							<li id="faveButtonLi">
 								<button id="newTimerAddFave" >add favorite</button>
 							</li>
 						</ul>

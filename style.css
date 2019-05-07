@@ -123,12 +123,7 @@ button.red:hover,button.delete:hover {
 }
 
 
-button#newTimerAddFave{
-	order:1;
-}
-button#newTimerStartButton{
-	order:2;
-}
+
 
 .menu button.delete, .menu button.edit	{ 
 	border-width: 0px; 

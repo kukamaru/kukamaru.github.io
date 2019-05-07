@@ -147,14 +147,14 @@ function init() {
 }
 
 
-
 var timerRunning = function(){
 	for (var i = 0;i<activeTimers.length; i++){
 		if (activeTimers[i].active) return true;
 	}
 	return false;
 }
-/* Main Function */
+
+/* Main function */
 
 function mainLoop() {
 	if (debug1) { return; } //DEBUG1 stops rendering
@@ -210,7 +210,7 @@ function setTheme(ID) {
 
 
 
-//New Timer Menu Function
+//New Timer Menu function
 
 function newTimer(){
 	menuShow("newTimerMenu");
@@ -275,7 +275,7 @@ function newTimer(){
 		appendText("faves not working","alert");
 		var i = getForm();
 
-		console.log(i);
+		dummyFaves.push(i);
 	}
 
 	function submit(){
@@ -307,8 +307,8 @@ var newTimerID = (function() {
 	return function(){ counter++; return counter }
 })()
 
-function startTimer(i) {
-	return launchTimer(i.duration,i.sound,i.style,i.text);
+function startTimer(nto) {
+	return launchTimer(nto.duration,nto.sound,nto.style,nto.text);
 
 	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
 		var d = new Date(); 
@@ -464,7 +464,7 @@ function clickedBar(ID) {
 	remainder = total-elapsed;
 
 	appendText("you clicked bar " + ID,"debug")
-	appendText("it has " + remainder + "ms left before alarm","debug")
+	appendText("it has " + msToString(remainder) + " left before alarm","debug")
 }
 
 function newBar(ID) {
@@ -582,9 +582,10 @@ function menuShow(i){
 
 	windowState = i;
 	if (windowState == "newTimerMenu") { 
-		//bake into newtimer
-		document.getElementById("newTimerMinutes").focus();
-		// newTimer();
+		newTimerMinutes.focus();
+	}
+	if (windowState == "menu") {
+		fave.refresh();
 	}
 }
 
@@ -600,7 +601,7 @@ function menuHide() {
 		focus.style.display = "none";
 		setTimeout(function(){bg.style.visibility = "hidden";}, 250)
 	}
-	if (optionState){ toggleOptions(); }
+	if (optionState){ fave.toggleOptions(); }
 }
 
 //executed on body loaded.
@@ -626,6 +627,51 @@ function fave(){
 		}
 		return n;
 	}
+	function clearFaves(){
+		while (favorites.firstChild){
+			favorites.removeChild(favorites.firstChild);
+		}
+	}
+	function loadFaves(){
+		function newFaveButton(fave,id){
+			console.log(fave);
+
+			li = document.createElement("li");
+			
+			function make(text,c,id){
+				var btn = document.createElement("button");
+				var txt = document.createTextNode(text);
+				btn.setAttribute("class",c);
+				btn.setAttribute("id",c+id);
+				btn.setAttribute("onclick","javascript:fave."+c+"("+id+")")
+				btn.appendChild(txt);
+				return btn;
+			}
+
+			var faveButton = make(fave.text,"launch",id);
+
+			var br = document.createElement("br");
+			var duration = document.createTextNode(msToString(fave.duration));
+
+			faveButton.appendChild(br);
+			faveButton.appendChild(duration);
+
+
+			li.appendChild(faveButton);
+			li.appendChild(make("EDIT"				,"edit"		,id));
+			li.appendChild(make("DEL"				,"delete"	,id));
+
+			li.setAttribute("id","faveli"+id)
+			return li;
+		}
+
+		collapseSpacer((dummyFaves.length == 0));
+		myFaves = dummyFaves.length; //* deprecate this *//
+
+		for (var i = 0; i < myFaves;i++){
+			favorites.appendChild(newFaveButton(dummyFaves[i],i));
+		}
+	}
 
 	fave.delete = function(id) {
 		var li = document.getElementById("faveli" + id);
@@ -647,46 +693,8 @@ function fave(){
 		if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
 		setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
 	}
-	function loadFaves(){
-		function newFaveButton(fave,id){
-			console.log(fave);
-
-			li = document.createElement("li");
-			
-			function make(text,c,id){
-				var btn = document.createElement("button");
-				var txt = document.createTextNode(text);
-				btn.setAttribute("class",c);
-				btn.setAttribute("id",c+id);
-				btn.setAttribute("onclick","javascript:fave."+c+"("+id+")")
-				btn.appendChild(txt);
-				return btn;
-			}
-
-			var faveButton = make(fave.text,"launch",id);
-
-			var br = document.createElement("br");
-			var duration = document.createTextNode(fave.duration);
-
-			faveButton.appendChild(br);
-			faveButton.appendChild(duration);
 
 
-			li.appendChild(faveButton);
-			li.appendChild(make("EDIT"				,"edit"		,id));
-			li.appendChild(make("DEL"				,"delete"	,id));
-
-			li.setAttribute("id","faveli"+id)
-			return li;
-		}
-
-		collapseSpacer((dummyFaves.length == 0));
-		myFaves = dummyFaves.length; //* deprecate this *//
-
-		for (var i = 0; i < myFaves;i++){
-			favorites.appendChild(newFaveButton(dummyFaves[i],i));
-		}
-	}
 	fave.toggleOptions = function() {
 		var a = document.getElementsByClassName("edit");
 		var b = document.getElementsByClassName("delete");
@@ -704,6 +712,25 @@ function fave(){
 		}
 
 		optionState = !optionState;	
+	}
+	fave.refresh = function(){
+		clearFaves();
+
+		var cleanArray = [];
+		for (var i = 0;i < dummyFaves.length;i++){
+			if (!dummyFaves[i].deleted){
+				cleanArray.push(dummyFaves[i]);
+			}
+		}
+
+		dummyFaves = cleanArray;
+
+		loadFaves();
+	}
+	fave.launch = function(id) {
+		newTimerObject = dummyFaves[id];
+		console.log(newTimerObject);
+		startTimer(newTimerObject);
 	}
 
 	loadFaves();
@@ -863,6 +890,23 @@ function addZeroMs(i) {
 
 function timeToMs(s = 0,m = 0,h = 0) {
 	return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
+}
+function msToString(ms) {
+	var h = Math.floor(ms/60/60/1000);
+	ms = ms - h*60*60*1000
+	var m = Math.floor(ms/60/1000);
+	ms = ms - m*60*1000
+	var s = Math.floor(ms/1000);
+
+	if ( h > 0 ) { 
+		return h + " hours, " + m + " minutes " + s + "seconds";
+	}
+	else if ( m > 0 ) { 
+		return m + " minutes " + s + " seconds";
+	}
+	else { 
+		return s + " seconds";
+	}
 }
 
 function numLength(x) { return x.toString().length; }
