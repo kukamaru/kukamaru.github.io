@@ -56,11 +56,6 @@ function appendText() {
 	}
 
 
-	if (document.getElementById("maintext") == undefined) {
-		console.log("no div, aborting")
-		//return;
-	}
-
 	if (debug) { console.log(arguments); }
 
 

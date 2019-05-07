@@ -146,7 +146,6 @@ function init() {
 	}
 }
 
-
 var timerRunning = function(){
 	for (var i = 0;i<activeTimers.length; i++){
 		if (activeTimers[i].active) return true;
@@ -205,10 +204,7 @@ function setTheme(ID) {
 	appendText("theme name:  " + themes[ID].name);
 	setBg(themes[ID]);
 	setCSSVars(themes[ID]);
-
 }
-
-
 
 //New Timer Menu function
 
@@ -620,21 +616,17 @@ function fave(){
 			nofav.style.opacity = 0;
 		}
 	}
-	function notDeleted(){
-		var n = 0;
-		for (var i = 0; i < dummyFaves.length; i++){
-			if (!dummyFaves[i].deleted) n++
-		}
-		return n;
-	}
+
+	// empties list in menu
 	function clearFaves(){
 		while (favorites.firstChild){
 			favorites.removeChild(favorites.firstChild);
 		}
 	}
+	// fills list in menu
 	function loadFaves(){
 		function newFaveButton(fave,id){
-			console.log(fave);
+			//console.log(fave);
 
 			li = document.createElement("li");
 			
@@ -673,14 +665,21 @@ function fave(){
 		}
 	}
 
+	// menu functions
 	fave.delete = function(id) {
-		var li = document.getElementById("faveli" + id);
-		var x = li.children;
-
+		function notDeleted(){
+			var n = 0;
+			for (var i = 0; i < dummyFaves.length; i++){
+				if (!dummyFaves[i].deleted) n++
+			}
+			return n;
+		}
 		function deleteIt() {
 			favorites.removeChild(li);
 		}
 
+		var li = document.getElementById("faveli" + id);
+		var x = li.children;
 		for (var i = 0 ; i < x.length ; i++ ) {
 			x[i].style.opacity = 0;
 			x[i].style.height = "0px";
@@ -693,7 +692,6 @@ function fave(){
 		if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
 		setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
 	}
-
 
 	fave.toggleOptions = function() {
 		var a = document.getElementsByClassName("edit");
@@ -713,6 +711,13 @@ function fave(){
 
 		optionState = !optionState;	
 	}
+	fave.launch = function(id) {
+		newTimerObject = dummyFaves[id];
+		console.log(newTimerObject);
+		startTimer(newTimerObject);
+	}
+
+	// cleans deleted faves from array
 	fave.refresh = function(){
 		clearFaves();
 
@@ -727,12 +732,25 @@ function fave(){
 
 		loadFaves();
 	}
-	fave.launch = function(id) {
-		newTimerObject = dummyFaves[id];
-		console.log(newTimerObject);
-		startTimer(newTimerObject);
+
+	function storedFaves(){
+		var stringified = localStorage.getItem('faves');
+		return JSON.parse(stringified)
 	}
 
+	//test line
+	fave.test = function(){ saveFaves(); }
+
+	function saveFaves(){
+		var stringified = JSON.stringify(dummyFaves);
+
+		localStorage.setItem('faves',stringified)
+
+		console.log("dummyFaves");
+		console.log(JSON.stringify(stringified));
+	}
+
+	getLocal();
 	loadFaves();
 }
 
