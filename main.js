@@ -287,65 +287,106 @@ function newTimer(){
 
 
 //Eggtimer creates a barebones timer object.
-function eggTimer(eS = 10,eM = 0,eH = 0,soundID,style,text) {
-	x = {
-		duration: timeToMs(eS,eM,eH),
-		soundID: soundID,
-		style: style,
-		text: text
-	};
-	startTimer(x);
+function eggTimer(eS,eM,eH,soundID,style,text) {
+	var xx = {}; // proto NTO
+	xx.duration = timeToMs(eS,eM,eH);
+	xx.text = text;
+	xx.eggtimer = true;
+	xx.style = style;
+	xx.soundID = soundID;
+
+	startTimer(xx);
 }
 
 
 
-
+//counter for the makeAto
 var newTimerID = (function() {
 	var counter = -1;
-
 	return function(){ counter++; return counter }
 })()
 
+
+//creates and activates a ato from nto.
 function startTimer(nto){
-	return launchTimer(nto.duration,nto.soundID,nto.style,nto.text);
+	console.log(nto);
 
-	function launchTimer(T,soundID = 0,style = "noStyle",text = "noText") {
-		var d = new Date(); 
-		var f = new Date(d.valueOf() + T);
+	
+	// active timer object
+	function makeAto(){
+		var newObj = {};
+		Object.defineProperties(newObj,{
+			'countdown': {
+				value: true,
+				writable: true
 
-		function setAlarm(ID,T) {
-			return setTimeout(function(){alarm(ID);},T);
-		}
-		var ID = newTimerID();
-		var timerObject = 
-		{
-			ID: 		   ID,
-			active: 		true,
-			text:  		text,
+			},
+			'soundID' :{
+				value:2,
+				writable: true
 
-			start: 		d,
-			finish: 		f,
-			duration: 	T,
+			},
+			'pausable': {
+				value:true
+			},
+			'style': {
+				value:'noStyle',
+				writable: true
 
-			style: 		style,
-			soundID: 	soundID,
-			inverted:   style.includes("inverted"),
-			countdown:  style.includes("countdown"),
-			protected:  style.includes("protected"),
+			},
+			'duration': {
+				value:261000,
+				writable: true
+			},
+			'action': {
+				value:function(){appendText("alarm finished -- action","alert");}
+			},
+			'id': {
+				value:newTimerID()
+			}
+		});
 
-			alarm: setAlarm(ID,T)
-		};
-
-		activeTimers.push(timerObject);
-		newBar(timerObject.ID);
-		return timerObject;
+		return newObj;
 	}
 
+	function setAlarm(ato) {
+		return setTimeout(function(){alarm(ato);},ato.duration);
+	}		
+
+
+	var d = new Date(); 
+	var ato = makeAto();
+
+
+	if (nto.duration) ato.duration = nto.duration;
+
+
+	var f = new Date(d.valueOf() + ato.duration);
+
+	ato.start = 		d;
+	ato.finish = 		f;
+
+
+	if (nto.text) ato.text =  nto.text;
+	if (nto.soundID) ato.soundID = nto.soundID;
+	if (nto.style) {
+		ato.style = nto.style;
+		ato.inverted =   nto.style.includes("inverted");
+		ato.countdown =  nto.style.includes("countdown");
+		ato.protected =  nto.style.includes("protected");
+	}
+
+	ato.alarm = setAlarm(ato);
+	ato.active = true;
+	
+	activeTimers.push(ato);
+	newBar(ato);
+	return ato;
 }
 
-function alarm(ID) {
-	var text = activeTimers[ID].text;
-	var soundID = activeTimers[ID].soundID;
+function alarm(ato) {
+	var text = ato.text;
+	var soundID = ato.soundID;
 	var isLooping = sounds[soundID].looping;
 
 	appendText(text,"alert");		
@@ -355,13 +396,16 @@ function alarm(ID) {
 		audio.play();
 		activeAlarms.push(audio);
 
-		alarmWindow(ID);
+		alarmWindow(ato.id);
 	}
 	else { audio.play(); }
+	ato.action();
 
-	hideBar(ID);
+	hideBar(ato);
 
-	activeTimers[ID].active = false;
+	activeTimers[ato.id].active = false;
+	console.log("ato:")
+	console.log(ato);
 }
 
 function alarmWindow(ID) {
@@ -466,7 +510,7 @@ function clickedBar(ID) {
 	appendText("it has " + msToString(remainder) + " left before alarm","debug")
 }
 
-function newBar(ID) {
+function newBar(ato) {
 	var parent = document.getElementById('bars');
 	var div = document.createElement('div');
 	var bar = document.createElement('div');
@@ -477,22 +521,22 @@ function newBar(ID) {
 	var timeText = document.createElement('span');
 
 
-	div.setAttribute('class',"bar" + " " + activeTimers[ID].style);
-	div.setAttribute('id',"bar" + ID);
-	div.setAttribute('onclick',"clickedBar("+ID+")");
-	bar.setAttribute('class',"progressbar" + " " + activeTimers[ID].style);
-	bar.setAttribute('id',"progress" + ID);
+	div.setAttribute('class',"bar" + " " + ato.style);
+	div.setAttribute('id',"bar" + ato.id);
+	div.setAttribute('onclick',"clickedBar("+ato.id+")");
+	bar.setAttribute('class',"progressbar" + " " + ato.style);
+	bar.setAttribute('id',"progress" + ato.id);
 
-	label.setAttribute('id',"barlabel" + ID);
+	label.setAttribute('id',"barlabel" + ato.id);
 	label.setAttribute('class',"barlabel");
-	label.innerHTML = activeTimers[ID].text;
+	label.innerHTML = ato.text;
 
 	countdown.setAttribute('class',"barcountdown");
 
 	timeText.setAttribute('class',"barcountdown")
-	timeText.setAttribute('id',"barcountdown"+ ID);
+	timeText.setAttribute('id',"barcountdown"+ ato.id);
 	msText.setAttribute('class',"barcountdownms");
-	msText.setAttribute('id',"barcountdownms" + ID);
+	msText.setAttribute('id',"barcountdownms" + ato.id);
 
 	countdown.appendChild(timeText);
 	countdown.appendChild(msText);
@@ -503,13 +547,13 @@ function newBar(ID) {
 
 	parent.appendChild(div);
 }
-function hideBar(ID) {
+function hideBar(ato) {
 	var parent = document.getElementById('bars');
-	var div = document.getElementById('bar'+ID);
-	var bar = document.getElementById('progress' + ID)
-	var label = document.getElementById('barlabel' + ID);
-	var countdown = document.getElementById('barcountdown' + ID);
-	var countdownms = document.getElementById('barcountdownms' + ID);
+	var div = document.getElementById('bar'+ato.id);
+	var bar = document.getElementById('progress' + ato.id)
+	var label = document.getElementById('barlabel' + ato.id);
+	var countdown = document.getElementById('barcountdown' + ato.id);
+	var countdownms = document.getElementById('barcountdownms' + ato.id);
 
 
 
@@ -534,7 +578,7 @@ function renderBars() {
 	for (i = 0; i < num; i++){
 		current = activeTimers[i];
 		if(current.active){
-			bar = document.getElementById("progress" + activeTimers[i].ID);
+			bar = document.getElementById("progress" + activeTimers[i].id);
 
 			start = current.start.valueOf();
 			end = current.finish.valueOf();
@@ -550,8 +594,8 @@ function renderBars() {
 			else 							{ widthPercent = elapsedFraction; }
 
 			if (current.countdown) {
-				countdown = document.getElementById("barcountdown" + current.ID);
-				ms = 			document.getElementById("barcountdownms" + current.ID);
+				countdown = document.getElementById("barcountdown" + current.id);
+				ms = 			document.getElementById("barcountdownms" + current.id);
 				countdown.innerHTML 				= renderTime(remainder);
 				ms.innerHTML = (msVisible) ? renderMs(remainder) : "";
 			}
@@ -849,7 +893,6 @@ var debugMenu = function(){
 			appendText("debug2 = " + i + " = " + debug2);
 
 	}
-
 }
 
 function clearEnable() {

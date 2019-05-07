@@ -1,4 +1,5 @@
 
+
 const themes = [
 { 
 
@@ -97,7 +98,7 @@ const themes = [
 			field:"--font-family-emphasis",
 			val:"unibody-black"
 		}
-		]
+	]
 	},
 
 	{
@@ -141,7 +142,59 @@ const themes = [
 			field:"--font-family-emphasis",
 			val:"times new roman"
 		}
-		]
-}
+	]
+	},
+
+
+	{
+
+	name:"public",
+
+	bg: 3,
+	debug: 0,
+	css: [ 
+		{
+			field: "--background-color",
+			val: "white"
+		},
+
+		{
+			field: "--buttonBackgroundColor",
+			val: "white"
+		},
+
+		{
+			field: "--active-bar",
+			val: "blueviolet"
+		},
+
+		{
+			field: "--stopped-bar",
+			val: "indigo"
+		},
+
+		{
+			field:"--bar-completing",
+			val:"green"
+		},
+
+		{
+			field:"--font-family",
+			val:"unibody"
+		},
+
+		{
+			field:"--text-color",
+			val:"black"
+		},
+
+		{
+			field:"--font-family-emphasis",
+			val:"unibody-caps"
+		}
+	]
+	}
+
+
 
 ];
