@@ -35,12 +35,24 @@ var dummyFaves = [
 
 
 // DO NOT USE before alarms are fixed, pausing is fixed.
+// removes dead atos from self.
 activeTimers.refresh = function() {
 	var cleanArray = [];
+
 	for (var i = 0;i < activeTimers.length; i++){
 		if (activeTimers[i].active) cleanArray.push(activeTimers[i]);
 	}
+
+	cleanArray.refresh = activeTimers.refresh; //reinstate self
 	activeTimers = cleanArray;
+}
+
+//gets ato from array
+function getActiveTimer(id) {
+	for (var i = 0;i < activeTimers.length; i++){
+		if (activeTimers[i].id == id) return activeTimers[i];
+	}
+	console.log("timer not found");
 }
 
 /* Init */
@@ -164,7 +176,7 @@ function init() {
 			preloader.style.background = "transparent";
 			setTimeout(function(){
 				body.removeChild(preloader);
-			}, 1500);
+			}, 500);
 		}
 
 	}
@@ -431,17 +443,17 @@ function alarm(ato) {
 		audio.play();
 		activeAlarms.push(audio);
 
-		alarmWindow(ato.id);
+		alarmWindow(ato);
 	}
 	else { audio.play(); }
 	ato.action();
 
 	hideBar(ato);
+	ato.active = false;
 
-	activeTimers[ato.id].active = false;
 }
 
-function alarmWindow(ID) {
+function alarmWindow(ato) {
 	alarmShow();
 	firstAlarm = (activeAlarms.length == 1);
 
@@ -484,8 +496,8 @@ function alarmWindow(ID) {
 
 	//text to window
 	var p = document.createElement('p');
-	p.innerHTML = activeTimers[ID].text;
-	p.setAttribute("id","alarmText"+ID);
+	p.innerHTML = ato.text;
+	p.setAttribute("id","alarmText"+ato.id);
 	alarmContent.appendChild(p);
 
 	alarmWindowDiv.style.opacity = 1;
@@ -531,7 +543,7 @@ function alarmSnooze(){
 /** BARS **/
 /* CLICK AND PAUSE */
 function clickedBar(ID) {
-	var ato 			= activeTimers[ID];
+	var ato 			= getActiveTimer(ID);
 	var now 			= new Date().valueOf();
 
 	var start 		= ato.start.valueOf();
@@ -546,7 +558,7 @@ function clickedBar(ID) {
 
 	if (ato.pausable) {
 		appendText("pausing " + ID);
-		ato.active = false;
+		ato.paused = true;
 		ato.pausable = false;
 		ato.pausedAt = now;
 		ato.pRemainder = remainder;
@@ -568,9 +580,9 @@ function clickedBar(ID) {
 		ato.start = new Date(newStart);
 		ato.duration = ato.pRemainder;
 
-		ato.active = true;
 		ato.pausedAt = undefined;
 		ato.pausable = true;
+		ato.paused = false;
 
 		div.className = "bar " + ato.style;
 
@@ -645,8 +657,8 @@ function renderBars() {
 	var num = activeTimers.length;
 
 	for (i = 0; i < num; i++){
-		var current = activeTimers[i]; // get current ato
-		if(current.active){
+		var current = activeTimers[i]; // get current ato from all in array.
+		if(current.active && !current.paused){
 			var bar = document.getElementById("progress" + current.id);
 
 			var start = current.start.valueOf();
@@ -673,9 +685,9 @@ function renderBars() {
 
 			bar.style.width = widthPercent;
 			if (remainder < 2000) bar.style.background = "var(--bar-completing)";
-
 		}
 	}
+
 } 
 
 function menuShow(i){
