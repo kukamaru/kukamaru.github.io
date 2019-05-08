@@ -2,18 +2,18 @@
 button {
 	font-family: var(--font-family-emphasis);
 
-	color: var(--buttonTextColor);
-	background: var(--buttonBackgroundColor);
+	color: var(--button-text-color);
+	background: var(--button-background-color);
 
 	padding:3px 16px 4px;
-	border:solid 1px var(--buttonBorderColor);
+	border:solid 1px var(--button-border-color);
 	font-size: 8px;
 	outline:none;
 }
 button:hover { 
-	color: var(--buttonHoverTextColor);  
-	border-color: var(--buttonHoverBorderColor);
-	background-color: var(--buttonHoverBackgroundColor);
+	color: var(--button-hover-text-color);  
+	border-color: var(--button-hover-border-color);
+	background-color: var(--button-hover-background-color);
 	text-decoration: underline;
 }
 button:active {

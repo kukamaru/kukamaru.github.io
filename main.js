@@ -110,7 +110,7 @@ function init() {
 
 		function initLocal() {
 			if (localStorage.getItem('trigger','trigger')){
-				appendText("trigger detected.");
+				appendText("trigger detected.","alert");
 				localStorage.clear();
 				return;
 			}
@@ -142,11 +142,14 @@ function init() {
 			header.appendChild(text);
 			header.id="header";
 			body.appendChild(header);
-		}	
+		}
+
 		else {
 			KnownElement = true;
 		}
+
 		setTheme(0);
+
 		if (isLocal) { initLocal(); } 
 		if (KnownElement) {
 
@@ -155,16 +158,15 @@ function init() {
 			fave();
 
 		}
-		appendText("loaded...","status");
 
 		//check for new timer menu and apply eventlisteners
 		if (document.getElementById("newTimerStartButton")) {
-			document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
+			newTimerStartButton.addEventListener("click", function(event){
 			event.preventDefault();
 			newTimer.submitButton();
 			},false);
 
-			document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+			newTimerAddFave.addEventListener("click", function(event){
 				event.preventDefault();
 				newTimer.faveButton();
 			},false);
@@ -173,10 +175,10 @@ function init() {
 
 		//check for preloader and hide.
 		if (document.getElementById("preloader")) {
-			preloader.style.background = "transparent";
+			preloader.style.opacity = 0;
 			setTimeout(function(){
 				body.removeChild(preloader);
-			}, 500);
+			}, 800);
 		}
 
 	}
@@ -339,6 +341,7 @@ function eggTimer(eS,eM,eH,soundID,style,text) {
 	xx.style = style;
 	xx.soundID = soundID;
 	xx.pausable = true;
+	xx.stoppable = true;
 
 	startTimer(xx);
 }
@@ -353,18 +356,14 @@ var newTimerID = (function() {
 
 //creates and activates a ato from nto.
 function startTimer(nto){
-	//console.log("nto in");
-	//console.log(nto);
 
-
-	// active timer object
-	function makeAto(){
-		var newObj = {};
-		Object.defineProperties(newObj,{
+	// active timer object from nto
+	function makeAto(nto){
+		var ato = {};
+		Object.defineProperties(ato,{
 			'countdown': {
 				value: true,
 				writable: true
-
 			},
 			'soundID' :{
 				value:2,
@@ -388,44 +387,35 @@ function startTimer(nto){
 				value:function(){appendText("alarm finished -- action","alert");}
 			},
 			'id': {
-				value:newTimerID()
+				value:newTimerID(),
+				writable:false
+			},
+			'stoppable': {
+				value:false,
+				writable:true
 			}
 		});
 
-		return newObj;
+		Object.assign(ato,nto);
+
+		return ato;
 	}
 
 	
-
-
 	var d = new Date(); 
-	var ato = makeAto();
-
-
-	if (nto.duration) ato.duration = nto.duration;
-
+	var ato = makeAto(nto);
 
 	var f = new Date(d.valueOf() + ato.duration);
 
 	ato.start = 		d;
 	ato.finish = 		f;
 
-	if (nto.pausable) ato.pausable = true;
-	if (nto.text) ato.text =  nto.text;
-	if (nto.soundID) ato.soundID = nto.soundID;
-	if (nto.style) {
-		ato.style = nto.style;
-		ato.inverted =   nto.style.includes("inverted");
-		ato.countdown =  nto.style.includes("countdown");
-		ato.protected =  nto.style.includes("protected");
-	}
-
 	ato.alarm = setAlarm(ato);
 	ato.active = true;
 	
 	activeTimers.push(ato); //important.
 	newBar(ato);
-	return ato;
+
 }
 
 function setAlarm(ato) {
@@ -542,24 +532,29 @@ function alarmSnooze(){
 
 /** BARS **/
 /* CLICK AND PAUSE */
+
 function clickedBar(ID) {
-	var ato 			= getActiveTimer(ID);
-	var now 			= new Date().valueOf();
-
-	var start 		= ato.start.valueOf();
-	var end 			= ato.finish.valueOf();
-
-	var elapsed 	= now-start;
-	var total 		= end-start;
-	var remainder	= total-elapsed;
+	pauseResume(ID);
+}
 
 
+function pauseResume(ID) {
+	var ato = getActiveTimer(ID);
+	var now = new Date().valueOf();
 	var div = document.getElementById("bar" + ID);
 
-	if (ato.pausable) {
+	// pausing
+	if (ato.pausable && !ato.paused) {
 		appendText("pausing " + ID);
+
+		var start 		= ato.start.valueOf();
+		var end 			= ato.finish.valueOf();
+
+		var elapsed 	= now-start;
+		var total 		= end-start;
+		var remainder	= total-elapsed;
+
 		ato.paused = true;
-		ato.pausable = false;
 		ato.pausedAt = now;
 		ato.pRemainder = remainder;
 		ato.pElapsed = elapsed;
@@ -567,10 +562,9 @@ function clickedBar(ID) {
 		div.className = div.className + " paused";
 
 		clearTimeout(ato.alarm);
-
-		activeTimers[ID] = ato;
-	} 
-	else if (ato.pausedAt) {
+	}
+	// resuming
+	else if (ato.paused) {
 		appendText("resuming " + ID);
 
 		var newFinish = now + ato.pRemainder;
@@ -581,52 +575,78 @@ function clickedBar(ID) {
 		ato.duration = ato.pRemainder;
 
 		ato.pausedAt = undefined;
-		ato.pausable = true;
 		ato.paused = false;
 
 		div.className = "bar " + ato.style;
 
 		ato.alarm = setAlarm(ato);
-		activeTimers[ID] = ato;
 	}
 }
 
 function newBar(ato) {
-	var parent = document.getElementById('bars');
-	var div = document.createElement('div');
-	var bar = document.createElement('div');
+	function bar(ato) { 
+		var div = document.createElement('div');
+		var bar = document.createElement('div');
 
-	var label = document.createElement('p');
-	var countdown = document.createElement('p');
-	var msText = document.createElement('span');
-	var timeText = document.createElement('span');
+		var label = document.createElement('p');
+		var countdown = document.createElement('p');
+		var msText = document.createElement('span');
+		var timeText = document.createElement('span');
 
 
-	div.setAttribute('class',"bar" + " " + ato.style);
-	div.setAttribute('id',"bar" + ato.id);
-	div.setAttribute('onclick',"clickedBar("+ato.id+")");
-	bar.setAttribute('class',"progressbar" + " " + ato.style);
-	bar.setAttribute('id',"progress" + ato.id);
+		div.setAttribute('class',"bar" + " " + ato.style);
+		div.setAttribute('id',"bar" + ato.id);
+		div.setAttribute('onclick',"clickedBar("+ato.id+")");
+		bar.setAttribute('class',"progressbar" + " " + ato.style);
+		bar.setAttribute('id',"progress" + ato.id);
 
-	label.setAttribute('id',"barlabel" + ato.id);
-	label.setAttribute('class',"barlabel");
-	label.innerHTML = ato.text;
+		label.setAttribute('id',"barlabel" + ato.id);
+		label.setAttribute('class',"barlabel");
+		label.innerHTML = ato.text;
 
-	countdown.setAttribute('class',"barcountdown");
+		countdown.setAttribute('class',"barcountdown");
 
-	timeText.setAttribute('class',"barcountdown")
-	timeText.setAttribute('id',"barcountdown"+ ato.id);
-	msText.setAttribute('class',"barcountdownms");
-	msText.setAttribute('id',"barcountdownms" + ato.id);
+		timeText.setAttribute('class',"barcountdown")
+		timeText.setAttribute('id',"barcountdown"+ ato.id);
+		msText.setAttribute('class',"barcountdownms");
+		msText.setAttribute('id',"barcountdownms" + ato.id);
 
-	countdown.appendChild(timeText);
-	countdown.appendChild(msText);
+		countdown.appendChild(timeText);
+		countdown.appendChild(msText);
 
-	div.appendChild(label);
-	div.appendChild(countdown);
-	div.appendChild(bar);
+		div.appendChild(label);
+		div.appendChild(countdown);
+		div.appendChild(bar);
 
-	parent.appendChild(div);
+		return div;
+	}
+	function barButtons(ato){
+		var div = document.createElement("div");
+		div.className = "barButtons";
+
+		if (ato.pausable){
+			var pause = document.createElement("button");
+			pause.id = "barPauseButton" + ato.id;
+			pause.innerHTML = "pause";
+			pause.className = "barButton barPauseButton";
+			div.appendChild(pause);
+		}
+		if (ato.stoppable){
+			var stop = document.createElement("button");
+			stop.id = "barStopButton" + ato.id;
+			stop.innerHTML = "stop";
+			stop.className = "barButton barStopButton";
+			div.appendChild(stop);
+		}
+
+		return div;
+	}
+
+	var newBar = bar(ato);
+	if (ato.pausable || ato.stoppable){
+		newBar.appendChild(barButtons(ato));
+	}
+	bars.appendChild(newBar);
 }
 function hideBar(ato) {
 	var parent = document.getElementById('bars');
@@ -687,7 +707,6 @@ function renderBars() {
 			if (remainder < 2000) bar.style.background = "var(--bar-completing)";
 		}
 	}
-
 } 
 
 function menuShow(i){
@@ -751,6 +770,7 @@ function fave(){
 			favorites.removeChild(favorites.firstChild);
 		}
 	}
+
 	// fills list in menu
 	function populateFaves(){
 		function newFaveButton(fave,id){
@@ -890,6 +910,7 @@ function tsVisCheck() {
 		stamps[i].style.width = (timeStamps) ? "auto" : "0px";
 	}
 }
+
 /* Milliseconds Checkbox */
 function msVisCheck() {
 	var checkBox = document.getElementById("msCheck");

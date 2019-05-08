@@ -14,7 +14,7 @@ const themes = [
 		},
 
 		{
-			field: "--buttonBackgroundColor",
+			field: "--button-background-color",
 			val: "white"
 		},
 
@@ -65,7 +65,7 @@ const themes = [
 		},
 
 		{
-			field: "--buttonBackgroundColor",
+			field: "--button-background-color",
 			val: "black"
 		},
 
@@ -114,7 +114,7 @@ const themes = [
 		},
 
 		{
-			field: "--buttonBackgroundColor",
+			field: "--button-background-color",
 			val: "yellow"
 		},
 

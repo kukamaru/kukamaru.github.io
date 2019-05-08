@@ -21,7 +21,7 @@ div.bar {
 	z-index: 0;
 	margin-bottom: 4px;
 	transition: height 0.5s ease-out, background-color 1s, margin-bottom 1s ease-out;
-	overflow: hidden;
+	/*overflow: hidden;*/
 }
 
 div.progressbar {
@@ -73,6 +73,21 @@ div.bar p {
 .big .barcountdownms {
 	font-size: 8px;
 	font-weight: normal;
+}
+
+/* hover and buttons */
+div.barButtons {
+	position: absolute;
+	background-color: transparent;
+	right:100%;
+	width:0;
+   height: 100%;
+	overflow:hidden;
+	transition: width 0.32s ease-out, background-color 0.6s linear;
+}
+div.bar:hover div.barButtons {
+	width: 20%;
+	background-color: var(--bar-buttons-bg);
 }
 
 /* Gradients */
