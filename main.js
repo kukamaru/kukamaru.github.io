@@ -514,9 +514,9 @@ function clickedBar(ID) {
 	var elapsed 	= now-start;
 	var total 		= end-start;
 	var remainder	= total-elapsed;
-	appendText("you clicked bar " + ID,"debug")
-	appendText("it has " + msToString(remainder) + " left before alarm","debug")
 
+
+	var div = document.getElementById("bar" + ID);
 
 	if (ato.pausable) {
 		appendText("pausing " + ID);
@@ -525,6 +525,8 @@ function clickedBar(ID) {
 		ato.pausedAt = now;
 		ato.pRemainder = remainder;
 		ato.pElapsed = elapsed;
+
+		div.className = div.className + " paused";
 
 		clearTimeout(ato.alarm);
 
@@ -543,6 +545,8 @@ function clickedBar(ID) {
 		ato.active = true;
 		ato.pausedAt = undefined;
 		ato.pausable = true;
+
+		div.className = "bar " + ato.style;
 
 		ato.alarm = setAlarm(ato);
 		activeTimers[ID] = ato;

@@ -32,7 +32,10 @@ div.progressbar {
 	position: absolute;
 	left: 0;
 	z-index: 1;
-	transition: height 0.5s ease-out, background-color 1s;
+	transition: height 0.5s ease-out, background-color 0.6s ease-in-out;
+}
+.paused div.progressbar {
+	background-color: var(--stopped-bar);
 }
 
 

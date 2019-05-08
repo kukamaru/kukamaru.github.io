@@ -7,6 +7,8 @@
 	--text-color: black;
 	--clock-text-color: white;
 
+	--alarm-window-background: white;
+
 	--active-bar: blueviolet; 				/* themed */
 	--stopped-bar: indigo;    				/* themed */
 	--bar-completing: green;  				/* themed */
