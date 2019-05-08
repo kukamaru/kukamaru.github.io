@@ -31,10 +31,29 @@ button.red:hover,button.delete:hover {
 	border-color: red;
 }
 
+button:disabled {
+	border: transparent;
+	color:lightgray;
+}
 
 button:disabled:hover {
 	background-color: transparent;
 	text-decoration: none;
+}
+
+#deleteDataButton:enabled {
+	animation-name: danger;
+	animation-duration: 0.02s;
+  	animation-iteration-count: 20;
+	animation-timing-function: steps(2, end);
+	border-color: red;
+	background-color: pink;
+	transition: background 0.5s;
+}
+
+@keyframes danger {
+	0% 	{border-color: transparent;}
+	100%	{border-color: red;}
 }
 
 .menu button.delete, .menu button.edit	{ 
@@ -77,3 +96,30 @@ button:disabled:hover {
 	text-decoration-color: darkgray;
 }
 
+
+@keyframes example {
+	0% 	{background-color: white; 			border-color: rgba(0,0,0,1);}
+	50%	{background-color: lightgreen; 	border-color: rgba(0,0,0,0.5);}
+	100%	{background-color: white; 			border-color: rgba(0,0,0,0.2);}
+}
+
+#faveButtonLi button {
+	transition: all 0.5s;
+}
+#faveButtonLi button.saved {
+	animation-name: example;
+	animation-duration: 1s;
+	border-color: rgba(0,0,0,0.2);
+}
+
+.launch.loop::after {
+	color: lightgray;
+    content: "*";
+    position: relative;
+    left: 16px;
+    /* height: 3em; */
+    bottom: 5px;
+    width: 0px;
+    /* display: flex; */
+    float: left;
+}

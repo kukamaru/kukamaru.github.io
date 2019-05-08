@@ -19,6 +19,9 @@ div.maintext p {
 	margin: 0;
 	z-index: -2;
 }
+div.maintext.no-timestamps .timestamp {
+	display: none;
+}
 
 div.maintext p.faded, div.maintext p.faded * {
 	transition-property: opacity, background-color;

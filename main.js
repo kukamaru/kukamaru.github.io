@@ -671,15 +671,6 @@ function newBar(ato) {
 	function barButtons(ato){
 		var div = document.createElement("div");
 		div.className = "barButtons";
-
-		if (ato.pausable){
-			var pause = document.createElement("button");
-			pause.id = "barPauseButton" + ato.id;
-			pause.innerHTML = "Pause";
-			pause.className = "barButton barPauseButton";
-			pause.setAttribute("onclick","pauseResume(" + ato.id + ")");
-			div.appendChild(pause);
-		}
 		if (ato.stoppable){
 			var stop = document.createElement("button");
 			stop.id = "barStopButton" + ato.id;
@@ -688,6 +679,15 @@ function newBar(ato) {
 			stop.setAttribute("onclick","stopTimer(" + ato.id + ")");
 			div.appendChild(stop);
 		}
+		if (ato.pausable){
+			var pause = document.createElement("button");
+			pause.id = "barPauseButton" + ato.id;
+			pause.innerHTML = "Pause";
+			pause.className = "barButton barPauseButton";
+			pause.setAttribute("onclick","pauseResume(" + ato.id + ")");
+			div.appendChild(pause);
+		}
+
 
 		return div;
 	}
@@ -845,6 +845,10 @@ function fave(){
 			faveButton.appendChild(br);
 			faveButton.appendChild(duration);
 
+			if (sounds[fave.soundID].looping){
+				faveButton.className = faveButton.className + " loop";
+			}
+
 
 			li.appendChild(faveButton);
 			li.appendChild(make("EDIT"				,"edit"		,id));
@@ -952,13 +956,7 @@ function fave(){
 function tsVisCheck() {
 	var checkBox = document.getElementById("tsCheck");
 	timeStamps = checkBox.checked;
-
-	var stamps = document.getElementsByClassName("timestamp");
-
-	for (i = 0; i < stamps.length; i++){
-		stamps[i].style.opacity = (timeStamps) ? 1 : 0;
-		stamps[i].style.width = (timeStamps) ? "auto" : "0px";
-	}
+	maintext.className = (timeStamps) ? "maintext" : "maintext no-timestamps"
 }
 
 /* Milliseconds Checkbox */

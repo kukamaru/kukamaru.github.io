@@ -57,7 +57,7 @@
 
 
 					<li>
-						<button class ="green" onclick="javascript:newTimer();">new timer</button>
+						<button class ="green" onclick="javascript:newTimer();">+ new timer</button>
 					</li>
 
 					<br>
@@ -65,19 +65,6 @@
 					<li>
 						<button class="green local" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
 						</button>
-					</li>
-				</ul>
-				<ul class="subNavHorizontal">
-					<li>
-
-						<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
-						<label for="msCheck">Milliseconds</label>
-					</li>
-
-					<li>
-
-						<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
-						<label for="tsCheck">Timestamps</label>
 					</li>
 				</ul>
 				<ul class="subNavHorizontal">
@@ -173,7 +160,6 @@
 
 		</div> <!-- newTimerMenu -->
 
-		<!-- Dummy Menus -->
 		<div id="recipe" class="menu">
 			<p style="background-color: white">
 				400g flour<br>
@@ -192,12 +178,22 @@
 			</p>
 		</div> <!-- recipe -->
 		<div id="settings" class="menu">
-			<ul>
-				<li>
-					<p style="background-color: white">
-						settings will go here
-					</p>
-				</li>
+			<ul id="settingsList" class="nav">
+				<ul class="subNavHorizontal">
+					<li>
+
+						<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
+						<label for="msCheck">Milliseconds</label>
+					</li>
+
+					<li>
+
+						<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
+						<label for="tsCheck">Timestamps</label>
+					</li>
+				</ul>
+				<hr>
+				<br>
 				<li>
 					<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
 				</li>
