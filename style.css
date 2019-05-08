@@ -88,6 +88,14 @@ ul {
 
 
 /* AlarmWindow Stuff */
+
+div.alarmWindow {
+	background: var(--alarm-window-background);
+}
+div.alarmWindow * {
+	background: var(--alarm-window-background);
+}
+
 div.alarmWindow * {
 	color:var(--alert-color);
 }

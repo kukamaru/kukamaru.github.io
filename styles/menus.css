@@ -41,12 +41,6 @@ div#menu, div.alarmWindow {
 	text-align: center;
 	max-width: 300px;
 }
-div.alarmWindow {
-	background: var(--alarm-window-background);
-}
-div.alarmWindow * {
-	background: var(--alarm-window-background);
-}
 
 div#newTimerMenu {
 	margin: 20vh auto;
