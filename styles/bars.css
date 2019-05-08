@@ -32,7 +32,7 @@ div.progressbar {
 	position: absolute;
 	left: 0;
 	z-index: 1;
-	transition: height 0.5s ease-out, background-color 0.6s ease-in-out;
+	transition: height 0.5s ease-out, background-color 0.6s ease-in-out, opacity 0.6s ease-in-out;
 }
 .paused div.progressbar {
 	background-color: var(--stopped-bar);
@@ -89,5 +89,14 @@ div.noStyle {
 div.noStyle.progressbar {
 	background: rgb(71,92,59);
 	background: linear-gradient(0deg, rgba(71,92,59,1) 0%, rgba(107,173,71,1) 27%, rgba(195,255,135,1) 72%, rgba(141,253,79,1) 76%, rgba(141,253,79,1) 86%, rgba(206,255,179,1) 100%);
+}
+
+.paused div.noStyle.progressbar {
+	opacity: 0.6;
+
+	/*
+	background: rgb(82,38,51); 
+	background: linear-gradient(0deg, rgba(82,38,51,1) 0%, rgba(144,102,102,1) 27%, rgba(164,88,88,1) 72%, rgba(203,131,131,1) 76%, rgba(162,76,76,1) 86%, rgba(102,72,93,1) 100%);
+	*/
 }
 

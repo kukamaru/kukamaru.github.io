@@ -7,7 +7,6 @@ var timeStamps;
 var optionButtonWidth = "76px";
 
 //variables
-var timerRunning = false;
 var timersRunning = 0;
 var canSnooze = true;
 var activeTimers = [];
@@ -34,6 +33,15 @@ var dummyFaves = [
 },
 ];
 
+
+// DO NOT USE before alarms are fixed, pausing is fixed.
+activeTimers.refresh = function() {
+	var cleanArray = [];
+	for (var i = 0;i < activeTimers.length; i++){
+		if (activeTimers[i].active) cleanArray.push(activeTimers[i]);
+	}
+	activeTimers = cleanArray;
+}
 
 /* Init */
 function init() {
@@ -178,6 +186,7 @@ function mainLoop() {
 
 	if (timerRunning()){
 		timediv.style.background = "var(--active-bar)";
+		renderBars();
 	}
 	else {
 		timediv.style.background = "var(--stopped-bar)";
@@ -193,15 +202,16 @@ function mainLoop() {
 	text3.innerHTML = ":" + seconds;
 
 	if(msVisible == true){
-		document.getElementById("text4").innerHTML = "." + ms;
+		text4.innerHTML = "." + ms;
 	}
 
-	renderBars();
 }
 
 //Themes
 function setTheme(ID) {
 	function setBg(theme){
+		if (!theme.bg) return;
+
 		var body = document.getElementsByTagName("body")[0];
 		body.style.background = backgrounds.url(theme.bg);
 		if (document.getElementById("debugDiv") != undefined){
@@ -210,6 +220,8 @@ function setTheme(ID) {
 	}
 
 	function setCSSVars(theme){
+		if (!theme.css) return;
+
 		let root = document.documentElement;
 		let x = theme.css.length;
 		for (let i = 0; i < x; i++) {
@@ -218,6 +230,7 @@ function setTheme(ID) {
 	}
 
 	appendText("theme name:  " + themes[ID].name);
+
 	setBg(themes[ID]);
 	setCSSVars(themes[ID]);
 }
@@ -564,7 +577,6 @@ function clickedBar(ID) {
 		ato.alarm = setAlarm(ato);
 		activeTimers[ID] = ato;
 	}
-
 }
 
 function newBar(ato) {
@@ -633,9 +645,9 @@ function renderBars() {
 	var num = activeTimers.length;
 
 	for (i = 0; i < num; i++){
-		var current = activeTimers[i];
+		var current = activeTimers[i]; // get current ato
 		if(current.active){
-			var bar = document.getElementById("progress" + activeTimers[i].id);
+			var bar = document.getElementById("progress" + current.id);
 
 			var start = current.start.valueOf();
 			var end = current.finish.valueOf();
@@ -894,6 +906,7 @@ function msVisCheck() {
 		div.style.width = "420px";
 	}
 }
+
 
 
 //Warning dialog if protected timer

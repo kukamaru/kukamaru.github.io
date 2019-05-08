@@ -148,51 +148,10 @@ const themes = [
 
 	{
 
-	name:"public",
+	name:"local",
 
 	bg: 4,
-	debug: 0,
-	css: [ 
-		{
-			field: "--background-color",
-			val: "white"
-		},
-
-		{
-			field: "--buttonBackgroundColor",
-			val: "white"
-		},
-
-		{
-			field: "--active-bar",
-			val: "blueviolet"
-		},
-
-		{
-			field: "--stopped-bar",
-			val: "indigo"
-		},
-
-		{
-			field:"--bar-completing",
-			val:"green"
-		},
-
-		{
-			field:"--font-family",
-			val:"unibody"
-		},
-
-		{
-			field:"--text-color",
-			val:"black"
-		},
-
-		{
-			field:"--font-family-emphasis",
-			val:"unibody-caps"
-		}
-	]
+	debug: 0
 	}
 
 
