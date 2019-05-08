@@ -36,10 +36,15 @@ div.menu {
 
 .menu, .alarmWindow, .headerDiv { padding: 20px; }
 
-div#menu, div.alarmWindow { 
+div#menu, div.alarmWindow, div#settings { 
 	margin: 20vh auto;
 	text-align: center;
 	max-width: 300px;
+}
+
+div#recipe {
+	margin: 20vh auto;
+	max-width: 66%;
 }
 
 div#newTimerMenu {
