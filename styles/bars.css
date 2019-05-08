@@ -12,7 +12,7 @@ div.bars {
 }
 
 div.bar, div.bar div.progressbar{
-	height: 20px;
+	height: 28px;
 }
 
 div.bar {
@@ -40,11 +40,11 @@ div.progressbar {
 
 
 div.big, div.big div.progressbar{
-	height: 40px;
+	height: 46px;
 }
 
 div.small, div.small div.progressbar{
-	height: 10px;
+	height: 18px;
 }
 div.small p {
 	visibility: hidden;
@@ -77,13 +77,22 @@ div.bar p {
 
 /* hover and buttons */
 div.barButtons {
+	display: flex;
 	position: absolute;
 	background-color: transparent;
 	right:100%;
-	width:0;
+	width: 0; /*set to 0 to enable hiding*/
    height: 100%;
+   overflow-wrap: none;
 	overflow:hidden;
 	transition: width 0.32s ease-out, background-color 0.6s linear;
+}
+div.barButtons button{
+	color: var(--button-text-color);
+	padding: 0;
+	flex-grow: 1;
+	height: 100%;
+	width: 100%;
 }
 div.bar:hover div.barButtons {
 	width: 20%;

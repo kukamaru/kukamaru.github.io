@@ -55,13 +55,7 @@ function appendText() {
 		maintext.style.visibility = (isHidden) ? "visible" : "hidden";
 	}
 
-
-	if (debug) { console.log(arguments); }
-
-
 	printtext(arguments[0],arguments[1]);
-
-	
 
 	function printtext(i,c){
 		var iT = linenumber();

@@ -23,13 +23,15 @@ var dummyFaves = [
 	text: "steamed eggs",
 	soundID: 2,
 	duration: timeToMs(30,8),
-	style: "big noStyle countdown",
+	style: "big countdown",
+	stoppable: true
 },
 {
 	text: "10 minutes",
 	soundID: 1,
 	duration: timeToMs(0,10),
-	style: "countdown protected",
+	style: "countdown big protected",
+	pausable: true
 },
 ];
 
@@ -333,20 +335,31 @@ function newTimer(){
 
 
 //Eggtimer creates a barebones timer object.
-function eggTimer(eS,eM,eH,soundID,style,text) {
+function eggTimer(eS,eM,eH,soundID,size,text) {
 	var xx = {}; // proto NTO
-	xx.duration = timeToMs(eS,eM,eH);
-	xx.text = text;
+	if (arguments.length > 0) {
+		xx.duration = timeToMs(eS,eM,eH);
+		if (size) xx.size = size;
+		if (text) xx.text = text;
+		if (soundID) xx.soundID = soundID;
+	}
+
 	xx.eggtimer = true;
-	xx.style = style;
-	xx.soundID = soundID;
 	xx.pausable = true;
 	xx.stoppable = true;
 
 	startTimer(xx);
 }
 
-
+function stressTest() {
+	var xx = {};
+	xx.text = "stressTest";
+	xx.style = "big noStyle";
+	xx.stoppable = true;
+	xx.duration = timeToMs(3);
+	xx.action = function(){ startTimer(xx) };
+	startTimer(xx);
+}
 
 //counter for the makeAto
 var newTimerID = (function() {
@@ -361,46 +374,62 @@ function startTimer(nto){
 	function makeAto(nto){
 		var ato = {};
 		Object.defineProperties(ato,{
+			'id': {
+				value:newTimerID(),
+				writable:false
+			},
+			'text': {
+				value:"atoTextHere",
+				writable:true
+			},
 			'countdown': {
 				value: true,
 				writable: true
 			},
 			'soundID' :{
 				value:2,
-				writable: true
-
+				writable: true,
 			},
 			'pausable': {
 				value:false,
 				writable: true
 			},
-			'style': {
+			'style': { // deprecate this
 				value:'noStyle',
 				writable: true
-
 			},
 			'duration': {
 				value:261000,
-				writable: true
+				writable: true,
 			},
 			'action': {
-				value:function(){appendText("alarm finished -- action","alert");}
+				value:function(){appendText("alarm finished -- action","alert");},
+				writable: true
 			},
-			'id': {
-				value:newTimerID(),
-				writable:false
-			},
+
 			'stoppable': {
 				value:false,
 				writable:true
+			},
+			'className': {
+				value:function(){
+					var str = "bar";
+					if (this.size) str = str + " " + this.size;
+					if (this.inverted) str = str + " inverted";
+					if (this.countdown) str = str + " countdown";
+					if (this.paused) str = str + " paused";
+					return str;
+				}
 			}
 		});
-
-		Object.assign(ato,nto);
-
+		if (nto){
+			Object.assign(ato,nto);
+		} else {
+			console.log("no nto, falling back on defaults");
+			console.log(ato);
+		}
 		return ato;
 	}
-
 	
 	var d = new Date(); 
 	var ato = makeAto(nto);
@@ -533,19 +562,46 @@ function alarmSnooze(){
 /** BARS **/
 /* CLICK AND PAUSE */
 
-function clickedBar(ID) {
-	pauseResume(ID);
+function clickedBar(id) {
+	appendText("you clicked on bar " + id,"debug");
+}
+
+function stopTimer(input) {
+	var ato;
+	
+	if (typeof input === 'number') {
+		ato = getActiveTimer(input);
+	}
+	else if (typeof input === 'object') {
+		ato = input;
+	}
+
+	ato.active = false;
+	clearTimeout(ato.alarm);
+	hideBar(ato);
+
+	appendText("stopped timer " + ato.id)
+
 }
 
 
-function pauseResume(ID) {
-	var ato = getActiveTimer(ID);
+function pauseResume(input) {
+
+	var ato;
+
+	if (typeof input === 'number') {
+		ato = getActiveTimer(input);
+	}
+	else if (typeof input === 'object') {
+		ato = input;
+	}
+
 	var now = new Date().valueOf();
-	var div = document.getElementById("bar" + ID);
+	var div = document.getElementById("bar" + ato.id);
 
 	// pausing
 	if (ato.pausable && !ato.paused) {
-		appendText("pausing " + ID);
+		appendText("pausing " + ato.id);
 
 		var start 		= ato.start.valueOf();
 		var end 			= ato.finish.valueOf();
@@ -559,13 +615,13 @@ function pauseResume(ID) {
 		ato.pRemainder = remainder;
 		ato.pElapsed = elapsed;
 
-		div.className = div.className + " paused";
+		div.className = ato.className();
 
 		clearTimeout(ato.alarm);
 	}
 	// resuming
 	else if (ato.paused) {
-		appendText("resuming " + ID);
+		appendText("resuming " + ato.id);
 
 		var newFinish = now + ato.pRemainder;
 		var newStart = now - ato.pElapsed; 
@@ -577,7 +633,7 @@ function pauseResume(ID) {
 		ato.pausedAt = undefined;
 		ato.paused = false;
 
-		div.className = "bar " + ato.style;
+		div.className = ato.className();
 
 		ato.alarm = setAlarm(ato);
 	}
@@ -594,10 +650,10 @@ function newBar(ato) {
 		var timeText = document.createElement('span');
 
 
-		div.setAttribute('class',"bar" + " " + ato.style);
+		div.setAttribute('class',ato.className());
 		div.setAttribute('id',"bar" + ato.id);
 		div.setAttribute('onclick',"clickedBar("+ato.id+")");
-		bar.setAttribute('class',"progressbar" + " " + ato.style);
+		bar.setAttribute('class',"progress" + ato.className());
 		bar.setAttribute('id',"progress" + ato.id);
 
 		label.setAttribute('id',"barlabel" + ato.id);
@@ -627,15 +683,17 @@ function newBar(ato) {
 		if (ato.pausable){
 			var pause = document.createElement("button");
 			pause.id = "barPauseButton" + ato.id;
-			pause.innerHTML = "pause";
+			pause.innerHTML = "Pause";
 			pause.className = "barButton barPauseButton";
+			pause.setAttribute("onclick","pauseResume(" + ato.id + ")");
 			div.appendChild(pause);
 		}
 		if (ato.stoppable){
 			var stop = document.createElement("button");
 			stop.id = "barStopButton" + ato.id;
-			stop.innerHTML = "stop";
+			stop.innerHTML = "Stop";
 			stop.className = "barButton barStopButton";
+			stop.setAttribute("onclick","stopTimer(" + ato.id + ")");
 			div.appendChild(stop);
 		}
 
@@ -961,8 +1019,8 @@ window.onbeforeunload = function() {
 
 function testButton1() {
 	appendText("testButton1 pressed","alert");
-	eggTimer(0,21,4,0,"big countdown","bigtest");
-	eggTimer(5,0,0,1,"countdown","medium test");
+	eggTimer(0,21,4,0,"big","bigtest");
+	eggTimer(5,0,0,1,"medium","medium test");
 	eggTimer(15,0,0,2,"small","smalltest + looped sound");
 }
 
