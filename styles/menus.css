@@ -10,7 +10,9 @@
 	transition-duration: 0.2s;
 	transition-property: background;
 	visibility: hidden;
-	width: 100%
+	width: 100%;
+	height: 100%;
+	display:flex;
 }
 .menuBG  { z-index: 1; }
 .alarmBG { z-index: 8; }
@@ -19,6 +21,8 @@ div.menuWrapper {
 	position: absolute;
 	left:0; top:0; bottom:0; right: 0;
 	width: 100%;
+	height: 100%;
+	display: flex;
 	z-index: 4;
 
 	visibility: hidden;
@@ -27,7 +31,9 @@ div.menu {
 	position: relative;
 	visibility: hidden;
 	display: none;
+   /*set to flex when shown*/
 	z-index: 6;
+	margin: auto;
 }
 
 .menu, .alarmWindow, .headerBG {
@@ -36,27 +42,26 @@ div.menu {
 
 .menu, .alarmWindow, .headerDiv { padding: 20px; }
 
+
+.alarmWindow { margin:auto; }
+
+
 div#menu, div.alarmWindow, div#settings { 
-	margin: 20vh auto;
 	text-align: center;
-	max-width: 300px;
+	max-width: 80%;
+	width: fit-content;
+	min-width: 300px;
+	max-height: 80%;
 }
 
 div#recipe {
-	margin: 20vh auto;
 	max-width: 66%;
 }
 
 div#newTimerMenu {
-	margin: 20vh auto;
 	text-align: center;
-
 	width: fit-content;
 
-	left: unset;
-	right: unset;
-	top:unset;
-	bottom:unset;
 }
 
 .menu input, .menu select {
@@ -121,6 +126,33 @@ ul.subNavHorizontal {
 
 ul.subNavVertical > li:last-child {
 	padding-bottom: 0;
+}
+
+/* Faves scrolling */
+ul#favorites {
+	overflow-y: auto;
+	overscroll-behavior-y: contain;
+}
+
+
+#favorites::-webkit-scrollbar {
+  width: 10px;
+
+}
+
+/* Track */
+#favorites::-webkit-scrollbar-track {
+}
+
+/* Handle */
+#favorites::-webkit-scrollbar-thumb {
+  background: lightgray;
+  width: 8px;
+}
+
+/* Handle on hover */
+#favorites::-webkit-scrollbar-thumb:hover {
+  background: #555; 
 }
 
 /* Favorites spacer (total animationtime .5s/500ms) */
