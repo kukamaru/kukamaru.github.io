@@ -282,29 +282,21 @@ function newTimer(){
 		var m = form.m.value;
 		var s = form.s.value;
 		
-		var style = form.size.value;
-		if (form.countdown.checked){ style = "countdown " + style; }
-		if (form.inverted.checked){ style = "inverted " + style; }
-		if (form.protected.checked){ style = "protected " + style; }
-
 		var newTimerObject = { 
 			duration: timeToMs(s,m,h),
-			size: form.size.value,
 			text: form.text.value,
 			soundID: form.sound.value,
-			protected: form.protected.value,
 
+			size: form.size.value,	
+			protected: form.protected.value,
 			countdown: form.countdown.checked,
 			inverted: form.inverted.checked,
-
-			style: style
 		};
 
 		return newTimerObject;
 	}
 
-	newTimer.submitButton = function() { submit(); }
-	function submit(){
+	newTimer.submitButton = function(){
 		startTimer(getForm());
 
 		form.reset();
