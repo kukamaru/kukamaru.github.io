@@ -115,6 +115,7 @@ function init() {
 			header.appendChild(span);
 		}
 
+
 		if (!document.getElementById("header")){
 			header = document.createElement("h1");
 			text = document.createTextNode("404 header not found");
@@ -136,15 +137,27 @@ function init() {
 		}
 		appendText("loaded...","status");
 
-		document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
-		event.preventDefault();
-		newTimer.submitButton();
-		},false);
-
-		document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+		//check for new timer menu and apply eventlisteners
+		if (document.getElementById("newTimerStartButton")) {
+			document.querySelector("#newTimerStartButton").addEventListener("click", function(event){
 			event.preventDefault();
-			newTimer.faveButton();
-		},false);
+			newTimer.submitButton();
+			},false);
+
+			document.querySelector("#newTimerAddFave").addEventListener("click", function(event){
+				event.preventDefault();
+				newTimer.faveButton();
+			},false);
+		}
+
+
+		//check for preloader and hide.
+		if (document.getElementById("preloader")) {
+			preloader.style.background = "transparent";
+			setTimeout(function(){
+				body.removeChild(preloader);
+			}, 1500);
+		}
 
 	}
 }
