@@ -3,6 +3,16 @@ var backgrounds = [
 { 
 	name: "water",
 	src: "img/water1_512.jpg",
+	css: [
+		{
+			field: "--background-attachment",
+			val: "auto"
+		},
+		{
+			field: "--background-size",
+			val: "auto"
+		}
+	]
 },
 
 
@@ -13,7 +23,7 @@ var backgrounds = [
 
 {
 	name: "inverted water",
-	src: "img/inverted_water.jpg"
+	src: "img/inverted_water.jpg",
 },
 {
 	name: "slabs annie spratt",
@@ -21,10 +31,18 @@ var backgrounds = [
 },
 {
 	name: "curved",
-	src: "img/curved.jpg"
+	src: "img/curved.jpg",
+	css: [
+		{
+			field: "--background-attachment",
+			val: "fixed"
+		},
+		{
+			field: "--background-size",
+			val: "cover"
+		}
+	]
 }
-
-
 ];
 
 

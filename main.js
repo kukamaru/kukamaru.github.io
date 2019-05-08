@@ -225,30 +225,35 @@ function mainLoop() {
 
 //Themes
 function setTheme(ID) {
+	let root = document.documentElement;
+
+
 	function setBg(theme){
 		if (theme.bg == undefined) return;
+		root.style.setProperty("--background-image",backgrounds.url(theme.bg));
+		if (backgrounds[theme.bg].css){
+			setCSSVars(backgrounds[theme.bg].css)
+		}
 
-		var body = document.getElementsByTagName("body")[0];
-		body.style.background = backgrounds.url(theme.bg);
+
 		if (document.getElementById("debugDiv") != undefined){
-			debugDiv.style.background = backgrounds.url(theme.debug);
+			root.style.setProperty("--debug-image",backgrounds.url(theme.debug));
 		}
 	}
 
-	function setCSSVars(theme){
-		if (!theme.css) return;
+	function setCSSVars(cssarray){
+		if (!cssarray) return;
 
-		let root = document.documentElement;
-		let x = theme.css.length;
+		let x = cssarray.length;
 		for (let i = 0; i < x; i++) {
-			root.style.setProperty(theme.css[i].field,theme.css[i].val);
+			root.style.setProperty(cssarray[i].field,cssarray[i].val);
 		}
 	}
 
 	appendText("theme name:  " + themes[ID].name);
 
 	setBg(themes[ID]);
-	setCSSVars(themes[ID]);
+	setCSSVars(themes[ID].css);
 }
 
 //New Timer Menu
