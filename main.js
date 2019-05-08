@@ -149,7 +149,7 @@ function init() {
 	}
 }
 
-var timerRunning = function(){
+var timerRunning = function() {
 	for (var i = 0;i<activeTimers.length; i++){
 		if (activeTimers[i].active) return true;
 	}
@@ -300,6 +300,7 @@ function eggTimer(eS,eM,eH,soundID,style,text) {
 	xx.eggtimer = true;
 	xx.style = style;
 	xx.soundID = soundID;
+	xx.pausable = true;
 
 	startTimer(xx);
 }
@@ -312,10 +313,10 @@ var newTimerID = (function() {
 	return function(){ counter++; return counter }
 })()
 
-
 //creates and activates a ato from nto.
 function startTimer(nto){
-	console.log(nto);
+	//console.log("nto in");
+	//console.log(nto);
 
 
 	// active timer object
@@ -333,7 +334,8 @@ function startTimer(nto){
 
 			},
 			'pausable': {
-				value:true
+				value:false,
+				writable: true
 			},
 			'style': {
 				value:'noStyle',
@@ -355,9 +357,7 @@ function startTimer(nto){
 		return newObj;
 	}
 
-	function setAlarm(ato) {
-		return setTimeout(function(){alarm(ato);},ato.duration);
-	}		
+	
 
 
 	var d = new Date(); 
@@ -372,7 +372,7 @@ function startTimer(nto){
 	ato.start = 		d;
 	ato.finish = 		f;
 
-
+	if (nto.pausable) ato.pausable = true;
 	if (nto.text) ato.text =  nto.text;
 	if (nto.soundID) ato.soundID = nto.soundID;
 	if (nto.style) {
@@ -390,13 +390,16 @@ function startTimer(nto){
 	return ato;
 }
 
-function alarm(ato) {
-	var text = ato.text;
-	var soundID = ato.soundID;
-	var isLooping = sounds[soundID].looping;
+function setAlarm(ato) {
+	return setTimeout(function(){alarm(ato);},ato.duration);
+}	
 
-	appendText(text,"alert");		
-	var audio = new Audio(sounds[soundID].src);
+function alarm(ato) {
+
+	var isLooping = sounds[ato.soundID].looping;
+
+	appendText(ato.text,"alert");		
+	var audio = new Audio(sounds[ato.soundID].src);
 	if (isLooping){
 		audio.setAttribute("loop",true);
 		audio.play();
@@ -410,8 +413,6 @@ function alarm(ato) {
 	hideBar(ato);
 
 	activeTimers[ato.id].active = false;
-	console.log("ato:")
-	console.log(ato);
 }
 
 function alarmWindow(ID) {
@@ -502,18 +503,51 @@ function alarmSnooze(){
 }
 
 /** BARS **/
+/* CLICK AND PAUSE */
 function clickedBar(ID) {
-	current = activeTimers[ID];
-	now = new Date().valueOf();
+	var ato 			= activeTimers[ID];
+	var now 			= new Date().valueOf();
 
-	start = current.start.valueOf();
-	end = current.finish.valueOf();
-	elapsed = now-start;
-	total = end-start;
-	remainder = total-elapsed;
+	var start 		= ato.start.valueOf();
+	var end 			= ato.finish.valueOf();
 
+	var elapsed 	= now-start;
+	var total 		= end-start;
+	var remainder	= total-elapsed;
 	appendText("you clicked bar " + ID,"debug")
 	appendText("it has " + msToString(remainder) + " left before alarm","debug")
+
+
+	if (ato.pausable) {
+		appendText("pausing " + ID);
+		ato.active = false;
+		ato.pausable = false;
+		ato.pausedAt = now;
+		ato.pRemainder = remainder;
+		ato.pElapsed = elapsed;
+
+		clearTimeout(ato.alarm);
+
+		activeTimers[ID] = ato;
+	} 
+	else if (ato.pausedAt) {
+		appendText("resuming " + ID);
+
+		var newFinish = now + ato.pRemainder;
+		var newStart = now - ato.pElapsed; 
+
+		ato.finish = new Date(newFinish);
+		ato.start = new Date(newStart);
+		ato.duration = ato.pRemainder;
+
+		ato.active = true;
+		ato.pausedAt = undefined;
+		ato.pausable = true;
+
+		ato.alarm = setAlarm(ato);
+		activeTimers[ID] = ato;
+	}
+
 }
 
 function newBar(ato) {
@@ -578,21 +612,21 @@ function renderBars() {
 
 	if (debug2) { return; } //DEBUG
 
-	now = new Date().valueOf();
-	num = activeTimers.length;
+	var now = new Date().valueOf();
+	var num = activeTimers.length;
 
 	for (i = 0; i < num; i++){
-		current = activeTimers[i];
+		var current = activeTimers[i];
 		if(current.active){
-			bar = document.getElementById("progress" + activeTimers[i].id);
+			var bar = document.getElementById("progress" + activeTimers[i].id);
 
-			start = current.start.valueOf();
-			end = current.finish.valueOf();
-			elapsed = now-start;
-			total = end-start;
-			remainder = total-elapsed;
+			var start = current.start.valueOf();
+			var end = current.finish.valueOf();
+			var elapsed = now-start;
+			var total = end-start;
+			var remainder = total-elapsed;
 
-			elapsedFraction = (elapsed/total*100);
+			var elapsedFraction = (elapsed/total*100);
 
 			if (elapsedFraction > 100) 	{ elapsedFraction = 100; }
 
@@ -600,20 +634,20 @@ function renderBars() {
 			else 							{ widthPercent = elapsedFraction; }
 
 			if (current.countdown) {
-				countdown = document.getElementById("barcountdown" + current.id);
-				ms = 			document.getElementById("barcountdownms" + current.id);
+				var countdown = document.getElementById("barcountdown" + current.id);
+				var ms = 			document.getElementById("barcountdownms" + current.id);
 				countdown.innerHTML 				= renderTime(remainder);
 				ms.innerHTML = (msVisible) ? renderMs(remainder) : "";
 			}
 
-			widthPercent = widthPercent + "%";
+			var widthPercent = widthPercent + "%";
 
 			bar.style.width = widthPercent;
 			if (remainder < 2000) bar.style.background = "var(--bar-completing)";
 
 		}
 	}
-}
+} 
 
 function menuShow(i){
 	if (windowState) { 

@@ -86,9 +86,11 @@ ul {
 
 
 /* AlarmWindow Stuff */
-div.alarmWindow {
+div.alarmWindow * {
 	color:var(--alert-color);
+}
 
+div.alarmWindow {
 	padding:20px;
 	width:70%;	
 	outline: 1px solid var(--alert-color);
@@ -111,6 +113,7 @@ div.alarmIcon {
 .alarmContent hr {
 	border-top-color: var(--alert-color);
 }
+
 .alarmButtons {
 	display: flex;
 	justify-content: space-around;
