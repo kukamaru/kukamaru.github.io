@@ -222,7 +222,7 @@ function mainLoop() {
 //Themes
 function setTheme(ID) {
 	function setBg(theme){
-		if (!theme.bg) return;
+		if (theme.bg == undefined) return;
 
 		var body = document.getElementsByTagName("body")[0];
 		body.style.background = backgrounds.url(theme.bg);
