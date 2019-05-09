@@ -101,7 +101,7 @@ function init() {
 
 	init.bodyOnLoad = function() {
 		const body = document.getElementsByTagName("body")[0];
-
+		prepThemes();
 		//start main loop if clock exists
 		clockExists = (document.getElementById("timediv") != undefined);
 		if (clockExists) { 
@@ -111,6 +111,7 @@ function init() {
 		const isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
 
 		function initLocal() {
+		
 			if (localStorage.getItem('trigger','trigger')){
 				appendText("trigger detected.","alert");
 				localStorage.clear();
@@ -127,7 +128,6 @@ function init() {
 			appendText("KnownElement " + KnownElement);
 
 			style("local.css");
-			setTheme(3);
 
 			var t = document.createTextNode(" (local version)");
 			var span = document.createElement("span");
@@ -150,7 +150,7 @@ function init() {
 			KnownElement = true;
 		}
 
-		setTheme(0);
+
 
 		if (isLocal) { initLocal(); } 
 		if (KnownElement) {
@@ -182,6 +182,8 @@ function init() {
 				body.removeChild(preloader);
 			}, 800);
 		}
+
+		setTimeout(setTheme(0), 1000);
 
 	}
 }
@@ -232,7 +234,7 @@ function setTheme(input) {
 		if (theme.bg == undefined) return;
 		root.style.setProperty("--background-image",backgrounds.url(theme.bg));
 		if (backgrounds[theme.bg].css){
-			setCSSVars(backgrounds[theme.bg].css)
+			//setCSSVars(backgrounds[theme.bg].css)
 		}
 
 
@@ -242,17 +244,19 @@ function setTheme(input) {
 	}
 
 	function setCSSVars(cssarray){
-		if (!cssarray) return;
 
 		let x = cssarray.length;
 
-		//back compat with old format.
+
+		console.log("setCSSvars got input " + cssarray);
+		console.log(cssarray)
+		if (!cssarray) return;
 		if (!Array.isArray(cssarray[0])){
 			for (let i = 0; i < x; i++) {
 				root.style.setProperty(cssarray[i].field,cssarray[i].val);
 			}
-		} 
- 
+		}
+
 		//new format
 		else if (Array.isArray(cssarray[0])) {
 			for (let i = 0; i < x; i++) {
@@ -264,14 +268,13 @@ function setTheme(input) {
 	//appendText("theme name:  " + themes[input].name);
 
 	if (input.isTheme) {
-		setBg(input);
-		setCSSVars(input.css)
+		setBg(input);		
+	   setCSSVars(input.css.css());
 	}	
 	else if (typeof input === "number"){
 		setBg(themes[input]);
-		setCSSVars(themes[input].css);
+		setCSSVars(themes[input].css.css());
 	}
-
 
 }
 

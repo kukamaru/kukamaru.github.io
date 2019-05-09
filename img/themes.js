@@ -1,6 +1,12 @@
 function makeTheme(inputTheme) {
 
-	var newCSS = makeCSS(inputTheme.css);
+	var newCSS
+
+	if (inputTheme.css){
+		newCSS = makeCSS(inputTheme.css);
+	}
+
+	else newCSS = makeCSS();
 
 	var defaultTheme = { 
 
@@ -15,33 +21,19 @@ function makeTheme(inputTheme) {
 
 	if (inputTheme) {
 		var newTheme = Object.assign(defaultTheme, inputTheme);
+		newTheme.css = makeCSS(inputTheme.css);
 		return newTheme;
 	}
 
 	else return defaultTheme;
 }
 
-var DEFAULTTHEMECSS = {
-			backgroundColor:"white",
-			buttonBackgroundColor:"white",
-			activeBar:"blueviolet",
-			stoppedBar:"indigo",
-			barCompleting:"green",
-			fontFamily:"unibody",
-			textColor:"black",
-			fontFamilyEmphasis:"unibody-caps"
-}
-var doink = makeCSS();
-
-
 
 //makes new css object
 function makeCSS(input){
 
-	function CSS(input){
-
 		function styleCssName(word){
-			if (typeof word !== "string") { return false }
+			if (typeof word !== "string") { return; }
 				function upperToHyphenLower(match, offset, string) {
 					return (offset > 0 ? '-' : '') + match.toLowerCase();
 				}
@@ -51,20 +43,32 @@ function makeCSS(input){
 				return word;
 		}
 
-		var cssObj = (input) ? input : {} ;
+		var DEFAULTTHEMECSS = {
+			backgroundColor:"white",
+			buttonBackgroundColor:"white",
+			activeBar:"blueviolet",
+			stoppedBar:"indigo",
+			barCompleting:"green",
+			fontFamily:"unibody",
+			textColor:"black",
+			fontFamilyEmphasis:"unibody-caps"
+		}
 
+
+		var cssObj = {}
 		Object.defineProperties(cssObj,{
 			"css": {
 				value: function(){
 					var values = Object.entries(this);
 
+					//1 skips first value, the function
 					for (var i = 0;i < values.length;i++){
 						values[i][0] = styleCssName(values[i][0]);
 					}
 					return values;
 				},
 				writable:false,
-				enumerable: false
+				//enumerable: true
 			},
 			"backgroundColor": {
 			//	value: "white",
@@ -120,16 +124,12 @@ function makeCSS(input){
 				enumerable: true
 			}
 		});
+		
+		Object.assign(cssObj, DEFAULTTHEMECSS);
+		Object.assign(cssObj, input);
 
 		return cssObj;
-	}
-
-	outputCSS = CSS(input);
-
-	outputCSS = Object.assign(DEFAULTTHEMECSS, outputCSS)	
-
-	return outputCSS;
-
+	
 }
 
 function prepThemes(){
@@ -146,7 +146,6 @@ var themes = [
 
 	bg: 0,
 	debug: 2,
-	css: doink
 
 	},
 
@@ -155,48 +154,7 @@ var themes = [
 	name: "dark",
 
 	bg: 1,
-	debug: 0//,
-	/*css: [ 
-		{
-			field: "--background-color",
-			val: "black"
-		},
-
-		{
-			field: "--button-background-color",
-			val: "black"
-		},
-
-		{
-			field: "--active-bar",
-			val: "red"
-		},
-
-		{
-			field: "--stopped-bar",
-			val: "darkred"
-		},
-
-		{
-			field:"--bar-completing",
-			val:"orange"
-		},
-
-		{
-			field:"--font-family",
-			val:"unibody"
-		},
-
-		{
-			field:"--text-color",
-			val:"white"
-		},
-
-		{
-			field:"--font-family-emphasis",
-			val:"unibody-black"
-		}
-	]*/
+	debug: 0
 	},
 	
 
