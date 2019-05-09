@@ -20,20 +20,21 @@ function makeTheme(inputTheme) {
 }
 
 
-function styleCssName(word){
-	if (typeof word !== "string") { return false }
-	function upperToHyphenLower(match, offset, string) {
-    	return (offset > 0 ? '-' : '') + match.toLowerCase();
-  	}
-
-	var re = /[A-Z]/g;	
-	word = "--" + word.replace(re,upperToHyphenLower);
-	return word;
-}
 
 
 //makes new css object
 function makeCSS(){
+		function styleCssName(word){
+		if (typeof word !== "string") { return false }
+		function upperToHyphenLower(match, offset, string) {
+	    	return (offset > 0 ? '-' : '') + match.toLowerCase();
+	  	}
+
+		var re = /[A-Z]/g;	
+		word = "--" + word.replace(re,upperToHyphenLower);
+		return word;
+	}
+
 	var defaultCSS = {};
 	Object.defineProperties(defaultCSS,{
 		"css": {
