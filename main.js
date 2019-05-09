@@ -422,6 +422,9 @@ function startTimer(nto){
 				value:function(){appendText("alarm finished -- action","alert");},
 				writable: true
 			},
+			'action2': {
+				value:function(){appendText("alarm confirmed, func 2");}
+			},
 
 			'stoppable': {
 				value:false,
@@ -476,11 +479,15 @@ function alarm(ato) {
 	if (isLooping){
 		audio.setAttribute("loop",true);
 		audio.play();
-		activeAlarms.push(audio);
+
+		ato.audio = audio;
+
+		activeAlarms.push(ato);
 
 		alarmWindow(ato);
 	}
 	else { audio.play(); }
+
 	ato.action();
 
 	hideBar(ato);
@@ -540,7 +547,8 @@ function alarmWindow(ato) {
 
 function alarmStop() {
 	for(let i=0; i < activeAlarms.length; i++) {
-		activeAlarms[i].pause();
+		activeAlarms[i].audio.pause();
+		activeAlarms[i].action2();
 	}
 	activeAlarms = [];
 	alarmHide();

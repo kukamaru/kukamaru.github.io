@@ -1,12 +1,14 @@
 function makeTheme(inputTheme) {
 
+	var newCSS = makeCSS(inputTheme.css);
+
 	var defaultTheme = { 
 
 	name:"light",
 
 	bg: 0,
 	debug: 2,
-	css: thing1.css(),
+	css: newCSS,
 	isTheme: true
 
 	}
@@ -19,107 +21,133 @@ function makeTheme(inputTheme) {
 	else return defaultTheme;
 }
 
+var DEFAULTTHEMECSS = {
+			backgroundColor:"white",
+			buttonBackgroundColor:"white",
+			activeBar:"blueviolet",
+			stoppedBar:"indigo",
+			barCompleting:"green",
+			fontFamily:"unibody",
+			textColor:"black",
+			fontFamilyEmphasis:"unibody-caps"
+}
+var doink = makeCSS();
 
 
 
 //makes new css object
-function makeCSS(){
-		function styleCssName(word){
-		if (typeof word !== "string") { return false }
-		function upperToHyphenLower(match, offset, string) {
-	    	return (offset > 0 ? '-' : '') + match.toLowerCase();
-	  	}
+function makeCSS(input){
 
-		var re = /[A-Z]/g;	
-		word = "--" + word.replace(re,upperToHyphenLower);
-		return word;
+	function CSS(input){
+
+		function styleCssName(word){
+			if (typeof word !== "string") { return false }
+				function upperToHyphenLower(match, offset, string) {
+					return (offset > 0 ? '-' : '') + match.toLowerCase();
+				}
+
+				var re = /[A-Z]/g;	
+				word = "--" + word.replace(re,upperToHyphenLower);
+				return word;
+		}
+
+		var cssObj = (input) ? input : {} ;
+
+		Object.defineProperties(cssObj,{
+			"css": {
+				value: function(){
+					var values = Object.entries(this);
+
+					for (var i = 0;i < values.length;i++){
+						values[i][0] = styleCssName(values[i][0]);
+					}
+					return values;
+				},
+				writable:false,
+				enumerable: false
+			},
+			"backgroundColor": {
+			//	value: "white",
+				writable: true,
+				enumerable: true
+			},
+			
+			"buttonBackgroundColor": {
+			//	value: "white",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"activeBar": {
+				//value: "blueviolet",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"stoppedBar": {
+			//	value: "indigo",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"barCompleting": {
+			//	value:"green",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"fontFamily": {
+			//	value:"unibody",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"textColor": {
+			//	value:"black",
+				writable: true,
+				enumerable: true
+			},
+
+			
+			"fontFamilyEmphasis": {
+			//	value:"unibody-caps",
+				writable: true,
+				enumerable: true
+			}
+		});
+
+		return cssObj;
 	}
 
-	var defaultCSS = {};
-	Object.defineProperties(defaultCSS,{
-		"css": {
-			value: function(){
-				var values = Object.entries(this);
+	outputCSS = CSS(input);
 
-				for (var i = 0;i < values.length;i++){
-					values[i][0] = styleCssName(values[i][0]);
-				}
-				return values;
-			},
-			writable:false,
-			enumerable: false
-		},
-		"backgroundColor": {
-			value: "white",
-			writable: true,
-			enumerable: true
-		},
-		
-		"buttonBackgroundColor": {
-			value: "white",
-			writable: true,
-			enumerable: true
-		},
+	outputCSS = Object.assign(DEFAULTTHEMECSS, outputCSS)	
 
-		
-		"activeBar": {
-			value: "blueviolet",
-			writable: true,
-			enumerable: true
-		},
+	return outputCSS;
 
-		
-		"stoppedBar": {
-			value: "indigo",
-			writable: true,
-			enumerable: true
-		},
+}
 
-		
-		"barCompleting": {
-			value:"green",
-			writable: true,
-			enumerable: true
-		},
-
-		
-		"fontFamily": {
-			value:"unibody",
-			writable: true,
-			enumerable: true
-		},
-
-		
-		"textColor": {
-			value:"black",
-			writable: true,
-			enumerable: true
-		},
-
-		
-		"fontFamilyEmphasis": {
-			value:"unibody-caps",
-			writable: true,
-			enumerable: true
-		}
-	});
-
-
-	return defaultCSS;
+function prepThemes(){
+	for (var i = 0;i < themes.length;i++){
+		themes[i] = makeTheme(themes[i]);
+	}
 }
 
 
-const thing1 = makeCSS()
-
-
-const themes = [
+var themes = [
 { 
 
 	name:"light",
 
 	bg: 0,
 	debug: 2,
-	css: thing1.css()
+	css: doink
+
 	},
 
 	{
@@ -127,8 +155,8 @@ const themes = [
 	name: "dark",
 
 	bg: 1,
-	debug: 0,
-	css: [ 
+	debug: 0//,
+	/*css: [ 
 		{
 			field: "--background-color",
 			val: "black"
@@ -168,51 +196,22 @@ const themes = [
 			field:"--font-family-emphasis",
 			val:"unibody-black"
 		}
-	]
+	]*/
 	},
+	
 
 	{
 
-	name: "vintage classic",
+	name:"local",
 
-	bg: 1,
+	bg: 3,
 	debug: 0,
-	css: [ 
-		{
-			field: "--background-color",
-			val: "lightyellow"
-		},
+	css: {
+		buttonBackgroundColor: "white",
+		activeBar: "lime"
+	}
 
-		{
-			field: "--button-background-color",
-			val: "yellow"
-		},
-
-		{
-			field: "--active-bar",
-			val: "orange"
-		},
-
-		{
-			field: "--stopped-bar",
-			val: "black"
-		},
-
-		{
-			field:"--bar-completing",
-			val:"green"
-		},
-
-		{
-			field:"--font-family",
-			val:"times new roman"
-		},
-
-		{
-			field:"--font-family-emphasis",
-			val:"times new roman"
-		}
-	]
+	
 	},
 
 
@@ -221,10 +220,11 @@ const themes = [
 	name:"local",
 
 	bg: 4,
-	debug: 0
+	debug: 0,
 	
 	}
 
 
 
 ];
+
