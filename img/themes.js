@@ -19,76 +19,84 @@ function makeTheme(inputTheme) {
 	else return defaultTheme;
 }
 
+
+function styleCssName(word){
+	if (typeof word !== "string") { return false }
+	function upperToHyphenLower(match, offset, string) {
+    	return (offset > 0 ? '-' : '') + match.toLowerCase();
+  	}
+
+	var re = /[A-Z]/g;	
+	word = "--" + word.replace(re,upperToHyphenLower);
+	return word;
+}
+
+
 //makes new css object
 function makeCSS(){
 	var defaultCSS = {};
 	Object.defineProperties(defaultCSS,{
 		"css": {
 			value: function(){
-				//names = Object.getOwnPropertyNames(this);
-				values = Object.entries(this);
+				var values = Object.entries(this);
 
-
-				//console.log(names);
-				//console.log("names");
-
-				//console.log(values);
-				//console.log("values");
-				return values; 
+				for (var i = 0;i < values.length;i++){
+					values[i][0] = styleCssName(values[i][0]);
+				}
+				return values;
 			},
 			writable:false,
 			enumerable: false
 		},
-		"--background-color": {
+		"backgroundColor": {
+			value: "white",
+			writable: true,
+			enumerable: true
+		},
+		
+		"buttonBackgroundColor": {
 			value: "white",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--button-background-color": {
-			value: "white",
-			writable: true,
-			enumerable: true
-		},
-
-		
-		"--active-bar": {
+		"activeBar": {
 			value: "blueviolet",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--stopped-bar": {
+		"stoppedBar": {
 			value: "indigo",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--bar-completing": {
+		"barCompleting": {
 			value:"green",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--font-family": {
+		"fontFamily": {
 			value:"unibody",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--text-color": {
+		"textColor": {
 			value:"black",
 			writable: true,
 			enumerable: true
 		},
 
 		
-		"--font-family-emphasis": {
+		"fontFamilyEmphasis": {
 			value:"unibody-caps",
 			writable: true,
 			enumerable: true
