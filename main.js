@@ -224,7 +224,7 @@ function mainLoop() {
 }
 
 //Themes
-function setTheme(ID) {
+function setTheme(input) {
 	let root = document.documentElement;
 
 
@@ -245,15 +245,34 @@ function setTheme(ID) {
 		if (!cssarray) return;
 
 		let x = cssarray.length;
-		for (let i = 0; i < x; i++) {
-			root.style.setProperty(cssarray[i].field,cssarray[i].val);
+
+		//back compat with old format.
+		if (!Array.isArray(cssarray[0])){
+			for (let i = 0; i < x; i++) {
+				root.style.setProperty(cssarray[i].field,cssarray[i].val);
+			}
+		} 
+ 
+		//new format
+		else if (Array.isArray(cssarray[0])) {
+			for (let i = 0; i < x; i++) {
+				root.style.setProperty(cssarray[i][0],cssarray[i][1]);
+			}
 		}
 	}
 
-	appendText("theme name:  " + themes[ID].name);
+	//appendText("theme name:  " + themes[input].name);
 
-	setBg(themes[ID]);
-	setCSSVars(themes[ID].css);
+	if (input.isTheme) {
+		setBg(input);
+		setCSSVars(input.css)
+	}	
+	else if (typeof input === "number"){
+		setBg(themes[input]);
+		setCSSVars(themes[input].css);
+	}
+
+
 }
 
 //New Timer Menu
@@ -1044,9 +1063,9 @@ var debugMenu = function(){
 		debug1 = debugCheck1.checked;
 		debug2 = debugCheck2.checked;
 
-			appendText("debug1 = " + i + " = " + debug1);
+			appendText("debug1 = "  + debug1);
 
-			appendText("debug2 = " + i + " = " + debug2);
+			appendText("debug2 = " + debug2);
 		if (debug2) {
 			localStorage.setItem('trigger','trigger');
 		}
