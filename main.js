@@ -108,12 +108,13 @@ function init() {
 			 myVar = setInterval(mainLoop, 11);
 		};
 
-		const isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
+		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
 
 		function initLocal() {
 		
 			if (localStorage.getItem('trigger','trigger')){
 				appendText("trigger detected.","alert");
+				isLocal = false;
 				localStorage.clear();
 				return;
 			}
@@ -183,7 +184,11 @@ function init() {
 			}, 800);
 		}
 
-		setTimeout(setTheme(0), 1000);
+		if (isLocal) { 
+			setTimeout(setTheme(3), 500); 
+			}
+		else { setTimeout(setTheme(0), 500); }
+
 
 	}
 }
@@ -234,7 +239,7 @@ function setTheme(input) {
 		if (theme.bg == undefined) return;
 		root.style.setProperty("--background-image",backgrounds.url(theme.bg));
 		if (backgrounds[theme.bg].css){
-			//setCSSVars(backgrounds[theme.bg].css)
+			setCSSVars(backgrounds[theme.bg].css)
 		}
 
 
@@ -251,6 +256,7 @@ function setTheme(input) {
 		console.log("setCSSvars got input " + cssarray);
 		console.log(cssarray)
 		if (!cssarray) return;
+		//old format
 		if (!Array.isArray(cssarray[0])){
 			for (let i = 0; i < x; i++) {
 				root.style.setProperty(cssarray[i].field,cssarray[i].val);
@@ -265,7 +271,7 @@ function setTheme(input) {
 		}
 	}
 
-	//appendText("theme name:  " + themes[input].name);
+	appendText("theme name:  " + themes[input].name);
 
 	if (input.isTheme) {
 		setBg(input);		
