@@ -235,27 +235,11 @@ function setTheme(input) {
 	let root = document.documentElement;
 
 
-	function setBg(theme){
-		if (theme.bg == undefined) return;
-		root.style.setProperty("--background-image",backgrounds.url(theme.bg));
-		if (backgrounds[theme.bg].css){
-			setCSSVars(backgrounds[theme.bg].css)
-		}
-
-
-		if (document.getElementById("debugDiv") != undefined){
-			root.style.setProperty("--debug-image",backgrounds.url(theme.debug));
-		}
-	}
-
 	function setCSSVars(cssarray){
+		if (!cssarray) return;
 
 		let x = cssarray.length;
-
-
-		console.log("setCSSvars got input " + cssarray);
-		console.log(cssarray)
-		if (!cssarray) return;
+		
 		//old format
 		if (!Array.isArray(cssarray[0])){
 			for (let i = 0; i < x; i++) {
@@ -271,15 +255,32 @@ function setTheme(input) {
 		}
 	}
 
-	appendText("theme name:  " + themes[input].name);
+	function setBg(theme){
+		if (theme.bg == undefined) return;
+		root.style.setProperty("--background-image",backgrounds.url(theme.bg));
+		if (backgrounds[theme.bg].css){
+			setCSSVars(backgrounds[theme.bg].css)
+		}
 
+
+		if (document.getElementById("debugDiv") != undefined){
+			root.style.setProperty("--debug-image",backgrounds.url(theme.debug));
+		}
+	}
+
+
+	//check for theme index or theme itself
 	if (input.isTheme) {
 		setBg(input);		
 	   setCSSVars(input.css.css());
+	   	appendText("theme name:  " + input.name);
+
 	}	
 	else if (typeof input === "number"){
 		setBg(themes[input]);
 		setCSSVars(themes[input].css.css());
+			appendText("theme name:  " + themes[input].name);
+
 	}
 
 }

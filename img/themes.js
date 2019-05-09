@@ -44,14 +44,15 @@ function makeCSS(input){
 		}
 
 		var DEFAULTTHEMECSS = {
-			backgroundColor:"white",
-			buttonBackgroundColor:"white",
-			activeBar:"blueviolet",
-			stoppedBar:"indigo",
-			barCompleting:"green",
-			fontFamily:"unibody",
-			textColor:"black",
-			fontFamilyEmphasis:"unibody-caps"
+			backgroundColor: 			"white",
+			buttonBackgroundColor: 	"white",
+			activeBar: 					"blueviolet",
+			stoppedBar: 				"indigo",
+			barCompleting: 			"green",
+			fontFamily: 				"unibody",
+			textColor: 					"black",
+			fontFamily: 			   "unibody", 
+			fontFamilyEmphasis: 		"unibody-caps"
 		}
 
 
