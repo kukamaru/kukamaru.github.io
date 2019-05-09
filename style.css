@@ -1,38 +1,39 @@
 @import url("font/unibody.css");
 
 :root {
-	--font-family: unibody;
-	--font-family-emphasis: unibody-caps;
+	--font-family: unibody;									/* themed */		
+	--font-family-emphasis: unibody-caps;				/* themed */
 
-	--text-color: black;
-	--clock-text-color: white;
+	--text-color: black;										/* themed */				
+	--clock-text-color: white;								/* themed */
 
-	--background-attachment: unset;
-	--background-size: unset;
-	--backgroung-image: unset;
+	--background-attachment: unset;						/* themed */
+	--background-size: unset;								/* themed */
+	--backgroung-image: unset;								/* themed */
 	--debug-image: none;
 
-	--alarm-window-background: white;
+	--alarm-window-background: white;					/* themed */
 
-	--active-bar: blueviolet; 				/* themed */
-	--stopped-bar: indigo;    				/* themed */
-	--bar-completing: green;  				/* themed */
-	--bar-buttons-bg: yellow;
+	--active-bar: blueviolet; 								/* themed */
+	--stopped-bar: indigo;    								/* themed */
+	--bar-completing: green;  								/* themed */
+	
+	--bar-buttons-bg: yellow;								
 
 	--freeze-color: blue;
 	--alert-color: red;
 	--status-color: teal;
 	--edit-color:darkgray;
 
-	--background-color: white; 			/* themed */
+	--background-color: white; 							/* themed */
 
-	--button-text-color: purple;
-	--button-border-color: black;
-	--button-background-color: white;		/* themed */
+	--button-text-color: purple;	 						/* themed */
+	--button-border-color: black;							/* themed */
+	--button-background-color: white;					/* themed */
 
-	--button-hover-text-color: blue;
-	--button-hover-border-color: purple;
-	--button-hover-background-color: lightyellow;
+	--button-hover-text-color: blue;						/* themed */
+	--button-hover-border-color: purple;				/* themed */
+	--button-hover-background-color: lightyellow;	/* themed */
 
 	--alert-icon: url("icons/loudspeaker_rays_red-0.png");
 

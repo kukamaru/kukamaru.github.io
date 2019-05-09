@@ -44,17 +44,30 @@ function makeCSS(input){
 		}
 
 		var DEFAULTTHEMECSS = {
-			backgroundColor: 			"white",
-			buttonBackgroundColor: 	"white",
-			activeBar: 					"blueviolet",
-			stoppedBar: 				"indigo",
-			barCompleting: 			"green",
-			fontFamily: 				"unibody",
-			textColor: 					"black",
-			fontFamily: 			   "unibody", 
-			fontFamilyEmphasis: 		"unibody-caps"
-		}
+			textColor: 							"black",
+			clockTextColor:  					"white",
 
+			alarmWindowBackgound:   		"white", 
+			backgroundColor: 					"white",
+
+			buttonBackgroundColor: 			"white",
+			buttonBorderColor:  				"black",
+			buttonTextColor:    				"purple",
+
+			buttonHoverTextColor:   		"blue",
+			buttonHoverBackgroundColor: 	"lightyellow",
+			buttonHoverBorderColor:       "value", 
+
+			activeBar: 							"blueviolet",
+			stoppedBar: 						"indigo",
+			barCompleting: 					"green",
+
+
+			fontFamily: 						"unibody",
+			
+			fontFamily: 			   		"unibody", 
+			fontFamilyEmphasis: 				"unibody-caps"
+		}
 
 		var cssObj = {}
 		Object.defineProperties(cssObj,{
