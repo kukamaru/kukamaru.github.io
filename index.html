@@ -12,251 +12,268 @@
 <body onload="init.bodyOnLoad()" style="overflow: hidden">
 
 	<div id="preloader" style="
-		background-color: black;
-		position: absolute;
-		width: 100%;
-		height: 100%; 
-		top: 0;
-		bottom: 0;
-		left: 0; 
-		right: 0;
-		z-index: 200;
-		text-align: center;
-		opacity: 1;
+	background-color: black;
+	position: absolute;
+	width: 100%;
+	height: 100%; 
+	top: 0;
+	bottom: 0;
+	left: 0; 
+	right: 0;
+	z-index: 200;
+	text-align: center;
+	opacity: 1;
 
-		transition: opacity 0.6s ease-in-out 0.15s;
+	transition: opacity 0.6s ease-in-out 0.15s;
 	">
-		<p style="
-		position: relative;
-		font-size:32pt;
-		color: rgb(20,20,20);
-		top: calc(50% - 16pt);
-		margin:0;
-		">
-		hello</p>
-	</div>
+	<p style="
+	position: relative;
+	font-size:32pt;
+	color: rgb(20,20,20);
+	top: calc(50% - 16pt);
+	margin:0;
+	">
+hello</p>
+</div>
 
-	<div class="headerWrapper">
-		<div class="headerBG" id="headerBG"></div>
-		<div class="headerDiv" id="headerDiv">
+<div>
+<div class="headerWrapper">
+	<div class="headerBG" id="headerBG"></div>
+	<div class="headerDiv" id="headerDiv">
 
-			<h1 id="header">timers n shit</h1>
-			<ul class="nav">
+		<h1 id="header">timers n shit</h1>
+		<ul class="nav">
 
-				<ul class="subNavHorizontal">
-					<li>
-						<button onclick="javascript:menuShow('recipe');">show recipe</button>
-					</li>
+			<ul class="subNavHorizontal">
+				<li>
+					<button onclick="javascript:menuShow('recipe');">show recipe</button>
+				</li>
 
-					<li>
-						<button onclick="javascript:menuShow('menu');">menu</button>
-					</li>
-					<li>
-						<button onclick="javascript:menuShow('settings');" class="gray">Settings</button>
-					</li>
+				<li>
+					<button onclick="javascript:menuShow('menu');">menu</button>
+				</li>
+				<li>
+					<button onclick="javascript:menuShow('settings');" class="gray">Settings</button>
+				</li>
 
 
-					<li>
-						<button class ="green" onclick="javascript:newTimer();">+ new timer</button>
-					</li>
+				<li>
+					<button class ="green" onclick="javascript:newTimer();">+ new timer</button>
+				</li>
 
-					<br>
+				<br>
 
-					<li>
-						<button class="green local" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
-						</button>
-					</li>
-				</ul>
-				<ul class="subNavHorizontal">
-					<li>
-						<button class="local" value="clear!!" id="clear" onclick="appendText.clear()">clear</button>
-					</li>
-					<li>
-						<button class="local" value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
-					</li>
-				</ul>
+				<li>
+					<button class="green local" onclick="eggTimer(30,8,0,2,'big countdown noStyle protected','EGG TIMER')">EGG TIMER (8 minutes 30s)
+					</button>
+				</li>
 			</ul>
+			<ul class="subNavHorizontal">
+				<li>
+					<button class="local" value="clear!!" id="clear" onclick="appendText.clear()">clear</button>
+				</li>
+				<li>
+					<button class="local" value="soundtest" id="soundtest" onclick="soundTest()">Sound Test</button>
+				</li>
+			</ul>
+		</ul>
 
-		</div> <!-- headerdiv -->
-	</div> <!-- headerwrapper -->
-
+	</div> <!-- headerdiv -->
+</div> <!-- headerwrapper -->
 	<ul id="grid" class="autogrid local">
-    <li>hello</li>
-    <li class="wide">hello</li>
-    <li>hello</li>
-    <li>hello</li>
-    <li>hello lorem ipsum</li>
-    <div class="wide"><p> heheheheheheheh ehelllo lorem ipsum imimimimimim im imim imi mi m   dolor si amet paenuttes hello</p></div>
-    <li>hello</li>
-    <li>hello</li>
-
+		<li>hello</li>
+		<li class="wide">hello</li>
+		<li>hello</li>
+		<li class="priority">hello</li>
+		<li>hello lorem ipsum</li>
+		<div class="wide noorder"><p> heheheheheheheh ehelllo lorem ipsum imimimimimim im imim imi mi m   dolor si amet paenuttes hello</p></div>
+		<li class="noorder">he noo order llo</li>
+		<li>hello</li>
+		<li>hello</li>
+		<li class="wide">hello</li>
+		<li>hello</li>
+		<li class="priority">hello</li>
+		<li>hello lorem ipsum</li>
+		<div class="wide noorder"><p> heheheheheheheh ehelllo lorem ipsum imimimimimim im imim imi mi m   dolor si amet paenuttes hello</p></div>
+		<li class="noorder">he noo order llo</li>
+		<li>hello</li>    <li>hello</li>
+		<li class="wide">hello</li>
+		<li>hello</li>
+		<li class="priority">hello</li>
+		<li>hello lorem ipsum</li>
+		<div class="wide noorder"><p> heheheheheheheh ehelllo lorem ipsum imimimimimim im imim imi mi m   dolor si amet paenuttes hello</p></div>
+		<li class="noorder">he noo order llo</li>
+		<li>hello</li>
 
 	</ul>
 
-	<div id="menuWrapper" class="menuWrapper">
-		<div id="menu" class="menu">
-			<ul id="menulist" class="nav">
-				<ul id="prefavButtons" class="subNavVertical">
-					<li><button onclick="javascript:newTimer();" class="green">New Timer</button></li>
+
+
+<div id="menuWrapper" class="menuWrapper">
+	<div id="menu" class="menu">
+		<ul id="menulist" class="nav">
+			<ul id="prefavButtons" class="subNavVertical">
+				<li><button onclick="javascript:newTimer();" class="green">New Timer</button></li>
+			</ul>
+			<li id="prefav"><hr></li>
+			<ul id="favorites" class="nav">
+			</ul>
+			<li id="postfav"><div id="nofav">no favorites :(</div><hr></li>
+
+			<ul id="postfavButtons" class="subNavVertical">
+				<li><button onclick="javascript:fave.toggleOptions();">Edit faves</button></li>
+				<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
+			</ul>
+		</ul>
+	</div> <!-- menu -->
+	<div id="newTimerMenu" class="menu">
+		<form id="newTimerForm">
+			<ul id="newTimerList" class="nav"> 
+				<li>
+					<input type="text" name="text" placeholder="New Timer">
+				</li>
+
+				<li class="timeInput">
+					<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
+					oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerHours">
+
+					<span class="timeColon" id="timeColon1">:</span>
+
+					<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
+					oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id ="newTimerMinutes">
+
+					<span class="timeColon" id="timeColon2">:</span>
+
+					<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
+					oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
+				</li>
+				<ul class="subNavHorizontal" id="newTimerCheckboxes">
+					<li>
+						<input type="checkbox" name="countdown" id="countdown" checked><label for="countdown">Countdown</label>
+					</li>
+					<li>
+						<input type="checkbox" name="inverted" id="inverted"><label for="inverted">Inverted</label>
+					</li>
+					<li>
+						<input type="checkbox" name="protected" id="protected" checked><label for="protected">Protecc</label>
+					</li>
 				</ul>
-				<li id="prefav"><hr></li>
-				<ul id="favorites" class="nav">
+				<ul class="subNavHorizontal" id="newTimerRadio">
+					<li>
+						<input type="radio" name="size" id="big" value="big"><label for="big">Big</label>
+					</li>
+					<li>
+						<input type="radio" name="size" id="medium" checked="true" value="medium"><label for="medium">Medium</label>
+					</li>
+					<li>
+						<input type="radio" name="size" id="small" value="small"><label for="small">Small</label>
+					</li>
 				</ul>
-				<li id="postfav"><div id="nofav">no favorites :(</div><hr></li>
-				
-				<ul id="postfavButtons" class="subNavVertical">
-					<li><button onclick="javascript:fave.toggleOptions();">Edit faves</button></li>
-					<li><button onclick="javascript:menuShow('settings');" class="gray">Settings</button></li>
+				<li>
+					<select name="sound">
+						<option value=2>sound 2 (looped)</option>
+						<option value=0>sound 0</option>
+						<option value=1>sound 1</option>
+					</select>
+				</li>
+				<ul class="subNavHorizontal stretch">
+					<li id="startButtonLi">
+						<button name="submit" class="green" id="newTimerStartButton">start timer</button>
+					</li>
+					<li id="faveButtonLi">
+						<button id="newTimerAddFave" >add favorite</button>
+					</li>
 				</ul>
 			</ul>
-		</div> <!-- menu -->
-		<div id="newTimerMenu" class="menu">
-			<form id="newTimerForm">
-				<ul id="newTimerList" class="nav"> 
-					<li>
-						<input type="text" name="text" placeholder="New Timer">
-					</li>
+		</form>
 
-					<li class="timeInput">
-						<input type="number" placeholder="00" max ="99" class="hours timeInput" name="h" 
-						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerHours">
+	</div> <!-- newTimerMenu -->
 
-						<span class="timeColon" id="timeColon1">:</span>
+	<div id="recipe" class="menu">
+		<p style="background-color: white">
+			400g flour<br>
+			230g water<br>
+			160g starter<br>
+			5g-7g salt<br>
+			<br>
+			let rise 3.5 hrs<br>
+			shape the dough<br>
+			second rise 2.5-3 hrs - or - fridge overnight<br>
+			preheat oven<br>
+			cook at 235-240 degrees<br>
+			32 minutes with lid<br>
+			18 minutes without, 50 minutes total<br>
+			let cool completely, then EAT<br>
+		</p>
+	</div> <!-- recipe -->
+	<div id="settings" class="menu">
+		<ul id="settingsList" class="nav">
+			<ul class="subNavHorizontal">
+				<li>
 
-						<input type="number" placeholder="00" max ="99" class="minutes timeInput" name="m" 
-						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id ="newTimerMinutes">
+					<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
+					<label for="msCheck">Milliseconds</label>
+				</li>
 
-						<span class="timeColon" id="timeColon2">:</span>
+				<li>
 
-						<input type="number" placeholder="00" max = "60" class="seconds timeInput" name="s" 
-						oninput="newTimer.changed(this)" onclick="newTimer.clicked(this);" value="" id="newTimerSeconds">
-					</li>
-					<ul class="subNavHorizontal" id="newTimerCheckboxes">
-						<li>
-							<input type="checkbox" name="countdown" id="countdown" checked><label for="countdown">Countdown</label>
-						</li>
-						<li>
-							<input type="checkbox" name="inverted" id="inverted"><label for="inverted">Inverted</label>
-						</li>
-						<li>
-							<input type="checkbox" name="protected" id="protected" checked><label for="protected">Protecc</label>
-						</li>
-					</ul>
-					<ul class="subNavHorizontal" id="newTimerRadio">
-						<li>
-							<input type="radio" name="size" id="big" value="big"><label for="big">Big</label>
-						</li>
-						<li>
-							<input type="radio" name="size" id="medium" checked="true" value="medium"><label for="medium">Medium</label>
-						</li>
-						<li>
-							<input type="radio" name="size" id="small" value="small"><label for="small">Small</label>
-						</li>
-					</ul>
-					<li>
-						<select name="sound">
-							<option value=2>sound 2 (looped)</option>
-							<option value=0>sound 0</option>
-							<option value=1>sound 1</option>
-						</select>
-					</li>
-					<ul class="subNavHorizontal stretch">
-						<li id="startButtonLi">
-							<button name="submit" class="green" id="newTimerStartButton">start timer</button>
-						</li>
-						<li id="faveButtonLi">
-							<button id="newTimerAddFave" >add favorite</button>
-						</li>
-					</ul>
-				</ul>
-			</form>
+					<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
+					<label for="tsCheck">Timestamps</label>
+				</li>
+			</ul>
+			<hr>
+			<br>
+			<li>
+				<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
+			</li>
+			<li>
+				<button id="deleteDataButton" class="red" disabled="true" onclick="clearLocalStorage();">Delete</button>
+			</li>
+		</ul>
+	</div> <!-- settings -->
+</div> <!-- menuWrapper -->
 
-		</div> <!-- newTimerMenu -->
 
-		<div id="recipe" class="menu">
-			<p style="background-color: white">
-				400g flour<br>
-				230g water<br>
-				160g starter<br>
-				5g-7g salt<br>
-				<br>
-				let rise 3.5 hrs<br>
-				shape the dough<br>
-				second rise 2.5-3 hrs - or - fridge overnight<br>
-				preheat oven<br>
-				cook at 235-240 degrees<br>
-				32 minutes with lid<br>
-				18 minutes without, 50 minutes total<br>
-				let cool completely, then EAT<br>
+<div id="menuBG" class="menuBG" onclick="menuHide();">		
+</div> <!-- menuBG -->
+
+<div id="alarmBG" class="alarmBG">
+	<div id="alarmWindowDiv" class="alarmWindow">
+		<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
+		<div id="alarmContent" class="alarmContent">
+			<p id="alarmText" class="alarmText">						
 			</p>
-		</div> <!-- recipe -->
-		<div id="settings" class="menu">
-			<ul id="settingsList" class="nav">
-				<ul class="subNavHorizontal">
-					<li>
-
-						<input class="gray" type="checkbox" id="msCheck" onclick="msVisCheck()">
-						<label for="msCheck">Milliseconds</label>
-					</li>
-
-					<li>
-
-						<input class="gray" type="checkbox" id="tsCheck" onclick="tsVisCheck()" checked>
-						<label for="tsCheck">Timestamps</label>
-					</li>
-				</ul>
-				<hr>
-				<br>
-				<li>
-					<input type="checkbox" class="danger" id="danger"><label onclick="clearEnable();" for="danger">Delete all local data</label>
-				</li>
-				<li>
-					<button id="deleteDataButton" class="red" disabled="true" onclick="clearLocalStorage();">Delete</button>
-				</li>
-			</ul>
-		</div> <!-- settings -->
-	</div> <!-- menuWrapper -->
-
-	<div id="menuBG" class="menuBG" onclick="menuHide();">		
-	</div> <!-- menuBG -->
-
-	<div id="alarmBG" class="alarmBG">
-		<div id="alarmWindowDiv" class="alarmWindow">
-			<h1 id="alarmHeader" class="alarmHeader">Alarm Expired!</h1>
-			<div id="alarmContent" class="alarmContent">
-				<p id="alarmText" class="alarmText">						
-				</p>
-			</div> <!-- alarmContent --> 
-			<div id="alarmButtons" class="alarmButtons"></div>
-		</div> <!-- alarmButtons -->
-	</div> <!-- alarmBG -->
+		</div> <!-- alarmContent --> 
+		<div id="alarmButtons" class="alarmButtons"></div>
+	</div> <!-- alarmButtons -->
+</div> <!-- alarmBG -->
 
 
-	<div draggable="true" id="notesDiv">
-		<textarea id="notesInput" placeholder="notes" onInput="notes.changed();"></textarea>
-	</div> <!-- notes -->
+<div draggable="true" id="notesDiv">
+	<textarea id="notesInput" placeholder="notes" onInput="notes.changed();"></textarea>
+</div> <!-- notes -->
 
-	<div class="cornerdiv">
-		<div class="bars" id="bars">
+<div class="cornerdiv">
+	<div class="bars" id="bars">
 
-		</div><!-- bars -->
+	</div><!-- bars -->
 
-		<div class="currenttime" id="timediv">
-			<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
-			<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
-			<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1</button>
-			<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
+	<div class="currenttime" id="timediv">
+		<span id="text1"></span><span id="text2"></span><span id="text3"></span><span id="text4"></span></span>
+		<button onclick="debugMenu();" id="debugButan" class="local"> debug</button>
+		<button class="local" value="button1" id="button1" onclick="testButton1()">testButton1</button>
+		<button class="local" value="button2" id="button2" onclick="testButton2()">testButton2</button>
 
-		</div> <!-- timediv -->
+	</div> <!-- timediv -->
 
-		<div id="debugDiv">
-			<ul>
-				<li>
-					<input class="gray" id="debugCheck1" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck1"> Render Stop </label>
-				</li>
-				<li>
-					<input class="gray" id="debugCheck2" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck2"> Emulate Online </label>
-				</li>
+	<div id="debugDiv">
+		<ul>
+			<li>
+				<input class="gray" id="debugCheck1" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck1"> Render Stop </label>
+			</li>
+			<li>
+				<input class="gray" id="debugCheck2" type="checkbox" onclick="debugMenu.check();"> <label for="debugCheck2"> Emulate Online </label>
+			</li>
 				<!--
 				<li>
 					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>

@@ -5,8 +5,9 @@
   	grid-gap: 1rem;
   	margin: 1rem 0vw 1rem 2vw;
     padding: 0 1vw 0 0;
-    height: 60vh;
+    max-height: 75vh;
     overflow-y: scroll;
+    grid-auto-flow: row dense;
 }
 .autogrid > * {
   background-color: white;
@@ -14,10 +15,22 @@
   text-align: center;
   background: rgba(255,255,255,0.8);
   color: var(--text-color);
+  order: 100;
 }
 
 .autogrid .wide {
 	grid-column-end: span 2;
+  order: 1;
+}
+
+.autogrid .priority {
+  order: 0;
+  background: white;
+}
+
+.autogrid .noorder {
+  order: unset;
+  columns: 1/2/3/4;
 }
 
 @media only screen and (max-width: 42rem){
