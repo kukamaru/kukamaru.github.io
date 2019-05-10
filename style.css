@@ -10,9 +10,11 @@
 	--background-attachment: unset;						/* themed */
 	--background-size: unset;								/* themed */
 	--backgroung-image: unset;								/* themed */
-	--debug-image: none;
+	--debug-image: none;										/* themed */
 
+	--background-color: white; 							/* themed */
 	--alarm-window-background: white;					/* themed */
+
 
 	--active-bar: blueviolet; 								/* themed */
 	--stopped-bar: indigo;    								/* themed */
@@ -25,7 +27,6 @@
 	--status-color: teal;
 	--edit-color:darkgray;
 
-	--background-color: white; 							/* themed */
 
 	--button-text-color: purple;	 						/* themed */
 	--button-border-color: black;							/* themed */

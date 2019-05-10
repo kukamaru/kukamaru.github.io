@@ -56,7 +56,7 @@ function makeCSS(input){
 
 			buttonHoverTextColor:   		"blue",
 			buttonHoverBackgroundColor: 	"lightyellow",
-			buttonHoverBorderColor:       "value", 
+			buttonHoverBorderColor:       "purple", 
 
 			activeBar: 							"blueviolet",
 			stoppedBar: 						"indigo",
@@ -193,7 +193,12 @@ var themes = [
 
 	bg: 4,
 	debug: 0,
-	
+	css: {
+		activeBar: "#667793",
+		stoppedBar: "#4e576b",
+		barCompleting: "#a290ac",
+		clockTextColor: "#e696a3",
+	}
 	}
 
 

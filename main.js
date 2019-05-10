@@ -49,6 +49,41 @@ activeTimers.refresh = function() {
 	activeTimers = cleanArray;
 }
 
+function saveActiveTimers() {
+	activeTimers.refresh();
+	console.log(activeTimers);
+
+	var string = JSON.stringify(activeTimers);
+	console.log(string);
+	localStorage.setItem('activeTimers', string)
+
+}
+
+function recallTimers() {
+	var thing = JSON.parse(localStorage.getItem('activeTimers'));
+	//activeTimers = thing;
+
+	for (var i = 0; i < thing.length; i++)
+	{
+		thing[i].id = "old" + i ;
+		reactivate(thing[i]);
+	}	
+
+	return thing;
+
+}
+
+//reactivates dead atos
+function reactivate(ato){
+	ato.className = atoClassName();
+
+	console.log(ato);
+
+	newBar(ato);
+	pause(ato);
+	resume(ato);
+}
+
 //gets ato from array
 function getActiveTimer(id) {
 	for (var i = 0;i < activeTimers.length; i++){
@@ -93,10 +128,11 @@ function init() {
 	style("styles/notes.css","stylesheetForNotes");
 	style("style.css");
 	style("styles/bars.css");
-	style("styles/radio.css")
-	style("styles/checkbox.css")
-	style("styles/buttons.css")
-	style("styles/menus.css")
+	style("styles/radio.css");
+	style("styles/checkbox.css");
+	style("styles/buttons.css");
+	style("styles/menus.css");
+	style("styles/autogrid.css");
 
 
 	init.bodyOnLoad = function() {
@@ -393,6 +429,20 @@ var newTimerID = (function() {
 	return function(){ counter++; return counter }
 })()
 
+function atoClassName() {
+	return function(){
+				{	
+					var str = "bar";
+					if (this.size) str = str + " " + this.size;
+					if (this.inverted) str = str + " inverted";
+					if (this.countdown) str = str + " countdown";
+					if (this.paused) str = str + " paused";
+					return str;
+				}
+			}
+}
+
+
 //creates and activates a ato from nto.
 function startTimer(nto){
 
@@ -406,19 +456,23 @@ function startTimer(nto){
 			},
 			'text': {
 				value:"atoTextHere",
-				writable:true
+				writable:true,
+				enumerable: true
 			},
 			'countdown': {
 				value: true,
-				writable: true
+				writable: true,
+				enumerable: true
 			},
 			'soundID' :{
 				value:2,
 				writable: true,
+				enumerable: true
 			},
 			'pausable': {
 				value:false,
-				writable: true
+				writable: true,
+				enumerable: true
 			},
 			'style': { // deprecate this
 				value:'noStyle',
@@ -427,28 +481,26 @@ function startTimer(nto){
 			'duration': {
 				value:261000,
 				writable: true,
+				enumerable: true
 			},
 			'action': {
 				value:function(){appendText("alarm finished -- action","alert");},
-				writable: true
+				writable: true,
+				enumerable: true
 			},
 			'action2': {
-				value:function(){appendText("alarm confirmed, func 2");}
+				value:function(){appendText("alarm confirmed, func 2");},
+				enumerable: true
 			},
 
 			'stoppable': {
 				value:false,
-				writable:true
+				writable:true,
+				enumerable: true
 			},
 			'className': {
-				value:function(){
-					var str = "bar";
-					if (this.size) str = str + " " + this.size;
-					if (this.inverted) str = str + " inverted";
-					if (this.countdown) str = str + " countdown";
-					if (this.paused) str = str + " paused";
-					return str;
-				}
+				value:atoClassName(),
+				enumerable: true
 			}
 		});
 		if (nto){
@@ -618,23 +670,11 @@ function stopTimer(input) {
 
 }
 
+function pause(ato) {
+		var now = new Date().valueOf();
 
-function pauseResume(input) {
+		var div = document.getElementById("bar" + ato.id);
 
-	var ato;
-
-	if (typeof input === 'number') {
-		ato = getActiveTimer(input);
-	}
-	else if (typeof input === 'object') {
-		ato = input;
-	}
-
-	var now = new Date().valueOf();
-	var div = document.getElementById("bar" + ato.id);
-
-	// pausing
-	if (ato.pausable && !ato.paused) {
 		appendText("pausing " + ato.id);
 
 		var start 		= ato.start.valueOf();
@@ -652,9 +692,13 @@ function pauseResume(input) {
 		div.className = ato.className();
 
 		clearTimeout(ato.alarm);
-	}
-	// resuming
-	else if (ato.paused) {
+}
+
+function resume(ato) {
+		var now = new Date().valueOf();
+
+		var div = document.getElementById("bar" + ato.id);
+
 		appendText("resuming " + ato.id);
 
 		var newFinish = now + ato.pRemainder;
@@ -670,6 +714,27 @@ function pauseResume(input) {
 		div.className = ato.className();
 
 		ato.alarm = setAlarm(ato);
+}
+
+
+function pauseResume(input) {
+	var ato;
+
+	if (typeof input === 'number') {
+		ato = getActiveTimer(input);
+	}
+	else if (typeof input === 'object') {
+		ato = input;
+	}
+
+	// pausing
+	if (ato.pausable && !ato.paused) {
+	pause(ato);
+	}
+
+	// resuming
+	else if (ato.paused) {
+	resume(ato);
 	}
 }
 
@@ -1041,6 +1106,7 @@ window.onbeforeunload = function() {
 		}
 		return false;
 	}
+
 
 	if (checkProtect()) { return "Timers running, close?"; }	
 }
