@@ -1,0 +1,48 @@
+.autogrid{
+	--auto-grid-min-size: 16rem;
+	 display: grid;
+   grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
+  	grid-gap: 1rem;
+  	margin: 1rem 0vw 1rem 2vw;
+    padding: 0 1vw 0 0;
+    height: 60vh;
+    overflow-y: scroll;
+}
+.autogrid > * {
+  background-color: white;
+  padding: 5rem 1rem;
+  text-align: center;
+  background: rgba(255,255,255,0.8);
+  color: var(--text-color);
+}
+
+.autogrid .wide {
+	grid-column-end: span 2;
+}
+
+@media only screen and (max-width: 42rem){
+  .autogrid .wide {
+    grid-column-end: span 1;
+  }
+}
+
+
+
+.autogrid::-webkit-scrollbar {
+  width: 1vw;
+  opacity: 0.8;
+
+}
+
+/* Track */
+.autogrid::-webkit-scrollbar-track {
+}
+
+/* Handle */
+.autogrid::-webkit-scrollbar-thumb {
+  background-color: rgba(255,255,255,0.8);
+}
+
+/* Handle on hover */
+.autogrid::-webkit-scrollbar-thumb:hover {
+}
