@@ -14,6 +14,7 @@ var activeAlarms = [];
 var windowState = false;
 var optionState = false;
 var clockExists;
+var storageTrigger = false;
 
 
 var KnownElement = false;
@@ -56,32 +57,37 @@ function saveActiveTimers() {
 	var string = JSON.stringify(activeTimers);
 	console.log(string);
 	localStorage.setItem('activeTimers', string)
-
 }
 
 function recallTimers() {
 	var thing = JSON.parse(localStorage.getItem('activeTimers'));
 	//activeTimers = thing;
-
-	for (var i = 0; i < thing.length; i++)
-	{
-		thing[i].id = "old" + i ;
-		reactivate(thing[i]);
-	}	
-
-	return thing;
+	if (thing){
+		for (var i = 0; i < thing.length; i++)
+		{
+			reactivate(thing[i]);
+		}
+	}
 
 }
 
 //reactivates dead atos
 function reactivate(ato){
+	ato.id = newTimerID();
 	ato.className = atoClassName();
+
+	ato.action = function() { appendText("action gone"); };
+	ato.action2 = function() { appendText("action gone"); };
 
 	console.log(ato);
 
-	newBar(ato);
-	pause(ato);
-	resume(ato);
+	if (!ato.paused) {
+		newBar(ato);
+		pause(ato);
+		resume(ato);
+	}
+
+	activeTimers.push(ato);
 }
 
 //gets ato from array
@@ -147,15 +153,7 @@ function init() {
 		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
 
 		function initLocal() {
-		
-			if (localStorage.getItem('trigger','trigger')){
-				appendText("trigger detected.","alert");
-				isLocal = false;
-				localStorage.clear();
-				return;
-			}
 
-			
 			if (typeof(Storage) !== "undefined") {
 				appendText("local storage exists");
 			} 
@@ -186,6 +184,14 @@ function init() {
 		else {
 			KnownElement = true;
 		}
+
+
+		if (localStorage.getItem('trigger','trigger')){
+			appendText("all data deleted","alert");
+			isLocal = false;
+			localStorage.clear();
+		}
+
 
 
 
@@ -224,6 +230,11 @@ function init() {
 			setTimeout(setTheme(3), 500); 
 			}
 		else { setTimeout(setTheme(0), 500); }
+
+
+
+		// recall saved timers.
+		recallTimers();
 
 
 	}
@@ -355,7 +366,7 @@ function newTimer(){
 		var newTimerObject = { 
 			duration: timeToMs(s,m,h),
 			text: form.text.value,
-			soundID: form.sound.value,
+			soundID: parseInt(form.sound.value),
 
 			size: form.size.value,	
 			protected: form.protected.value,
@@ -512,10 +523,10 @@ function startTimer(nto){
 		return ato;
 	}
 	
-	var d = new Date(); 
+	var d = new Date().valueOf();
 	var ato = makeAto(nto);
 
-	var f = new Date(d.valueOf() + ato.duration);
+	var f = d + ato.duration;
 
 	ato.start = 		d;
 	ato.finish = 		f;
@@ -532,12 +543,17 @@ function setAlarm(ato) {
 	return setTimeout(function(){alarm(ato);},ato.duration);
 }	
 
+//autoplay issues if refreshed and no interaction
 function alarm(ato) {
 
-	var isLooping = sounds[ato.soundID].looping;
+	var soundID = ato.soundID
+
+	var isLooping = sounds[soundID].looping;
 
 	appendText(ato.text,"alert");		
-	var audio = new Audio(sounds[ato.soundID].src);
+
+	var audio = new Audio(sounds[soundID].src);
+
 	if (isLooping){
 		audio.setAttribute("loop",true);
 		audio.play();
@@ -548,6 +564,7 @@ function alarm(ato) {
 
 		alarmWindow(ato);
 	}
+
 	else { audio.play(); }
 
 	ato.action();
@@ -675,10 +692,10 @@ function pause(ato) {
 
 		var div = document.getElementById("bar" + ato.id);
 
-		appendText("pausing " + ato.id);
+		//appendText("pausing " + ato.id);
 
-		var start 		= ato.start.valueOf();
-		var end 			= ato.finish.valueOf();
+		var start 		= ato.start;
+		var end 			= ato.finish;
 
 		var elapsed 	= now-start;
 		var total 		= end-start;
@@ -693,20 +710,28 @@ function pause(ato) {
 
 		clearTimeout(ato.alarm);
 }
-
 function resume(ato) {
 		var now = new Date().valueOf();
 
 		var div = document.getElementById("bar" + ato.id);
 
-		appendText("resuming " + ato.id);
+		//appendText("resuming " + ato.id);
 
 		var newFinish = now + ato.pRemainder;
 		var newStart = now - ato.pElapsed; 
 
-		ato.finish = new Date(newFinish);
-		ato.start = new Date(newStart);
+		ato.finish = new Date(newFinish).valueOf();
+		ato.start = new Date(newStart).valueOf();
+
+
 		ato.duration = ato.pRemainder;
+
+		if (ato.duration < 0) {
+			ato.active = false;
+			appendText("alarm expired while away:");
+			hideBar(ato);
+			return;
+		} 
 
 		ato.pausedAt = undefined;
 		ato.paused = false;
@@ -715,7 +740,6 @@ function resume(ato) {
 
 		ato.alarm = setAlarm(ato);
 }
-
 
 function pauseResume(input) {
 	var ato;
@@ -838,8 +862,8 @@ function renderBars() {
 		if(current.active && !current.paused){
 			var bar = document.getElementById("progress" + current.id);
 
-			var start = current.start.valueOf();
-			var end = current.finish.valueOf();
+			var start = current.start;
+			var end = current.finish;
 			var elapsed = now-start;
 			var total = end-start;
 			var remainder = total-elapsed;
@@ -1100,6 +1124,8 @@ function msVisCheck() {
 //Warning dialog if protected timer
 window.onbeforeunload = function() {
 
+	saveActiveTimers();
+
 	function checkProtect() {
 		for (var i = 0; i < activeTimers.length; i++) {
 			if (activeTimers[i].protected && activeTimers[i].active) { return true; }
@@ -1107,8 +1133,11 @@ window.onbeforeunload = function() {
 		return false;
 	}
 
+	if (debug2) {
+		localStorage.setItem('trigger','trigger');
+	}
 
-	if (checkProtect()) { return "Timers running, close?"; }	
+	else if (checkProtect()) { return "Timers running, close?"; }	
 }
 
 
@@ -1150,9 +1179,7 @@ var debugMenu = function(){
 			appendText("debug1 = "  + debug1);
 
 			appendText("debug2 = " + debug2);
-		if (debug2) {
-			localStorage.setItem('trigger','trigger');
-		}
+
 
 	}
 }
@@ -1164,8 +1191,8 @@ function clearEnable() {
 }
 
 function clearLocalStorage() {
-	localStorage.clear();
-	appendText("local storage cleared", "alert");
+	debug2 = true;
+	document.location.reload();
 }
 
 
