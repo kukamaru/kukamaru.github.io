@@ -86,6 +86,8 @@ function reactivate(ato){
 		newBar(ato);
 		pause(ato);
 		resume(ato);
+	} else {
+		newBar(ato);
 	}
 
 	activeTimers.push(ato);

@@ -5,7 +5,7 @@
   	grid-gap: 1rem;
   	margin: 1rem 0vw 1rem 2vw;
     padding: 0 1vw 0 0;
-    max-height: 75vh;
+    max-height: 70vh;
     overflow-y: scroll;
     grid-auto-flow: row dense;
 }
