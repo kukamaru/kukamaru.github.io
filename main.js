@@ -37,6 +37,7 @@ var dummyFaves = [
 ];
 
 
+
 // DO NOT USE before alarms are fixed, pausing is fixed.
 // removes dead atos from self.
 activeTimers.refresh = function() {
@@ -129,6 +130,7 @@ function init() {
 	load("img/backgrounds.js");
 	load("img/themes.js");
 	load("notes.js");
+	load("lib/howler.js")
 
 	// Stylesheets to load
 	style("styles/notes.css","stylesheetForNotes");
@@ -141,6 +143,7 @@ function init() {
 	style("styles/autogrid.css");
 
 
+
 	init.bodyOnLoad = function() {
 		const body = document.getElementsByTagName("body")[0];
 		prepThemes();
@@ -150,7 +153,9 @@ function init() {
 			 myVar = setInterval(mainLoop, 11);
 		};
 
-		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/"));
+		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/")
+			||
+			window.location.href.includes("http://127.0.0.1:8080/"));
 
 		function initLocal() {
 
@@ -197,9 +202,8 @@ function init() {
 
 		if (isLocal) { initLocal(); } 
 		if (KnownElement) {
-
-			msVisCheck();
-			tsVisCheck();
+			setTimeout(msVisCheck);
+			setTimeout(tsVisCheck);
 			fave();
 
 		}
@@ -227,9 +231,9 @@ function init() {
 		}
 
 		if (isLocal) { 
-			setTimeout(setTheme(3), 500); 
+			setTimeout(setTheme(3), 5000); 
 			}
-		else { setTimeout(setTheme(0), 500); }
+		else { setTimeout(setTheme(0), 5000); }
 
 
 
@@ -552,10 +556,11 @@ function alarm(ato) {
 
 	appendText(ato.text,"alert");		
 
-	var audio = new Audio(sounds[soundID].src);
-
 	if (isLooping){
-		audio.setAttribute("loop",true);
+		var audio = new Howl({
+			src: sounds[soundID].src,
+			loop: true
+		});
 		audio.play();
 
 		ato.audio = audio;
@@ -565,7 +570,10 @@ function alarm(ato) {
 		alarmWindow(ato);
 	}
 
-	else { audio.play(); }
+	else { 
+		var audio = new Howl({src: sounds[soundID].src});
+		audio.play();
+	}
 
 	ato.action();
 
