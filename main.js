@@ -433,6 +433,7 @@ function stressTest() {
 	xx.stoppable = true;
 	xx.duration = timeToMs(3);
 	xx.action = function(){ startTimer(xx) };
+	xx.action2 = function(){ startTimer(xx) };
 	startTimer(xx);
 }
 
@@ -503,7 +504,8 @@ function startTimer(nto){
 			},
 			'action2': {
 				value:function(){appendText("alarm confirmed, func 2");},
-				enumerable: true
+				writable: true,
+				enumerable: true,
 			},
 
 			'stoppable': {
