@@ -1,4 +1,4 @@
-@import url("font/unibody.css");
+@import url("bin/font/unibody.css");
 
 :root {
 	--font-family: unibody;									/* themed */		
@@ -36,7 +36,7 @@
 	--button-hover-border-color: purple;				/* themed */
 	--button-hover-background-color: lightyellow;	/* themed */
 
-	--alert-icon: url("icons/loudspeaker_rays_red-0.png");
+	--alert-icon: url("bin/icons/loudspeaker_rays_red-0.png");
 
 	--wrapperbg-color: rgba(0,0,0,0.8);
 

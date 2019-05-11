@@ -62,17 +62,14 @@ function saveActiveTimers() {
 
 function recallTimers() {
 	var thing = JSON.parse(localStorage.getItem('activeTimers'));
-	//activeTimers = thing;
 	if (thing){
 		for (var i = 0; i < thing.length; i++)
 		{
 			reactivate(thing[i]);
 		}
 	}
-
 }
 
-//reactivates dead atos
 function reactivate(ato){
 	ato.id = newTimerID();
 	ato.className = atoClassName();
@@ -127,11 +124,11 @@ function init() {
 	init.style = function(i) { style(i); }
 
 	// SCRIPTS TO LOAD
-	load("debugtext.js");
-	load("audio/sounds.js");
-	load("img/backgrounds.js");
-	load("img/themes.js");
-	load("notes.js");
+	load("scripts/debugtext.js");
+	load("scripts/sounds.js");
+	load("scripts/backgrounds.js");
+	load("scripts/themes.js");
+	load("scripts/notes.js");
 	load("lib/howler.js")
 
 	// Stylesheets to load
@@ -169,7 +166,7 @@ function init() {
 			}
 			appendText("KnownElement " + KnownElement);
 
-			style("local.css");
+			style("styles/local.css");
 
 			var t = document.createTextNode(" (local version)");
 			var span = document.createElement("span");
@@ -280,7 +277,6 @@ function mainLoop() {
 	if(msVisible == true){
 		text4.innerHTML = "." + ms;
 	}
-
 }
 
 //Themes
