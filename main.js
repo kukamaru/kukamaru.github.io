@@ -1441,9 +1441,7 @@ function Recipe(){
 				value:true
 			}
 		});				
-			
-
-	
+				
 		if (name == "flour"){
 			this.hydration = 0;
 		} 
@@ -1488,16 +1486,16 @@ function Recipe(){
 		else return boo;
 	}
 
-	function TimeEvent(){
+	function TimeEvent(duration = 5000,name){
 		this.location = "recipe";
-		this.duration = 5000;
+		this.duration = duration;
+		this.name = name;
 	}
 
 	Recipe.prototype.nextEvent = function(){
-		if (this.eventCount > 0){
-			this.eventCount--;
+		if (this.events.length > 0){
 
-			var nte = new TimeEvent();
+			var nte = this.events.shift();
 			startTimer(nte);
 		}
 	}
@@ -1509,11 +1507,18 @@ function Recipe(){
 			writable: true
 		},
 		"eventCount":{
-			value: 3,
+			value: 3,		// dummy value
 			enumerable: false,
 			writable: true
 		}
 	});
+
+	this.events = [
+	new TimeEvent(1000,"wait"),
+	new TimeEvent(5000,"first rise"),
+	new TimeEvent(1000,"wait"),
+	new TimeEvent(13000,"second rise"),
+	];
 
 	this.flour = flour = new Ingredient("flour",flour);
 	this.water = water = new Ingredient("water",water);

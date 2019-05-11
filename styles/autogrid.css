@@ -2,13 +2,12 @@
 	--auto-grid-min-size: 8rem;
 	 display: grid;
    grid-template-columns: repeat(auto-fill, minmax(var(--auto-grid-min-size), 1fr));
-grid-template-rows: repeat(3, 1fr);
+   /*grid-template-rows: repeat(3, 1fr);*/
 
 
   	grid-gap: 1rem;
-  	margin: 1rem 0vw 1rem 2vw;
-    padding: 0 1vw 0 0;
-    max-height: 70vh;
+  	margin: 1rem 2vw 1rem 2vw;
+    padding: 0;
     /*overflow-y: scroll;*/
     overflow: hidden;
     grid-auto-flow: row dense;
@@ -41,7 +40,7 @@ grid-template-rows: repeat(3, 1fr);
 
 .autogrid #recipeBox {
   grid-row-start: 1;
-  grid-row-end: 5; 
+  grid-row-end: span 5; 
   grid-column-start: 1;
   grid-column-end: span 2;
 }
