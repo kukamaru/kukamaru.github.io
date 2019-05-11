@@ -430,19 +430,23 @@ function newTimer(){
 }
 
 
-//Eggtimer creates a barebones timer object.
-function eggTimer(eS,eM,eH,soundID,size,text) {
-	var xx = {}; // proto NTO
+function NewTimerObject(eS = 1000,eM,eH,soundID,size,text){
+
 	if (arguments.length > 0) {
-		xx.duration = timeToMs(eS,eM,eH);
-		if (size) xx.size = size;
-		if (text) xx.text = text;
-		if (soundID) xx.soundID = soundID;
+		this.duration = timeToMs(eS,eM,eH);
+		if (size) this.size = size;
+		if (text) this.text = text;
+		if (soundID) this.soundID = soundID;
 	}
 
-	xx.eggtimer = true;
-	xx.pausable = true;
-	xx.stoppable = true;
+	this.eggtimer = true;
+	this.pausable = true;
+	this.stoppable = true;
+}
+
+//Eggtimer creates a barebones timer object.
+function eggTimer(eS,eM,eH,soundID,size,text) {
+	var xx = new NewTimerObject(eS,eM,eH,soundID,size,text);
 
 	startTimer(xx);
 }
@@ -657,12 +661,9 @@ function grid(){
 		//box.className = "recipeBox";
 		box.id = "recipeBox";
 
-		var text = document.createTextNode(sourDoughRecipe);
-		var p = document.createElement("p");
+		var ingredients = myBread.getIngredients("ul");
 
-		p.appendChild(text);
-		box.appendChild(p);
-
+		box.appendChild(ingredients);
 		gridUl.appendChild(box);
 	}
 
@@ -1417,8 +1418,14 @@ function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
 
 
-function RecipeMaker(){
-	var starterHydration = 100;
+function Recipe(){
+	var flour = 400;
+	var water = 230;
+	var starter = 160;
+	var salt = "~5-7"
+	//not in actual bakers percentage, but water content to whole weight ratio.
+	//thats 0.5 for 100% hydration etc.
+	var starterHydration = 0.5;
 
 	function Ingredient(name, amount, unit = "g") {
 
@@ -1426,46 +1433,122 @@ function RecipeMaker(){
 		this.amount = amount;
 		this.unit = unit;
 
-		var h = 0;
-		if (this.name == "flour"){
-			h = 0;
+		Object.defineProperties(this, { 
+			'hydration': {
+				enumerable:false,
+				writable: true
+			}, 'isIngredient':{
+				value:true
+			}
+		});				
+			
+
+	
+		if (name == "flour"){
+			this.hydration = 0;
 		} 
-		else if (this.name == "water"){
-			h = 100;
+		else if (name == "water"){
+			this.hydration = 1;
 		} 
-		else if (this.name == "starter"){
-			h = starterHydration;
+		else if (name == "starter"){
+			this.hydration = starterHydration;
 		}
 
-		this.getStr = function(){
+		Ingredient.prototype.getStr = function(){
 			var string = "";
 			string = this.name + ": " + this.amount + this.unit;
 			return string;
 		}
-
-		this.hydration = h;
 	}
 
-	this.flour = new Ingredient("flour",400);
-	this.water = new Ingredient("water",230);
-	this.starter = new Ingredient("starter",160);
-	this.salt = new Ingredient("salt","~ 5-7");
+	Recipe.prototype.getIngredients = function(){
+		var thing = Object.entries(this);
+		var boo = [];
 
+		for (var i = 0;i < thing.length;i++){
+			if (!!thing[i][1].isIngredient){
+
+				boo.push(thing[i][1].getStr());
+		
+			}
+		}
+
+		if (arguments[0] == "ul"){
+			var ul = document.createElement("ul");
+			for (var i = 0;i < boo.length;i++){
+				var li = document.createElement("li");
+				var text = document.createTextNode(boo[i]);
+
+				li.appendChild(text);
+				ul.appendChild(li);
+			}
+			return ul;
+		}
+
+		else return boo;
+	}
+
+	function TimeEvent(){
+		this.location = "recipe";
+		this.duration = 5000;
+	}
+
+	Recipe.prototype.nextEvent = function(){
+		if (this.eventCount > 0){
+			this.eventCount--;
+
+			var nte = new TimeEvent();
+			startTimer(nte);
+		}
+	}
+
+	Object.defineProperties(this,{
+		"name":{
+			value: "mydeliciousbread",
+			enumerable: false,
+			writable: true
+		},
+		"eventCount":{
+			value: 3,
+			enumerable: false,
+			writable: true
+		}
+	});
+
+	this.flour = flour = new Ingredient("flour",flour);
+	this.water = water = new Ingredient("water",water);
+	this.starter = starter = new Ingredient("starter",starter);
+	this.salt = salt = new Ingredient("salt",salt);
+
+	if (arguments.length>1 && typeof arguments[0] === "string"){
+		var x = Math.floor(arguments.length/2)*2; //gets an even number.
+
+		for(var i=0;i<x;i = i + 2){
+			var ingred = new Ingredient(arguments[i],arguments[i+1]);
+			Object.defineProperty(this,arguments[i],{
+				enumerable:true,
+				value:ingred
+			});
+		}
+	}
+
+	if (starterHydration) { 
+		this.hydration = (function(){
+			var starterWater = (starter.amount*starter.hydration);
+			var starterFlour = (starter.amount*(1-starter.hydration))
+
+			hydr = (water.amount+starterWater)/(flour.amount+starterFlour);
+			hydr = hydr.toFixed(2);
+			return hydr;
+		}()); 
+
+		Object.defineProperty(this, 'hydration', {
+			enumerable:false
+		});
+	}
+	
 }
 
-
-
-
-var sourDoughRecipe = "			400g flour"
-+ "230g water"
-+ "160g starter"
-+ "5g-7g salt"
-+ ""
-+ "let rise 3.5 hrs"
-+ "shape the dough"
-+ "second rise 2.5-3 hrs - or - fridge overnight"
-+ "preheat oven"
-+ "cook at 235-240 degrees"
-+ "32 minutes with lid"
-+ "18 minutes without, 50 minutes total"
-+ "let cool completely, then EAT";
+var seeds = new Recipe("seeds",200);
+var myBread = new Recipe();
+var pepperBread = new Recipe("pepper",100);
