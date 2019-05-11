@@ -25,7 +25,9 @@ var dummyFaves = [
 	soundID: 2,
 	duration: timeToMs(30,8),
 	stoppable: true
-}/*,
+}
+/*
+,
 {
 	text: "thing forthe test",
 	soundID: 1,
@@ -47,7 +49,9 @@ var dummyFaves = [
 	pausable: true,
 	location: "box",
 	size: "medium"
-}*/
+}
+
+*/
 ];
 
 
