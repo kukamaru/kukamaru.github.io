@@ -225,8 +225,8 @@ function init() {
 		//check for new timer menu and apply eventlisteners
 		if (document.getElementById("newTimerStartButton")) {
 			newTimerStartButton.addEventListener("click", function(event){
-			event.preventDefault();
-			newTimer.submitButton();
+				event.preventDefault();
+				newTimer.submitButton();
 			},false);
 
 			newTimerAddFave.addEventListener("click", function(event){
@@ -246,7 +246,7 @@ function init() {
 
 		if (isLocal) { 
 			setTimeout(setTheme(3), 5000); 
-			}
+		}
 		else { setTimeout(setTheme(0), 5000); }
 
 
@@ -259,7 +259,7 @@ function init() {
 		//notes();
 		//notes.show();
 		if (clockExists) { 
-			 coreLoop = setInterval(mainLoop, 11);
+			coreLoop = setInterval(mainLoop, 11);
 		};
 	}
 }
@@ -342,14 +342,14 @@ function setTheme(input) {
 	//check for theme index or theme itself
 	if (input.isTheme) {
 		setBg(input);		
-	   setCSSVars(input.css.css());
-	   	appendText("theme name:  " + input.name);
+		setCSSVars(input.css.css());
+		appendText("theme name:  " + input.name);
 
 	}	
 	else if (typeof input === "number"){
 		setBg(themes[input]);
 		setCSSVars(themes[input].css.css());
-			appendText("theme name:  " + themes[input].name);
+		appendText("theme name:  " + themes[input].name);
 
 	}
 
@@ -466,16 +466,16 @@ var newTimerID = (function() {
 
 function atoClassName() {
 	return function(){
-				{	
-					var str = "bar";
-					if (this.size) str = str + " " + this.size;
-					if (this.inverted) str = str + " inverted";
-					if (this.countdown) str = str + " countdown";
-					if (this.paused) str = str + " paused";
-					if (this.location) str = str + " " + this.location;
-					return str;
-				}
-			}
+		{	
+			var str = "bar";
+			if (this.size) str = str + " " + this.size;
+			if (this.inverted) str = str + " inverted";
+			if (this.countdown) str = str + " countdown";
+			if (this.paused) str = str + " paused";
+			if (this.location) str = str + " " + this.location;
+			return str;
+		}
+	}
 }
 
 
@@ -502,6 +502,11 @@ function startTimer(nto){
 			},
 			'soundID' :{
 				value:2,
+				writable: true,
+				enumerable: true
+			},
+			'size' :{
+				value:"normal",
 				writable: true,
 				enumerable: true
 			},
@@ -614,13 +619,19 @@ function grid(){
 		gridUl.removeChild(gridUl.firstChild);
 	}
 
-	function newBox(ato) {
-
-		if (!ato){
-			var ato = {};
-			ato.text = ""
-			ato.id = ""
+	function newBox() {
+		//takes ato or string arguments.
+		if (typeof arguments[0] === "object"){
+			var ato = arguments[0];
 		}
+
+		else {
+			var ato = {};
+			ato.text = arguments[0];
+			ato.size = arguments[1];
+			ato.id = "";
+		}
+
 
 		var li = document.createElement("li");
 		var h2 = document.createElement("h2");
@@ -641,9 +652,25 @@ function grid(){
 
 	//called from renderbars
 
+	grid.recipe = function() {
+		var box = newBox("recipe here","big");
+		//box.className = "recipeBox";
+		box.id = "recipeBox";
+
+		var text = document.createTextNode(sourDoughRecipe);
+		var p = document.createElement("p");
+
+		p.appendChild(text);
+		box.appendChild(p);
+
+		gridUl.appendChild(box);
+	}
+
 
 	grid.spawn = function(ato){
 		var box = newBox(ato);
+
+
 
 		gridUl.appendChild(box);
 	}
@@ -780,57 +807,55 @@ function stopTimer(input) {
 }
 
 function pause(ato) {
-		var now = new Date().valueOf();
+	var now = new Date().valueOf();
 
-		var div = document.getElementById("bar" + ato.id);
+	var div = document.getElementById("bar" + ato.id);
 
-		//appendText("pausing " + ato.id);
 
-		var start 		= ato.start;
-		var end 			= ato.finish;
+	var start 		= ato.start;
+	var end 			= ato.finish;
 
-		var elapsed 	= now-start;
-		var total 		= end-start;
-		var remainder	= total-elapsed;
+	var elapsed 	= now-start;
+	var total 		= end-start;
+	var remainder	= total-elapsed;
 
-		ato.paused = true;
-		ato.pausedAt = now;
-		ato.pRemainder = remainder;
-		ato.pElapsed = elapsed;
+	ato.paused = true;
+	ato.pausedAt = now;
+	ato.pRemainder = remainder;
+	ato.pElapsed = elapsed;
 
-		div.className = ato.className();
+	div.className = ato.className();
 
-		clearTimeout(ato.alarm);
+	clearTimeout(ato.alarm);
 }
 function resume(ato) {
-		var now = new Date().valueOf();
+	var now = new Date().valueOf();
 
-		var div = document.getElementById("bar" + ato.id);
-
-		//appendText("resuming " + ato.id);
-
-		var newFinish = now + ato.pRemainder;
-		var newStart = now - ato.pElapsed; 
-
-		ato.finish = new Date(newFinish).valueOf();
-		ato.start = new Date(newStart).valueOf();
+	var div = document.getElementById("bar" + ato.id);
 
 
-		ato.duration = ato.pRemainder;
+	var newFinish = now + ato.pRemainder;
+	var newStart = now - ato.pElapsed; 
 
-		if (ato.duration < 0) {
-			ato.active = false;
-			appendText("alarm expired while away:");
-			hideBar(ato);
-			return;
-		} 
+	ato.finish = new Date(newFinish).valueOf();
+	ato.start = new Date(newStart).valueOf();
 
-		ato.pausedAt = undefined;
-		ato.paused = false;
 
-		div.className = ato.className();
+	ato.duration = ato.pRemainder;
 
-		ato.alarm = setAlarm(ato);
+	if (ato.duration < 0) {
+		ato.active = false;
+		appendText("alarm expired while away:");
+		hideBar(ato);
+		return;
+	} 
+
+	ato.pausedAt = undefined;
+	ato.paused = false;
+
+	div.className = ato.className();
+
+	ato.alarm = setAlarm(ato);
 }
 
 function pauseResume(input) {
@@ -843,14 +868,13 @@ function pauseResume(input) {
 		ato = input;
 	}
 
-	// pausing
 	if (ato.pausable && !ato.paused) {
-	pause(ato);
+		pause(ato);
 	}
 
-	// resuming
+
 	else if (ato.paused) {
-	resume(ato);
+		resume(ato);
 	}
 }
 
@@ -979,11 +1003,11 @@ function renderBars() {
 			var remainder = total-elapsed;
 
 			if (current.needsRefresh == true) {
-					current.needsRefresh = false;
+				current.needsRefresh = false;
 
-					remainder = current.pRemainder;
-					elapsed = current.pElapsed; 
-					total = current.duration;
+				remainder = current.pRemainder;
+				elapsed = current.pElapsed; 
+				total = current.duration;
 			}
 
 			var elapsedFraction = (elapsed/total*100);
@@ -1121,27 +1145,27 @@ function fave(){
 			for (var i = 0; i < favesArray.length; i++){
 				if (!favesArray[i].deleted) n++
 			}
-			return n;
-		}
-		function deleteIt() {
-			favorites.removeChild(li);
-		}
+		return n;
+	}
+	function deleteIt() {
+		favorites.removeChild(li);
+	}
 
-		var li = document.getElementById("faveli" + id);
-		var x = li.children;
-		for (var i = 0 ; i < x.length ; i++ ) {
-			x[i].style.opacity = 0;
-			x[i].style.height = "0px";
-			x[i].style.borderWidth = "0px";
-			x[i].className = x[i].className + "deleted";
-		}
-		li.style.padding = 0;
-		li.className = li.className + "deleted";
+	var li = document.getElementById("faveli" + id);
+	var x = li.children;
+	for (var i = 0 ; i < x.length ; i++ ) {
+		x[i].style.opacity = 0;
+		x[i].style.height = "0px";
+		x[i].style.borderWidth = "0px";
+		x[i].className = x[i].className + "deleted";
+	}
+	li.style.padding = 0;
+	li.className = li.className + "deleted";
 
-		favesArray[id].deleted = true;
+	favesArray[id].deleted = true;
 
-		fave.saveFaves();
-		if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
+	fave.saveFaves();
+	if(notDeleted() == 0){ collapseSpacer(true); fave.toggleOptions(); }
 		setTimeout(function(){ deleteIt(); },505); // delete after animation time + 5ms / 0.505s
 	}
 
@@ -1296,9 +1320,9 @@ var debugMenu = function(){
 		debug1 = debugCheck1.checked;
 		debug2 = debugCheck2.checked;
 
-			appendText("debug1 = "  + debug1);
+		appendText("debug1 = "  + debug1);
 
-			appendText("debug2 = " + debug2);
+		appendText("debug2 = " + debug2);
 
 
 	}
@@ -1390,3 +1414,58 @@ function msToString(ms) {
 function numLength(x) { return x.toString().length; }
 function isEven(x) { return (x%2)==0; }
 function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
+
+
+
+function RecipeMaker(){
+	var starterHydration = 100;
+
+	function Ingredient(name, amount, unit = "g") {
+
+		this.name = name;
+		this.amount = amount;
+		this.unit = unit;
+
+		var h = 0;
+		if (this.name == "flour"){
+			h = 0;
+		} 
+		else if (this.name == "water"){
+			h = 100;
+		} 
+		else if (this.name == "starter"){
+			h = starterHydration;
+		}
+
+		this.getStr = function(){
+			var string = "";
+			string = this.name + ": " + this.amount + this.unit;
+			return string;
+		}
+
+		this.hydration = h;
+	}
+
+	this.flour = new Ingredient("flour",400);
+	this.water = new Ingredient("water",230);
+	this.starter = new Ingredient("starter",160);
+	this.salt = new Ingredient("salt","~ 5-7");
+
+}
+
+
+
+
+var sourDoughRecipe = "			400g flour"
++ "230g water"
++ "160g starter"
++ "5g-7g salt"
++ ""
++ "let rise 3.5 hrs"
++ "shape the dough"
++ "second rise 2.5-3 hrs - or - fridge overnight"
++ "preheat oven"
++ "cook at 235-240 degrees"
++ "32 minutes with lid"
++ "18 minutes without, 50 minutes total"
++ "let cool completely, then EAT";
