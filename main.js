@@ -26,7 +26,6 @@ var dummyFaves = [
 	duration: timeToMs(30,8),
 	stoppable: true
 }
-/*
 ,
 {
 	text: "thing forthe test",
@@ -51,7 +50,7 @@ var dummyFaves = [
 	size: "medium"
 }
 
-*/
+
 ];
 
 
@@ -1114,8 +1113,10 @@ function fave(){
 			x[i].style.opacity = 0;
 			x[i].style.height = "0px";
 			x[i].style.borderWidth = "0px";
+			x[i].className = x[i].className + "deleted";
 		}
 		li.style.padding = 0;
+		li.className = li.className + "deleted";
 
 		favesArray[id].deleted = true;
 

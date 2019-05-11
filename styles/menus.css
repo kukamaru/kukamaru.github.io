@@ -83,16 +83,18 @@ div#newTimerMenu {
 	display: flex; 
 	flex-direction: row; 
 	margin:0px 0px; 
-	padding-bottom: 10px;
+	padding: 5px 0px 5px 0px;
 	width: 100%;
-	transition: padding 0.3s linear;
+	transition: padding 0.1s linear; 
 }
 
 .menu label 			{ position: absolute; }
 .menu button  			{ width: 100%; height: 46px; padding: 0; 	overflow: hidden; }
 .menu hr 				{ width: 100%; margin: 0; color:var(--edit-color); }
 
-ul.nav > :last-child 	{ padding-bottom: 0 }
+/*ul.nav > :last-child 	{ padding-bottom: 0 } */
+/*ul.nav > :first-child 	{ padding-top: 0 } */
+
 
 /* subnav */ 
 
@@ -124,9 +126,11 @@ ul.subNavHorizontal {
 	flex-grow: 1;
 }
 
-ul.subNavVertical > li:last-child {
+ul.subNavVertical:last-child > li:last-child {
 	padding-bottom: 0;
 }
+
+ul.subNavVertical:first-child > li:first-child 	{ padding-top: 0 }
 
 /* Faves scrolling */
 ul#favorites {
@@ -161,7 +165,7 @@ ul#settingsList {
 
 /* Favorites spacer (total animationtime .5s/500ms) */
 #prefav hr, #postfav hr {
-	transition: padding 0.5s ease-in;
+	transition: padding 0.3s ease-in;
 }
 #postfav { position: relative; }
 #nofav {

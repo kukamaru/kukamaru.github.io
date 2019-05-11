@@ -69,6 +69,17 @@ button:disabled:hover {
 	border-width 0.3s ease-out,
 	height 0.5s ease-in-out;
 }
+
+.menu button.deleted {
+	padding: 0;
+	transition: 
+	width 1s step-end,
+	opacity 0.3s ease-in-out,
+	border-width 0.3s ease-out,
+	height 0.3s ease-out,
+	padding 0.3s ease-out;
+}
+
 .alarmWindow button {
 	width:100%;
 	display: inline;
