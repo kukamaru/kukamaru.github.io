@@ -36,7 +36,6 @@
 hello</p>
 </div>
 
-<div>
 <div class="headerWrapper">
 	<div class="headerBG" id="headerBG"></div>
 	<div class="headerDiv" id="headerDiv">
@@ -80,15 +79,11 @@ hello</p>
 
 	</div> <!-- headerdiv -->
 </div> <!-- headerwrapper -->
-	<ul id="grid" class="autogrid local">
-		<li>hello</li>
-		<li class="wide">hello</li>
-		<li>hello</li>
-		<li class="priority">hello</li>
-		<li>hello lorem ipsum</li>
-		<li class="wide noorder">heheheheheheheh ehelllo lorem ipsum imimimimimim im imim imi mi m   dolor si amet paenuttes hell</li>
-		<li class="noorder">he noo order llo</li>
-	</ul>
+<ul id="gridUl" class="autogrid local">
+	<li class="col1">hello</li>
+	<li class="wide priority">hello</li>
+	<li class="priority">hello</li>
+</ul>
 
 
 
@@ -232,7 +227,8 @@ hello</p>
 </div> <!-- alarmBG -->
 
 
-<div draggable="true" id="notesDiv">
+<div id="notesDiv">
+	<div id="notesDragger"></div>
 	<textarea id="notesInput" placeholder="notes" onInput="notes.changed();"></textarea>
 </div> <!-- notes -->
 
@@ -260,33 +256,34 @@ hello</p>
 				<!--
 				<li>
 					<input name="volume" id="volume" type="range" onclick=""> <label id="volumeLabel" for="volume"> volume </label>
-				</li>	-->
-				<li>
-					<button onclick="setTheme(0);">Theme 0</button> 
-					<button onclick="setTheme(1);">Theme 1</button>
-					<button onclick="setTheme(2);">Theme 2</button>
-				</li>
+				</li>	
+			-->
+			<li>
+				<button onclick="setTheme(0);">Theme 0</button> 
+				<button onclick="setTheme(1);">Theme 1</button>
+				<button onclick="setTheme(2);">Theme 2</button>
+			</li>
 
-				<li>
-					<button onclick="eggTimer();">eggTimer();</button>
-				</li>
+			<li>
+				<button onclick="eggTimer();">eggTimer();</button>
+			</li>
 
-				<li>
-					<button onclick="notes();">notes();</button>
-					<button onclick="notes.show();">notes.show();</button>
-				</li>
-				<li>
-					<input type="text" value="lol" id="testText01">
-				</li>
-				<li>
-					<button onclick="javascript:ttButton();">ttButton</button>
-				</li>
-			</ul>
-		</div> <!-- debug -->
+			<li>
+				<button onclick="notes();">notes();</button>
+				<button onclick="notes.show();">notes.show();</button>
+			</li>
+			<li>
+				<input type="text" value="lol" id="testText01">
+			</li>
+			<li>
+				<button onclick="javascript:ttButton();">ttButton</button>
+			</li>
+		</ul>
+	</div> <!-- debug -->
 
-	</div> <!-- cornerdiv -->
+</div> <!-- cornerdiv -->
 
-	
+
 
 
 </body>

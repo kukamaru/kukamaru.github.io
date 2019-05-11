@@ -11,6 +11,8 @@ div.bars {
 	display: inline;
 }
 
+
+
 div.bar, div.bar div.progressbar{
 	height: 28px;
 }
@@ -122,5 +124,17 @@ div.noStyle.progressbar {
 	background: rgb(82,38,51); 
 	background: linear-gradient(0deg, rgba(82,38,51,1) 0%, rgba(144,102,102,1) 27%, rgba(164,88,88,1) 72%, rgba(203,131,131,1) 76%, rgba(162,76,76,1) 86%, rgba(102,72,93,1) 100%);
 	*/
+}
+
+div.bar.box {
+	position: fixed;
+	height: initial;
+	max-height: 30px;
+	margin: 0;
+}
+
+div.bar.box .progressbar{
+	height: 100%;
+	max-height: 30px;
 }
 

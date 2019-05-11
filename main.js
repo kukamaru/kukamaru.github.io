@@ -1,5 +1,5 @@
 // loops Main function at 11ms rate, initialised on body load
-var myvar
+var coreLoop;
 
 //defaults
 var msVisible;
@@ -24,16 +24,30 @@ var dummyFaves = [
 	text: "steamed eggs",
 	soundID: 2,
 	duration: timeToMs(30,8),
-	style: "big countdown",
 	stoppable: true
-},
+}/*,
 {
-	text: "10 minutes",
+	text: "thing forthe test",
 	soundID: 1,
 	duration: timeToMs(0,10),
-	style: "countdown big protected",
-	pausable: true
-},
+	pausable: true,
+	location: "box",
+	size: "big"
+},{
+	text: "thing forthe test",
+	soundID: 1,
+	duration: timeToMs(0,10),
+	pausable: true,
+	location: "box",
+	size: "small"
+},{
+	text: "thing forthe test",
+	soundID: 1,
+	duration: timeToMs(0,10),
+	pausable: true,
+	location: "box",
+	size: "medium"
+}*/
 ];
 
 
@@ -84,6 +98,7 @@ function reactivate(ato){
 		pause(ato);
 		resume(ato);
 	} else {
+		ato.needsRefresh = true;
 		newBar(ato);
 	}
 
@@ -144,13 +159,12 @@ function init() {
 
 
 	init.bodyOnLoad = function() {
+		setTimeout(delayed,50);
+
 		const body = document.getElementsByTagName("body")[0];
 		prepThemes();
 		//start main loop if clock exists
 		clockExists = (document.getElementById("timediv") != undefined);
-		if (clockExists) { 
-			 myVar = setInterval(mainLoop, 11);
-		};
 
 		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/")
 			||
@@ -174,6 +188,7 @@ function init() {
 			span.appendChild(t);
 
 			header.appendChild(span);
+
 		}
 
 
@@ -196,15 +211,12 @@ function init() {
 			localStorage.clear();
 		}
 
-
-
-
 		if (isLocal) { initLocal(); } 
 		if (KnownElement) {
 			setTimeout(msVisCheck);
 			setTimeout(tsVisCheck);
 			fave();
-
+			grid();
 		}
 
 		//check for new timer menu and apply eventlisteners
@@ -236,10 +248,16 @@ function init() {
 
 
 
-		// recall saved timers.
-		recallTimers();
+	}
 
 
+	function delayed() {
+		recallTimers()
+		//notes();
+		//notes.show();
+		if (clockExists) { 
+			 coreLoop = setInterval(mainLoop, 11);
+		};
 	}
 }
 
@@ -451,6 +469,7 @@ function atoClassName() {
 					if (this.inverted) str = str + " inverted";
 					if (this.countdown) str = str + " countdown";
 					if (this.paused) str = str + " paused";
+					if (this.location) str = str + " " + this.location;
 					return str;
 				}
 			}
@@ -492,6 +511,11 @@ function startTimer(nto){
 				value:'noStyle',
 				writable: true
 			},
+			'location': {
+				writable: true,
+				value: "corner",
+				enumerable: true
+			},
 			'duration': {
 				value:261000,
 				writable: true,
@@ -499,13 +523,11 @@ function startTimer(nto){
 			},
 			'action': {
 				value:function(){appendText("alarm finished -- action","alert");},
-				writable: true,
-				enumerable: true
+				writable: true
 			},
 			'action2': {
 				value:function(){appendText("alarm confirmed, func 2");},
-				writable: true,
-				enumerable: true,
+				writable: true
 			},
 
 			'stoppable': {
@@ -581,6 +603,54 @@ function alarm(ato) {
 	ato.active = false;
 
 }
+
+
+function grid(){
+
+	while(gridUl.firstChild){
+		gridUl.removeChild(gridUl.firstChild);
+	}
+
+	function newBox(ato) {
+
+		var li = document.createElement("li");
+		var h2 = document.createElement("h2");
+		var text = document.createTextNode(ato.text);
+
+
+		h2.appendChild(text)
+		li.appendChild(h2);
+
+		var div = document.createElement("div");
+		div.id = "windowbar" + ato.id;
+		div.className = "windowbar";
+		li.className = ato.size;
+		li.appendChild(div);
+
+		return li;
+	}
+
+	//called from renderbars
+	grid.attach = function(id) {
+		var target = document.getElementById("windowbar" + id).getBoundingClientRect();
+		var bar = document.getElementById("bar" + id);
+
+		bar.style.top = target.top + "px";
+		bar.style.bottom = "calc(100% - " + target.bottom + "px)";
+		bar.style.left = target.left + "px";
+		bar.style.right = "calc(100% - " + target.right + "px)";
+	}
+
+	grid.spawn = function(ato){
+		var box = newBox(ato);
+
+		gridUl.appendChild(box);
+	}
+}
+
+
+
+
 
 function alarmWindow(ato) {
 	alarmShow();
@@ -835,7 +905,12 @@ function newBar(ato) {
 	if (ato.pausable || ato.stoppable){
 		newBar.appendChild(barButtons(ato));
 	}
+
 	bars.appendChild(newBar);
+
+	if (ato.location == "box"){
+		grid.spawn(ato);
+	}
 }
 function hideBar(ato) {
 	var parent = document.getElementById('bars');
@@ -867,7 +942,11 @@ function renderBars() {
 
 	for (i = 0; i < num; i++){
 		var current = activeTimers[i]; // get current ato from all in array.
-		if(current.active && !current.paused){
+		if (current.needsRefresh || current.active && !current.paused){
+
+			if (current.location == "box") { grid.attach(current.id); }
+
+
 			var bar = document.getElementById("progress" + current.id);
 
 			var start = current.start;
@@ -875,6 +954,14 @@ function renderBars() {
 			var elapsed = now-start;
 			var total = end-start;
 			var remainder = total-elapsed;
+
+			if (current.needsRefresh == true) {
+					current.needsRefresh = false;
+
+					remainder = current.pRemainder;
+					elapsed = current.pElapsed; 
+					total = current.duration;
+			}
 
 			var elapsedFraction = (elapsed/total*100);
 
