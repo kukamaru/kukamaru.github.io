@@ -165,7 +165,7 @@ ul#settingsList {
 
 /* Favorites spacer (total animationtime .5s/500ms) */
 #prefav hr, #postfav hr {
-	transition: padding 0.3s ease-in;
+	transition: padding 0.48s ease-in-out;
 }
 #postfav { position: relative; }
 #nofav {

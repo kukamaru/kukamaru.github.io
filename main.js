@@ -616,6 +616,12 @@ function grid(){
 
 	function newBox(ato) {
 
+		if (!ato){
+			var ato = {};
+			ato.text = ""
+			ato.id = ""
+		}
+
 		var li = document.createElement("li");
 		var h2 = document.createElement("h2");
 		var text = document.createTextNode(ato.text);
@@ -634,20 +640,25 @@ function grid(){
 	}
 
 	//called from renderbars
-	grid.attach = function(id) {
-		var target = document.getElementById("windowbar" + id).getBoundingClientRect();
-		var bar = document.getElementById("bar" + id);
 
-		bar.style.top = target.top + "px";
-		bar.style.bottom = "calc(100% - " + target.bottom + "px)";
-		bar.style.left = target.left + "px";
-		bar.style.right = "calc(100% - " + target.right + "px)";
-	}
 
 	grid.spawn = function(ato){
 		var box = newBox(ato);
 
 		gridUl.appendChild(box);
+	}
+
+	grid.populate = function(){
+		var boxes = 12;
+		while (boxes){
+			var box = newBox();
+
+			box.className = "noorder";
+			box.id ="boxNumber" + boxes;
+
+			gridUl.appendChild(box);
+			boxes--;
+		}
 	}
 }
 
@@ -937,6 +948,15 @@ function hideBar(ato) {
 }
 
 function renderBars() {
+	attachToGrid = function(id) {
+		var target = document.getElementById("windowbar" + id).getBoundingClientRect();
+		var bar = document.getElementById("bar" + id);
+
+		bar.style.top = target.top + "px";
+		bar.style.bottom = "calc(100% - " + target.bottom + "px)";
+		bar.style.left = target.left + "px";
+		bar.style.right = "calc(100% - " + target.right + "px)";
+	}
 
 	if (debug2) { return; } //DEBUG
 
@@ -945,9 +965,9 @@ function renderBars() {
 
 	for (i = 0; i < num; i++){
 		var current = activeTimers[i]; // get current ato from all in array.
-		if (current.needsRefresh || current.active && !current.paused){
+		if (current.location == "box" || current.needsRefresh || current.active && !current.paused){
 
-			if (current.location == "box") { grid.attach(current.id); }
+			if (current.location == "box") { attachToGrid(current.id); }
 
 
 			var bar = document.getElementById("progress" + current.id);

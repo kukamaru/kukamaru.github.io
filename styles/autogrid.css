@@ -15,7 +15,7 @@
   text-align: center;
   background: rgba(255,255,255,0.6);
   color: var(--text-color);
-  order: 100;
+  order: 19;
 }
 
 .autogrid .big {
@@ -33,13 +33,14 @@
   grid-column-end:1;
 }
 
+
 .autogrid .noorder {
-  order: unset;
+  order: 20;
   columns: 1/2/3/4;
 }
 
-@media only screen and (max-width: 42rem){
-  .autogrid .wide {
+@media only screen and (max-width: 32rem){
+  .autogrid .big {
     grid-column-end: span 1;
   }
 }
