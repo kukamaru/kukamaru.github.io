@@ -488,28 +488,27 @@ var newTimerID = (function() {
 	return function(){ counter++; return counter }
 })()
 
-function atoClassName() {
-	return function(){
-		{	
-			var str = "bar";
-			if (this.size) str = str + " " + this.size;
-			if (this.inverted) str = str + " inverted";
-			if (this.countdown) str = str + " countdown";
-			if (this.paused) str = str + " paused";
-			if (this.location) str = str + " " + this.location;
-			return str;
-		}
-	}
-}
+
 
 
 //creates and activates a ato from nto.
 function startTimer(nto){
 
 	// active timer object from nto
-	function makeAto(nto){
-		var ato = {};
-		Object.defineProperties(ato,{
+	function ActiveTimerObj(nto){
+
+
+			ActiveTimerObj.prototype.className = function() {
+						var str = "bar";
+						if (this.size) str = str + " " + this.size;
+						if (this.inverted) str = str + " inverted";
+						if (this.countdown) str = str + " countdown";
+						if (this.paused) str = str + " paused";
+						if (this.location) str = str + " " + this.location;
+						return str;
+					}
+
+		Object.defineProperties(this,{
 			'id': {
 				value:newTimerID(),
 				writable:false
@@ -556,23 +555,20 @@ function startTimer(nto){
 				value:false,
 				writable:true,
 				enumerable: true
-			},
-			'className': {
-				value:atoClassName(),
-				enumerable: true
 			}
 		});
+
 		if (nto){
-			Object.assign(ato,nto);
+			Object.assign(this,nto);
 		} else {
 			console.log("no nto, falling back on defaults");
 			console.log(ato);
 		}
-		return ato;
+		//return ato;
 	}
 	
 	var d = new Date().valueOf();
-	var ato = makeAto(nto);
+	var ato = new ActiveTimerObj(nto);
 	ato.start = d;
 
 
@@ -587,6 +583,7 @@ function startTimer(nto){
 	
 	activeTimers.push(ato); //important.
 	newBar(ato);
+	return ato;
 
 }
 
@@ -1446,6 +1443,7 @@ function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
 
 function Recipe(){
+	//-- ingredients--
 	var flour = 400;
 	var water = 230;
 	var starter = 160;
@@ -1459,6 +1457,7 @@ function Recipe(){
 		this.name = name;
 		this.amount = amount;
 		this.unit = unit;
+
 
 		Object.defineProperties(this, { 
 			'hydration': {
@@ -1514,64 +1513,6 @@ function Recipe(){
 		else return boo;
 	}
 
-	function TimeEvent(duration = 5000,text){
-		this.location = "recipe";
-		this.duration = duration;
-		this.text = text;
-	}
-
-	function WaitEvent(estimate, text){
-		this.location = "recipe";
-		this.duration = false;
-		this.estimate = estimate;
-		this.text = text;
-		this.countdown = false;
-	}
-
-	Recipe.prototype.nextEvent = function(){
-		if (this.events.length > 0){
-
-			var nte = this.events.shift();
-			startTimer(nte);
-		}
-	}
-
-	Object.defineProperties(this,{
-		"id":{
-			value: 1
-		}, 
-		"name":{
-			value: "mydeliciousbread",
-			enumerable: false,
-			writable: true
-		},
-		"eventCount":{
-			value: 3,		// dummy value
-			enumerable: false,
-			writable: true
-		},
-		"hasWindow":{
-			value: false,
-			writable: true
-		}
-	});
-
-	this.events = [
-		new WaitEvent(10000,"wait, mixing and kneading"),
-		new TimeEvent(50000,"first rise"),
-		new WaitEvent(10000,"wait, "),
-		new TimeEvent(13000,"second rise"),
-		new WaitEvent(10000,"wait, shaping"),
-		new TimeEvent(10000,"cook with lid"),
-		new TimeEvent(10000,"cook without lid (total cooking time)"),
-		new TimeEvent(10000000,"let cool....")
-	];
-
-	this.flour = flour = new Ingredient("flour",flour);
-	this.water = water = new Ingredient("water",water);
-	this.starter = starter = new Ingredient("starter",starter);
-	this.salt = salt = new Ingredient("salt",salt);
-
 	if (arguments.length>1 && typeof arguments[0] === "string"){
 		var x = Math.floor(arguments.length/2)*2; //gets an even number.
 
@@ -1599,8 +1540,77 @@ function Recipe(){
 		});
 	}
 	
+
+	this.flour 		= flour 		= new Ingredient("flour",flour);
+	this.water 		= water 		= new Ingredient("water",water);
+	this.starter 	= starter 	= new Ingredient("starter",starter);
+	this.salt 		= salt 		= new Ingredient("salt",salt);
+	//--ingredients end--
+
+	//timing stuff
+	function TimeEvent(duration = 5000,text){
+		this.location = "recipe";
+		this.duration = duration;
+		this.text = text;
+	}
+
+	function WaitEvent(estimate, text){
+		this.location = "recipe";
+		this.duration = false;
+		this.estimate = estimate;
+		this.text = text;
+		this.countdown = false;
+	}
+
+	Recipe.prototype.nextEvent = function(){
+		if (this.events.length > 0){
+
+			var nte = this.events.shift();
+			var ato = startTimer(nte);
+			this.log.push(ato);
+			this.runcount++;
+		}
+	}
+
+	Object.defineProperties(this,{
+		"id":{
+			value: 1
+		}, 
+		"name":{
+			value: "mydeliciousbread",
+			enumerable: false,
+			writable: true
+		},
+		"eventCount":{
+			value: 3,		// dummy value
+			enumerable: false,
+			writable: true
+		},
+		"hasWindow":{
+			value: false,
+			writable: true
+		}
+	});
+
+	this.log = [];
+	this.runcount = 0;
+
+	//placeholder events...
+	this.events = [
+		new WaitEvent(10000,"wait, mixing and kneading"),
+		new TimeEvent(50000,"first rise"),
+		new WaitEvent(10000,"wait, "),
+		new TimeEvent(13000,"second rise"),
+		new WaitEvent(10000,"wait, shaping"),
+		new TimeEvent(10000,"cook with lid"),
+		new TimeEvent(10000,"cook without lid (total cooking time)"),
+		new TimeEvent(10000000,"let cool....")
+	];
+
+
+
 }
 
+var pepperBread = new Recipe("pepper",100);
 var seeds = new Recipe("seeds",200);
 var myBread = new Recipe();
-var pepperBread = new Recipe("pepper",100);
