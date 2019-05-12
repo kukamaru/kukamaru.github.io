@@ -87,13 +87,8 @@ function recallTimers() {
 	}
 }
 
-function reactivate(ato){
-	ato.id = newTimerID();
-	ato.className = atoClassName();
-
-	ato.action = function() { appendText("action gone"); };
-	ato.action2 = function() { appendText("action gone"); };
-
+function reactivate(old){
+	ato = new ActiveTimerObj(old);
 	console.log(ato);
 
 	if (!ato.paused) {
@@ -255,7 +250,8 @@ function init() {
 
 
 	function delayed() {
-		recallTimers()
+		recallTimers();
+		grid.populate();
 		//notes();
 		//notes.show();
 		if (clockExists) { 
@@ -490,83 +486,93 @@ var newTimerID = (function() {
 
 
 
+	// active timer object from nto
+
+function ActiveTimerObj(nto){
+
+
+		ActiveTimerObj.prototype.className = function() {
+					var str = "bar";
+					if (this.size) str = str + " " + this.size;
+					if (this.inverted) str = str + " inverted";
+					if (this.countdown) str = str + " countdown";
+					if (this.paused) str = str + " paused";
+					if (this.location) str = str + " " + this.location;
+					return str;
+				}
+
+	Object.defineProperties(this,{
+		'id': {
+			value:newTimerID(),
+			writable:false
+		},
+		'text': {
+			value:"atoTextHere",
+			writable:true,
+			enumerable: true
+		},
+		'countdown': {
+			value: true,
+			writable: true,
+			enumerable: true
+		},
+		'soundID' :{
+			value:2,
+			writable: true,
+			enumerable: true
+		},
+		'size' :{
+			value:"normal",
+			writable: true,
+			enumerable: true
+		},
+		'pausable': {
+			value:false,
+			writable: true,
+			enumerable: true
+		},
+		'location': {
+			writable: true,
+			value: "corner",
+			enumerable: true
+		},
+		'action': {
+			value:function(){appendText("alarm finished -- action","alert");},
+			writable: true
+		},
+		'action2': {
+			value:function(){appendText("alarm confirmed, func 2");},
+			writable: true
+		},
+		'stoppable': {
+			value:false,
+			writable:true,
+			enumerable: true
+		}
+	});
+
+	if (nto){
+		Object.assign(this,nto);
+	} else {
+		console.log("no nto, falling back on defaults");
+		console.log(ato);
+	}
+	//return ato;
+}
+
+
+
+
+
+
+
+
+
 
 //creates and activates a ato from nto.
 function startTimer(nto){
 
-	// active timer object from nto
-	function ActiveTimerObj(nto){
 
-
-			ActiveTimerObj.prototype.className = function() {
-						var str = "bar";
-						if (this.size) str = str + " " + this.size;
-						if (this.inverted) str = str + " inverted";
-						if (this.countdown) str = str + " countdown";
-						if (this.paused) str = str + " paused";
-						if (this.location) str = str + " " + this.location;
-						return str;
-					}
-
-		Object.defineProperties(this,{
-			'id': {
-				value:newTimerID(),
-				writable:false
-			},
-			'text': {
-				value:"atoTextHere",
-				writable:true,
-				enumerable: true
-			},
-			'countdown': {
-				value: true,
-				writable: true,
-				enumerable: true
-			},
-			'soundID' :{
-				value:2,
-				writable: true,
-				enumerable: true
-			},
-			'size' :{
-				value:"normal",
-				writable: true,
-				enumerable: true
-			},
-			'pausable': {
-				value:false,
-				writable: true,
-				enumerable: true
-			},
-			'location': {
-				writable: true,
-				value: "corner",
-				enumerable: true
-			},
-			'action': {
-				value:function(){appendText("alarm finished -- action","alert");},
-				writable: true
-			},
-			'action2': {
-				value:function(){appendText("alarm confirmed, func 2");},
-				writable: true
-			},
-			'stoppable': {
-				value:false,
-				writable:true,
-				enumerable: true
-			}
-		});
-
-		if (nto){
-			Object.assign(this,nto);
-		} else {
-			console.log("no nto, falling back on defaults");
-			console.log(ato);
-		}
-		//return ato;
-	}
-	
 	var d = new Date().valueOf();
 	var ato = new ActiveTimerObj(nto);
 	ato.start = d;
