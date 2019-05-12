@@ -18,7 +18,7 @@ div.bar, div.bar div.progressbar{
 }
 
 div.bar {
-	background: rgba(0,0,0,0.5);
+	background: var(--bar-background);
 	position: relative;
 	z-index: 0;
 	margin-bottom: 4px;
@@ -34,8 +34,14 @@ div.progressbar {
 	position: absolute;
 	left: 0;
 	z-index: 1;
-	transition: height 0.5s ease-out, background-color 0.6s ease-in-out, opacity 0.6s ease-in-out;
+	transition: background 0.4s;
 }
+
+div.progressbar.vertical {
+	height: unset;
+	width: 100%;
+}
+
 .paused div.progressbar {
 	background-color: var(--stopped-bar);
 }
@@ -101,6 +107,7 @@ div.bar:hover div.barButtons {
 	background-color: var(--bar-buttons-bg);
 }
 
+
 /* Gradients */
 
 div.noStyle * {
@@ -126,6 +133,11 @@ div.noStyle.progressbar {
 	*/
 }
 
+
+/* recipe bars attached to this one */
+/* div.rBarElement {} */
+
+
 div.bar.box {
 	position: fixed;
 	height: initial;
@@ -133,8 +145,22 @@ div.bar.box {
 	margin: 0;
 }
 
-div.bar.box .progressbar{
-	height: 100%;
-	max-height: 30px;
+div.bar.recipe {
+	position: fixed;
+	height: initial;
+	margin: 0;
+	background: none;
 }
+
+div.bar.recipe .barlabel {
+	display: none;
+}
+
+
+div.bar.recipe .barcountdown {
+	position: absolute;
+	left: 11px;
+	color: var(--text-color);
+}
+
 

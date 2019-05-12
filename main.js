@@ -498,6 +498,7 @@ function ActiveTimerObj(nto){
 					if (this.countdown) str = str + " countdown";
 					if (this.paused) str = str + " paused";
 					if (this.location) str = str + " " + this.location;
+					if (this.isVertical) str = str + " vertical";
 					return str;
 				}
 
@@ -627,6 +628,10 @@ function alarm(ato) {
 
 	ato.action();
 
+	if (ato.recipeId){
+		return;
+	}
+
 	hideBar(ato);
 	ato.active = false;
 
@@ -680,15 +685,31 @@ function grid(){
 
 	//called from renderbars
 
+	function recipeButton(){
+		var button = document.createElement("button");
+		var text = document.createTextNode("recipe button");
+
+		button.setAttribute("onclick","myBread.nextEvent()");
+		button.className = "recipeButton";
+
+		return button;
+	}
+
 	grid.recipe = function() {
 		var box = newBox("recipe",myBread.id);
-		//box.className = "recipeBox";
+		box.className = "big recipeBox";
 		box.id = "recipeBox";
 
 		var ingredients = myBread.getIngredients("ul");
-		myBread.hasWindow = true;
+		var timeevents = myBread.getEvents("ul");
 
+		timeevents.className = "recipeEvents";
+
+		myBread.hasWindow = true; //make dynamic someday
+
+		box.appendChild(recipeButton());
 		box.appendChild(ingredients);
+		box.appendChild(timeevents);
 		gridUl.appendChild(box);
 	}
 
@@ -999,9 +1020,16 @@ function hideBar(ato) {
 
 function renderBars() {
 	attachToGrid = function(ato) {
-
-		var target = document.getElementById(ato.location + "bar" + ato.id).getBoundingClientRect();
+		var target;
+		if (ato.location == "box") {
+			 target = document.getElementById(ato.location + "bar" + ato.id);
+		} 
+		else if (ato.location == "recipe") {
+			 target = document.getElementById("rBarR" + ato.recipeId + "S" + ato.recipeSection);
+		}
 		var bar = document.getElementById("bar" + ato.id);
+
+		target = target.getBoundingClientRect();
 
 		bar.style.top = target.top + "px";
 		bar.style.bottom = "calc(100% - " + target.bottom + "px)";
@@ -1019,7 +1047,9 @@ function renderBars() {
 		if (current.location == "box" || current.needsRefresh || current.active && !current.paused){
 
 			if (current.location == "box") { attachToGrid(current); }
-			if (current.location == "recipe") { attachToGrid(current); }
+			if (current.location == "recipe") { 
+				attachToGrid(current);
+			}
 
 
 			var bar = document.getElementById("progress" + current.id);
@@ -1047,17 +1077,24 @@ function renderBars() {
 
 				var countdown = document.getElementById("barcountdown" + current.id);
 				var ms = 			document.getElementById("barcountdownms" + current.id);
-			if (current.countdown) { //countdown for countdowns
+			if (elapsedFraction == 100) {
+				countdown.innerHTML = "finished at: " + unixToString(current.finish);
+			}
+			else if (current.countdown) { //countdown for countdowns
 				countdown.innerHTML 				= renderTime(remainder);
 				ms.innerHTML = (msVisible) ? renderMs(remainder) : "";
-			} else if (!current.duration) { //render elapsed time for wait events
-				countdown.innerHTML = renderTime(elapsed);
+			} 
+			else if (!current.duration) { //render elapsed time for wait events
+				countdown.innerHTML = renderTime(elapsed) + "elapsed";
 				ms.innerHTML = (msVisible) ? renderMs(elapsed) : "";
 			}
 
 			var widthPercent = widthPercent + "%";
-
-			bar.style.width = widthPercent;
+			if (current.isVertical){
+				bar.style.height = widthPercent;
+			} else {
+				bar.style.width = widthPercent;
+			}
 			if (remainder < 2000) bar.style.background = "var(--bar-completing)";
 		}
 	}
@@ -1412,6 +1449,15 @@ function addZeroMs(i) {
 	return i;
 }
 
+function unixToString(unixtime){
+		var d = new Date(unixtime);
+
+		var hours = addZero(d.getHours());
+		var minutes = addZero(d.getMinutes());
+	   var seconds = addZero(d.getSeconds());
+	   return hours + ":" + minutes + ":" + seconds;
+}
+
 function timeToMs(s = 0,m = 0,h = 0) {
 	return ( s*1000 ) + (m*60*1000) + (h*60*60*1000);
 }
@@ -1491,7 +1537,6 @@ function Recipe(){
 			return string;
 		}
 	}
-
 	Recipe.prototype.getIngredients = function(){
 		var thing = Object.entries(this);
 		var boo = [];
@@ -1518,7 +1563,6 @@ function Recipe(){
 
 		else return boo;
 	}
-
 	if (arguments.length>1 && typeof arguments[0] === "string"){
 		var x = Math.floor(arguments.length/2)*2; //gets an even number.
 
@@ -1530,7 +1574,6 @@ function Recipe(){
 			});
 		}
 	}
-
 	if (starterHydration) { 
 		this.hydration = (function(){
 			var starterWater = (starter.amount*starter.hydration);
@@ -1545,8 +1588,6 @@ function Recipe(){
 			enumerable:false
 		});
 	}
-	
-
 	this.flour 		= flour 		= new Ingredient("flour",flour);
 	this.water 		= water 		= new Ingredient("water",water);
 	this.starter 	= starter 	= new Ingredient("starter",starter);
@@ -1554,10 +1595,16 @@ function Recipe(){
 	//--ingredients end--
 
 	//timing stuff
-	function TimeEvent(duration = 5000,text){
+	function TimeEvent(duration = 5000,text,recipe,soundID = 0){
 		this.location = "recipe";
 		this.duration = duration;
 		this.text = text;
+		this.isVertical = true;
+		this.soundID = soundID;
+
+		this.action = function() { 
+			return function(){ recipe.nextEvent(); }
+		}();
 	}
 
 	function WaitEvent(estimate, text){
@@ -1566,6 +1613,7 @@ function Recipe(){
 		this.estimate = estimate;
 		this.text = text;
 		this.countdown = false;
+		this.isVertical = true;
 	}
 
 	Recipe.prototype.nextEvent = function(){
@@ -1573,6 +1621,9 @@ function Recipe(){
 
 			var nte = this.events.shift();
 			var ato = startTimer(nte);
+	
+			ato.recipeId = this.id;
+			ato.recipeSection = this.runcount;
 			this.log.push(ato);
 			this.runcount++;
 		}
@@ -1603,15 +1654,46 @@ function Recipe(){
 
 	//placeholder events...
 	this.events = [
-		new WaitEvent(10000,"wait, mixing and kneading"),
-		new TimeEvent(50000,"first rise"),
-		new WaitEvent(10000,"wait, "),
-		new TimeEvent(13000,"second rise"),
-		new WaitEvent(10000,"wait, shaping"),
-		new TimeEvent(10000,"cook with lid"),
-		new TimeEvent(10000,"cook without lid (total cooking time)"),
-		new TimeEvent(10000000,"let cool....")
+	//	new WaitEvent(10000,"wait, mixing and kneading"),
+		new TimeEvent(5000,"first rise",this),
+		new TimeEvent(5000,"first xx rise",this),
+		new TimeEvent(5000,"first  xx rise",this),
+	//	new WaitEvent(10000,"wait, "),
+		new TimeEvent(6000,"second rise",this),
+	//	new WaitEvent(10000,"wait, shaping"),
+		new TimeEvent(4000,"cook with lid",this),
+		new TimeEvent(3000,"cook without lid (total cooking time)",this),
+		new TimeEvent(10000,"let cool....",this,2)
 	];
+
+	Recipe.prototype.getEvents = function(){
+		var output = (arguments[0] == "ul") ? document.createElement("ul") : "";
+		for (var i = 0;i < this.events.length;i++){
+
+			if (arguments[0] == "ul"){
+				var text = document.createTextNode(i + "  " + this.events[i].text);
+				var div = document.createElement("div");
+				var span = document.createElement("span");
+
+				var li = document.createElement("li");
+				li.id = "recipeEventR" + this.id + "S" + i;
+
+				div.className = "rBarElement";
+				div.id = "rBarR" + this.id + "S" + i;
+
+				span.appendChild(text);
+				li.appendChild(span);
+				li.appendChild(div);
+
+				output.appendChild(li);
+
+			} else {
+				output = (i == 0) ? this.events[i].text : output + "\n" + this.events[i].text; 
+			}
+		}
+
+		return output;
+	}
 
 
 

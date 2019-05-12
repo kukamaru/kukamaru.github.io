@@ -20,7 +20,8 @@
 	--stopped-bar: indigo;    								/* themed */
 	--bar-completing: green;  								/* themed */
 	
-	--bar-buttons-bg: yellow;								
+	--bar-buttons-bg: yellow;		
+	--bar-background: rgba(0,0,0,0.5);						
 
 	--freeze-color: blue;
 	--alert-color: red;

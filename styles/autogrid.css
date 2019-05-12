@@ -38,13 +38,6 @@
   order: 1;
 }
 
-.autogrid #recipeBox {
-  grid-row-start: 1;
-  grid-row-end: span 5; 
-  grid-column-start: 1;
-  grid-column-end: span 2;
-}
-
 
 
 .autogrid .priority {
@@ -105,3 +98,31 @@
 /* Handle on hover */
 .autogrid::-webkit-scrollbar-thumb:hover {
 }
+
+
+/* recipe stuff */
+
+ul.recipeEvents {
+  display: flex;
+  flex-direction: column;
+}
+ul.recipeEvents > li {
+  flex-grow: 1;
+}
+ul.recipeEvents > li > span {
+  position: absolute;
+}
+
+.autogrid #recipeBox {
+  grid-row-start: 1;
+  grid-row-end: span 5; 
+  grid-column-start: 1;
+  grid-column-end: span 2;
+}
+
+.rBarElement{
+  height: 60px;
+  width: 20px;
+  background-color: var(--bar-background);
+}
+
