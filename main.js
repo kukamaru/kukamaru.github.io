@@ -636,8 +636,8 @@ function grid(){
 		gridUl.removeChild(gridUl.firstChild);
 	}
 
-	function newBox() {
-		//takes ato or string arguments.
+	function newBox() { 		//takes ato or "recipe" argument.
+
 		var ato
 		if (typeof arguments[0] === "object"){
 			ato = arguments[0];
@@ -652,6 +652,8 @@ function grid(){
 		} else {
 			ato = {};
 			ato.size = "";
+			ato.id = "";
+			ato.location = "";
 		}
 
 
