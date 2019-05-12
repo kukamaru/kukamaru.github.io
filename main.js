@@ -488,76 +488,76 @@ var newTimerID = (function() {
 
 	// active timer object from nto
 
-function ActiveTimerObj(nto){
+	function ActiveTimerObj(nto){
 
 
 		ActiveTimerObj.prototype.className = function() {
-					var str = "bar";
-					if (this.size) str = str + " " + this.size;
-					if (this.inverted) str = str + " inverted";
-					if (this.countdown) str = str + " countdown";
-					if (this.paused) str = str + " paused";
-					if (this.location) str = str + " " + this.location;
-					if (this.isVertical) str = str + " vertical";
-					return str;
-				}
-
-	Object.defineProperties(this,{
-		'id': {
-			value:newTimerID(),
-			writable:false
-		},
-		'text': {
-			value:"atoTextHere",
-			writable:true,
-			enumerable: true
-		},
-		'countdown': {
-			value: true,
-			writable: true,
-			enumerable: true
-		},
-		'soundID' :{
-			value:2,
-			writable: true,
-			enumerable: true
-		},
-		'size' :{
-			value:"normal",
-			writable: true,
-			enumerable: true
-		},
-		'pausable': {
-			value:false,
-			writable: true,
-			enumerable: true
-		},
-		'location': {
-			writable: true,
-			value: "corner",
-			enumerable: true
-		},
-		'action': {
-			value:function(){appendText("alarm finished -- action","alert");},
-			writable: true
-		},
-		'action2': {
-			value:function(){appendText("alarm confirmed, func 2");},
-			writable: true
-		},
-		'stoppable': {
-			value:false,
-			writable:true,
-			enumerable: true
+			var str = "bar";
+			if (this.size) str = str + " " + this.size;
+			if (this.inverted) str = str + " inverted";
+			if (this.countdown) str = str + " countdown";
+			if (this.paused) str = str + " paused";
+			if (this.location) str = str + " " + this.location;
+			if (this.isVertical) str = str + " vertical";
+			return str;
 		}
-	});
 
-	if (nto){
-		Object.assign(this,nto);
-	} else {
-		console.log("no nto, falling back on defaults");
-		console.log(ato);
-	}
+		Object.defineProperties(this,{
+			'id': {
+				value:newTimerID(),
+				writable:false
+			},
+			'text': {
+				value:"atoTextHere",
+				writable:true,
+				enumerable: true
+			},
+			'countdown': {
+				value: true,
+				writable: true,
+				enumerable: true
+			},
+			'soundID' :{
+				value:2,
+				writable: true,
+				enumerable: true
+			},
+			'size' :{
+				value:"normal",
+				writable: true,
+				enumerable: true
+			},
+			'pausable': {
+				value:false,
+				writable: true,
+				enumerable: true
+			},
+			'location': {
+				writable: true,
+				value: "corner",
+				enumerable: true
+			},
+			'action': {
+				value:function(){appendText("alarm finished -- action","alert");},
+				writable: true
+			},
+			'action2': {
+				value:function(){appendText("alarm confirmed, func 2");},
+				writable: true
+			},
+			'stoppable': {
+				value:false,
+				writable:true,
+				enumerable: true
+			}
+		});
+
+		if (nto){
+			Object.assign(this,nto);
+		} else {
+			console.log("no nto, falling back on defaults");
+			console.log(ato);
+		}
 	//return ato;
 }
 
@@ -647,42 +647,42 @@ function grid(){
 
 	function newBox() { 		//takes ato or "recipe" argument.
 
-		var ato
-		if (typeof arguments[0] === "object"){
-			ato = arguments[0];
-		}
-
-		else if (arguments[0] == "recipe") {
-			ato = {};
-			ato.text = "the bomb bread";
-			ato.size = "big";
-			ato.id = arguments[1];
-			ato.location = "recipe";
-		} else {
-			ato = {};
-			ato.size = "";
-			ato.id = "";
-			ato.location = "";
-		}
-
-
-		var li = document.createElement("li");
-		var h2 = document.createElement("h2");
-		var text = document.createTextNode(ato.text);
-
-
-		h2.appendChild(text)
-		li.appendChild(h2);
-
-		var div = document.createElement("div");
-		div.id = ato.location + "bar" + ato.id;
-		div.className = ato.location + "bar";
-
-		li.className = ato.size;
-		li.appendChild(div);
-
-		return li;
+	var ato
+	if (typeof arguments[0] === "object"){
+		ato = arguments[0];
 	}
+
+	else if (arguments[0] == "recipe") {
+		ato = {};
+		ato.text = "the bomb bread";
+		ato.size = "big";
+		ato.id = arguments[1];
+		ato.location = "recipe";
+	} else {
+		ato = {};
+		ato.size = "";
+		ato.id = "";
+		ato.location = "";
+	}
+
+
+	var li = document.createElement("li");
+	var h2 = document.createElement("h2");
+	var text = document.createTextNode(ato.text);
+
+
+	h2.appendChild(text)
+	li.appendChild(h2);
+
+	var div = document.createElement("div");
+	div.id = ato.location + "bar" + ato.id;
+	div.className = ato.location + "bar";
+
+	li.className = ato.size;
+	li.appendChild(div);
+
+	return li;
+}
 
 	//called from renderbars
 
@@ -896,7 +896,7 @@ function resume(ato) {
 
 	if (ato.duration < 0) {
 		ato.active = false;
-		appendText("alarm expired while away:");
+		appendText("alarm expired while away: " + ato.text);
 		hideBar(ato);
 		return;
 	} 
@@ -1026,10 +1026,10 @@ function renderBars() {
 	attachToGrid = function(ato) {
 		var target;
 		if (ato.location == "box") {
-			 target = document.getElementById(ato.location + "bar" + ato.id);
+			target = document.getElementById(ato.location + "bar" + ato.id);
 		} 
 		else if (ato.location == "recipe") {
-			 target = document.getElementById("rBarR" + ato.recipeId + "S" + ato.recipeSection);
+			target = document.getElementById("rBarR" + ato.recipeId + "S" + ato.recipeSection);
 		}
 		var bar = document.getElementById("bar" + ato.id);
 
@@ -1079,8 +1079,8 @@ function renderBars() {
 			if (current.inverted) 	{ widthPercent = 100-elapsedFraction; }
 			else 							{ widthPercent = elapsedFraction; }
 
-				var countdown = document.getElementById("barcountdown" + current.id);
-				var ms = 			document.getElementById("barcountdownms" + current.id);
+			var countdown = document.getElementById("barcountdown" + current.id);
+			var ms = 			document.getElementById("barcountdownms" + current.id);
 			if (current.isFinished) {
 				countdown.innerHTML = "finished at: " + unixToString(current.finish);
 			}
@@ -1343,10 +1343,11 @@ window.onbeforeunload = function() {
 	saveActiveTimers();
 
 	function checkProtect() {
+		var protecc = false;
 		for (var i = 0; i < activeTimers.length; i++) {
-			if (activeTimers[i].protected && activeTimers[i].active) { return true; }
+			if (activeTimers[i].protected && activeTimers[i].active) { protecc = true; }
 		}
-		return false;
+		return protecc;
 	}
 
 	if (debug2) {
@@ -1454,12 +1455,12 @@ function addZeroMs(i) {
 }
 
 function unixToString(unixtime){
-		var d = new Date(unixtime);
+	var d = new Date(unixtime);
 
-		var hours = addZero(d.getHours());
-		var minutes = addZero(d.getMinutes());
-	   var seconds = addZero(d.getSeconds());
-	   return hours + ":" + minutes + ":" + seconds;
+	var hours = addZero(d.getHours());
+	var minutes = addZero(d.getMinutes());
+	var seconds = addZero(d.getSeconds());
+	return hours + ":" + minutes + ":" + seconds;
 }
 
 function timeToMs(s = 0,m = 0,h = 0) {
@@ -1524,7 +1525,7 @@ function Recipe(){
 			}
 
 		});				
-				
+
 		if (name == "flour"){
 			this.hydration = 0;
 		} 
@@ -1549,7 +1550,7 @@ function Recipe(){
 			if (!!thing[i][1].isIngredient){
 
 				boo.push(thing[i][1].getStr());
-		
+
 			}
 		}
 
@@ -1600,6 +1601,8 @@ function Recipe(){
 
 	//timing stuff
 	function TimeEvent(duration = 5000,text,recipe,soundID = 0){
+		//this.recipe = recipe; creates circular loop xD
+
 		this.location = "recipe";
 		this.duration = duration;
 		this.text = text;
@@ -1611,7 +1614,7 @@ function Recipe(){
 		}();
 	}
 
-	function WaitEvent(estimate, text){
+	function WaitEvent(estimate, text, recipe){
 		this.location = "recipe";
 		this.duration = false;
 		this.estimate = estimate;
@@ -1636,10 +1639,10 @@ function Recipe(){
 
 			var nte = this.events.shift();
 			var ato = startTimer(nte);
-	
+
 			ato.recipeId = this.id;
 			ato.recipeSection = this.runcount;
-			this.log.push(ato);
+			this.atos.push(ato);
 			this.runcount++;
 		} else {
 			flexOrder(this.id,this.runcount,true) //final flex.
@@ -1648,9 +1651,20 @@ function Recipe(){
 	}
 
 	Recipe.prototype.lastEvent = function(){
-		console.log("finished recipe:");
-		console.log(this);
+		function killAtos(recipe) {
+			while (recipe.atos.length > 0){
+				appendText(recipe.atos.length);
+				var ato = recipe.atos.pop();
+				ato.active = false;
+			}
+		}
+
+
+		console.log(this.atos);
+
+		setTimeout(killAtos(this),500);
 	}
+
 
 	Object.defineProperties(this,{
 		"id":{
@@ -1672,21 +1686,21 @@ function Recipe(){
 		}
 	});
 
-	this.log = [];
+	this.atos = [];
 	this.runcount = 0;
 
 	//placeholder events...
 	this.events = [
 	//	new WaitEvent(10000,"wait, mixing and kneading"),
-		new TimeEvent(5000,"first rise",this),
-		new TimeEvent(5000,"first xx rise",this),
-		new TimeEvent(5000,"first  xx rise",this),
+	new TimeEvent(5000,"first rise",this),
+	new TimeEvent(5000,"first xx rise",this),
+	new TimeEvent(1000,"first  xx rise",this),
 	//	new WaitEvent(10000,"wait, "),
-		new TimeEvent(6000,"second rise",this),
+	new TimeEvent(6000,"second rise",this),
 	//	new WaitEvent(10000,"wait, shaping"),
-		new TimeEvent(4000,"cook with lid",this),
-		new TimeEvent(3000,"cook without lid (total cooking time)",this),
-		new TimeEvent(10000,"let cool....",this,2)
+	new TimeEvent(4000,"cook with lid",this),
+	new TimeEvent(3000,"cook without lid (total cooking time)",this),
+	new TimeEvent(1000,"let cool....",this)
 	];
 
 	Recipe.prototype.start = function(){
