@@ -11,6 +11,8 @@ var timersRunning = 0;
 var canSnooze = true;
 var activeTimers = [];
 var activeAlarms = [];
+var activeRecipes = [];
+
 var windowState = false;
 var optionState = false;
 var clockExists;
@@ -73,16 +75,27 @@ function saveActiveTimers() {
 	console.log(activeTimers);
 
 	var string = JSON.stringify(activeTimers);
+	var strin2 = JSON.stringify(activeRecipes);
+
 	console.log(string);
 	localStorage.setItem('activeTimers', string)
+	localStorage.setItem('activeRecipes', strin2)
 }
 
 function recallTimers() {
-	var thing = JSON.parse(localStorage.getItem('activeTimers'));
+	var thing = JSON.parse(localStorage.getItem('activeTimers')); // gets timers
 	if (thing){
 		for (var i = 0; i < thing.length; i++)
 		{
 			reactivate(thing[i]);
+		}
+	}
+	var thing2 = JSON.parse(localStorage.getItem('activeRecipes')); // and recipes :)
+	console.log(thing2);
+	if (thing2){
+		for (var i = 0; i< thing2.length; i++)
+		{
+			reactivateRecipe(thing2[i]);
 		}
 	}
 }
@@ -101,6 +114,14 @@ function reactivate(old){
 	}
 
 	activeTimers.push(ato);
+}
+
+function reactivateRecipe(old){
+	recipe = new Recipe();
+	Object.assign (recipe, old);
+	console.log(recipe);
+	grid.recipe(recipe);
+	activeRecipes.push(recipe);
 }
 
 //gets ato from array
@@ -482,82 +503,82 @@ function stressTest() {
 var newTimerID = (function() {
 	var counter = -1;
 	return function(){ counter++; return counter }
-})()
+})();
 
 
 
-	// active timer object from nto
+// active timer object from nto
 
-	function ActiveTimerObj(nto){
+function ActiveTimerObj(nto){
 
 
-		ActiveTimerObj.prototype.className = function() {
-			var str = "bar";
-			if (this.size) str = str + " " + this.size;
-			if (this.inverted) str = str + " inverted";
-			if (this.countdown) str = str + " countdown";
-			if (this.paused) str = str + " paused";
-			if (this.location) str = str + " " + this.location;
-			if (this.isVertical) str = str + " vertical";
-			return str;
+	ActiveTimerObj.prototype.className = function() {
+		var str = "bar";
+		if (this.size) str = str + " " + this.size;
+		if (this.inverted) str = str + " inverted";
+		if (this.countdown) str = str + " countdown";
+		if (this.paused) str = str + " paused";
+		if (this.location) str = str + " " + this.location;
+		if (this.isVertical) str = str + " vertical";
+		return str;
+	}
+
+	Object.defineProperties(this,{
+		'id': {
+			value:newTimerID(),
+			writable:false
+		},
+		'text': {
+			value:"atoTextHere",
+			writable:true,
+			enumerable: true
+		},
+		'countdown': {
+			value: true,
+			writable: true,
+			enumerable: true
+		},
+		'soundID' :{
+			value:2,
+			writable: true,
+			enumerable: true
+		},
+		'size' :{
+			value:"normal",
+			writable: true,
+			enumerable: true
+		},
+		'pausable': {
+			value:false,
+			writable: true,
+			enumerable: true
+		},
+		'location': {
+			writable: true,
+			value: "corner",
+			enumerable: true
+		},
+		'action': {
+			value:function(){appendText("alarm finished -- action","alert");},
+			writable: true
+		},
+		'action2': {
+			value:function(){appendText("alarm confirmed, func 2");},
+			writable: true
+		},
+		'stoppable': {
+			value:false,
+			writable:true,
+			enumerable: true
 		}
+	});
 
-		Object.defineProperties(this,{
-			'id': {
-				value:newTimerID(),
-				writable:false
-			},
-			'text': {
-				value:"atoTextHere",
-				writable:true,
-				enumerable: true
-			},
-			'countdown': {
-				value: true,
-				writable: true,
-				enumerable: true
-			},
-			'soundID' :{
-				value:2,
-				writable: true,
-				enumerable: true
-			},
-			'size' :{
-				value:"normal",
-				writable: true,
-				enumerable: true
-			},
-			'pausable': {
-				value:false,
-				writable: true,
-				enumerable: true
-			},
-			'location': {
-				writable: true,
-				value: "corner",
-				enumerable: true
-			},
-			'action': {
-				value:function(){appendText("alarm finished -- action","alert");},
-				writable: true
-			},
-			'action2': {
-				value:function(){appendText("alarm confirmed, func 2");},
-				writable: true
-			},
-			'stoppable': {
-				value:false,
-				writable:true,
-				enumerable: true
-			}
-		});
-
-		if (nto){
-			Object.assign(this,nto);
-		} else {
-			console.log("no nto, falling back on defaults");
-			console.log(ato);
-		}
+	if (nto){
+		Object.assign(this,nto);
+	} else {
+		console.log("no nto, falling back on defaults");
+		console.log(ato);
+	}
 	//return ato;
 }
 
@@ -613,7 +634,6 @@ function alarm(ato) {
 			loop: true
 		});
 		audio.play();
-
 		ato.audio = audio;
 
 		activeAlarms.push(ato);
@@ -622,14 +642,18 @@ function alarm(ato) {
 	}
 
 	else { 
+
 		var audio = new Howl({src: sounds[soundID].src});
 		audio.play();
 	}
 
-	ato.action();
+	//ato.action();
 
 	if (ato.recipeId){
+		if (ato.isFinished) return;
 		ato.isFinished = true;
+		var recipe = getActiveRecipe(ato.recipeId);
+		recipe.nextEvent();
 		return;
 	}
 
@@ -698,21 +722,21 @@ function grid(){
 		return button;
 	}
 
-	grid.recipe = function() {
-		var box = newBox("recipe",myBread.id);
+	grid.recipe = function(recipe) {
+		var box = newBox("recipe",recipe.id);
 		box.className = "big recipeBox";
 		box.id = "recipeBox";
 
-		var ingredients = myBread.getIngredients("ul");
-		var timeevents = myBread.getEvents("ul");
+		var ingredients = recipe.getIngredients("ul");
+		var timeevents = recipe.getEvents("ul");
 
 		timeevents.className = "recipeEvents";
 		ingredients.className = "ingredients";
 
-		myBread.hasWindow = true; //make dynamic someday
+		recipe.hasWindow = true; //make dynamic someday
 
 		box.appendChild(ingredients);
-		box.appendChild(recipeButton(myBread.id));
+		if (!recipe.active) { box.appendChild(recipeButton(recipe.id)); }
 		box.appendChild(timeevents);
 		gridUl.appendChild(box);
 	}
@@ -894,7 +918,7 @@ function resume(ato) {
 
 	ato.duration = ato.pRemainder;
 
-	if (ato.duration < 0) {
+	if (ato.duration < 0 && !ato.recipeId) {
 		ato.active = false;
 		appendText("alarm expired while away: " + ato.text);
 		hideBar(ato);
@@ -1499,6 +1523,14 @@ function evenOdd(x) { if (isEven(x)){return "even";} else {return "odd";} }
 
 
 
+
+function getActiveRecipe(id) {
+	for (var i = 0;i < activeRecipes.length; i++){
+		if (activeRecipes[i].id == id) return activeRecipes[i];
+	}
+	console.log("recipe not found");
+}
+
 function Recipe(){
 	//-- ingredients--
 	var flour = 400;
@@ -1661,6 +1693,7 @@ function Recipe(){
 
 
 		console.log(this.atos);
+		this.active = false;
 
 		setTimeout(killAtos(this),500);
 	}
@@ -1668,7 +1701,9 @@ function Recipe(){
 
 	Object.defineProperties(this,{
 		"id":{
-			value: 1
+			value: activeRecipes.length+1,
+			enumerable:true,
+			writable:true
 		}, 
 		"name":{
 			value: "mydeliciousbread",
@@ -1692,18 +1727,20 @@ function Recipe(){
 	//placeholder events...
 	this.events = [
 	//	new WaitEvent(10000,"wait, mixing and kneading"),
-	new TimeEvent(5000,"first rise",this),
-	new TimeEvent(5000,"first xx rise",this),
-	new TimeEvent(1000,"first  xx rise",this),
+	new TimeEvent(20000,"first rise",this),
+	new TimeEvent(20000,"2rise",this),
+	new TimeEvent(20000,"f3x rise",this),
 	//	new WaitEvent(10000,"wait, "),
-	new TimeEvent(6000,"second rise",this),
+	new TimeEvent(20000,"s4econd rise",this),
 	//	new WaitEvent(10000,"wait, shaping"),
-	new TimeEvent(4000,"cook with lid",this),
-	new TimeEvent(3000,"cook without lid (total cooking time)",this),
-	new TimeEvent(1000,"let cool....",this)
+	new TimeEvent(20000,"c5ook with lid",this),
+	new TimeEvent(20000,"c6ook without lid (total cooking time)",this),
+	new TimeEvent(20000,"l7et cool....",this)
 	];
 
 	Recipe.prototype.start = function(){
+		this.active = true;
+		activeRecipes.push(this);
 		this.nextEvent();
 
 		//hide button
