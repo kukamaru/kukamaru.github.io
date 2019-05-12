@@ -140,9 +140,11 @@ div.noStyle.progressbar {
 
 div.bar.box {
 	position: fixed;
-	height: initial;
-	max-height: 30px;
+	/*height: initial; */
 	margin: 0;
+}
+
+div.bar.box, .bar.box .progressbar{
 }
 
 div.bar.recipe {

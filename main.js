@@ -581,9 +581,9 @@ function startTimer(nto){
 
 	if (ato.duration){
 		ato.finish = d + ato.duration;
-		ato.alarm = setAlarm(ato);
+		ato.alarm = setAlarm(ato); //set the alarm
 	} else {
-		ato.finish = d + ato.estimate;
+		ato.finish = d + ato.estimate; // no triggers for estimates yet
 	}
 
 	ato.active = true;
@@ -629,6 +629,7 @@ function alarm(ato) {
 	ato.action();
 
 	if (ato.recipeId){
+		ato.isFinished = true;
 		return;
 	}
 
@@ -1077,7 +1078,7 @@ function renderBars() {
 
 				var countdown = document.getElementById("barcountdown" + current.id);
 				var ms = 			document.getElementById("barcountdownms" + current.id);
-			if (elapsedFraction == 100) {
+			if (current.isFinished) {
 				countdown.innerHTML = "finished at: " + unixToString(current.finish);
 			}
 			else if (current.countdown) { //countdown for countdowns
