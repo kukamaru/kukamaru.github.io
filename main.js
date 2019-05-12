@@ -70,8 +70,20 @@ activeTimers.refresh = function() {
 	activeTimers = cleanArray;
 }
 
+activeRecipes.refresh = function() {
+	var cleanArray = [];
+
+	for (var i = 0;i < activeRecipes.length; i++){
+		if (activeRecipes[i].active) cleanArray.push(activeRecipes[i]);
+	}
+
+	cleanArray.refresh = activeRecipes.refresh; //reinstate self
+	activeRecipes = cleanArray;
+}
+
 function saveActiveTimers() {
 	activeTimers.refresh();
+	activeRecipes.refresh();
 	console.log(activeTimers);
 
 	var string = JSON.stringify(activeTimers);
@@ -126,7 +138,6 @@ function reactivateRecipe(old){
 	Object.assign (recipe, old);
 	console.log(recipe);
 	grid.recipe(recipe);
-	activeRecipes.push(recipe);
 }
 
 //gets ato from array
@@ -718,7 +729,7 @@ function grid(){
 		var button = document.createElement("button");
 		var text = document.createTextNode("recipe button");
 
-		button.setAttribute("onclick","myBread.start()");
+		button.setAttribute("onclick","startRecipe("+id+")");
 		button.className = "recipeButton green";
 		button.innerHTML = "Start Baking";
 		button.id = id + "Rstart";
@@ -736,8 +747,6 @@ function grid(){
 
 		timeevents.className = "recipeEvents";
 		ingredients.className = "ingredients";
-
-		recipe.hasWindow = true; //make dynamic someday
 
 		box.appendChild(ingredients);
 		if (!recipe.active) { box.appendChild(recipeButton(recipe.id)); }
@@ -1535,6 +1544,16 @@ function getActiveRecipe(id) {
 	console.log("recipe not found");
 }
 
+function startRecipe(id){
+	var recipe = getActiveRecipe(id);
+	recipe.start();
+}
+
+var newRecipeID = (function() {
+	var counter = 0;
+	return function(){ counter++; return counter }
+})();
+
 function Recipe(){
 	//-- ingredients--
 	var flour = 400;
@@ -1710,24 +1729,15 @@ function Recipe(){
 	}
 
 
+
 	Object.defineProperties(this,{
 		"id":{
-			value: activeRecipes.length+1,
-			enumerable:true,
-			writable:true
+			value: newRecipeID(),
+			writable:false
 		}, 
 		"name":{
 			value: "mydeliciousbread",
-			enumerable: false,
-			writable: true
-		},
-		"eventCount":{
-			value: 3,		// dummy value
-			enumerable: false,
-			writable: true
-		},
-		"hasWindow":{
-			value: false,
+			enumerable: true,
 			writable: true
 		}
 	});
@@ -1754,7 +1764,6 @@ function Recipe(){
 	Recipe.prototype.start = function(){
 		this.active = true;
 		this.runcount = 0;
-		activeRecipes.push(this);
 		this.nextEvent();
 
 		//hide button
@@ -1792,10 +1801,8 @@ function Recipe(){
 		return output;
 	}
 
-
+	activeRecipes.push(this);
 
 }
 
-var pepperBread = new Recipe("pepper",100);
-var seeds = new Recipe("seeds",200);
-var myBread = new Recipe();
+var myBread = function(){ return new Recipe(); }
