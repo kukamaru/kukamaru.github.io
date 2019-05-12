@@ -166,7 +166,7 @@ function init() {
 
 		var isLocal = (window.location.href.includes("file:///C:/Users/utamaru/workspace/")
 			||
-			window.location.href.includes("http://127.0.0.1:8080/"));
+			window.location.href.includes("http://127.0.0.1"));
 
 		function initLocal() {
 
@@ -686,12 +686,14 @@ function grid(){
 
 	//called from renderbars
 
-	function recipeButton(){
+	function recipeButton(id){
 		var button = document.createElement("button");
 		var text = document.createTextNode("recipe button");
 
-		button.setAttribute("onclick","myBread.nextEvent()");
-		button.className = "recipeButton";
+		button.setAttribute("onclick","myBread.start()");
+		button.className = "recipeButton green";
+		button.innerHTML = "Start Baking";
+		button.id = id + "Rstart";
 
 		return button;
 	}
@@ -705,11 +707,12 @@ function grid(){
 		var timeevents = myBread.getEvents("ul");
 
 		timeevents.className = "recipeEvents";
+		ingredients.className = "ingredients";
 
 		myBread.hasWindow = true; //make dynamic someday
 
-		box.appendChild(recipeButton());
 		box.appendChild(ingredients);
+		box.appendChild(recipeButton(myBread.id));
 		box.appendChild(timeevents);
 		gridUl.appendChild(box);
 	}
@@ -1618,7 +1621,18 @@ function Recipe(){
 	}
 
 	Recipe.prototype.nextEvent = function(){
+		function flexOrder(recipeID,sectionID,final = false){
+			if (!final){
+				var current = document.getElementById("recipeEventR" + recipeID + "S" + sectionID);
+				current.className = "active";
+			}
+			if (sectionID != 0){
+				var prev = document.getElementById("recipeEventR" + recipeID + "S" + (sectionID-1));
+				prev.className = "";
+			}
+		}
 		if (this.events.length > 0){
+			flexOrder(this.id,this.runcount);
 
 			var nte = this.events.shift();
 			var ato = startTimer(nte);
@@ -1627,7 +1641,15 @@ function Recipe(){
 			ato.recipeSection = this.runcount;
 			this.log.push(ato);
 			this.runcount++;
+		} else {
+			flexOrder(this.id,this.runcount,true) //final flex.
+			this.lastEvent();
 		}
+	}
+
+	Recipe.prototype.lastEvent = function(){
+		console.log("finished recipe:");
+		console.log(this);
 	}
 
 	Object.defineProperties(this,{
@@ -1667,6 +1689,14 @@ function Recipe(){
 		new TimeEvent(10000,"let cool....",this,2)
 	];
 
+	Recipe.prototype.start = function(){
+		this.nextEvent();
+
+		//hide button
+		var button = document.getElementById(this.id+"Rstart");
+		button.className = button.className + " hidden";
+	}
+
 	Recipe.prototype.getEvents = function(){
 		var output = (arguments[0] == "ul") ? document.createElement("ul") : "";
 		for (var i = 0;i < this.events.length;i++){
@@ -1683,8 +1713,9 @@ function Recipe(){
 				div.id = "rBarR" + this.id + "S" + i;
 
 				span.appendChild(text);
-				li.appendChild(span);
+
 				li.appendChild(div);
+				li.appendChild(span);
 
 				output.appendChild(li);
 

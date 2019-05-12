@@ -24,7 +24,6 @@
 .autogrid h2 {
   margin: 0;
   padding: 0;
-  height: 0;
 }
 
 .autogrid .big {
@@ -102,27 +101,70 @@
 
 /* recipe stuff */
 
-ul.recipeEvents {
-  display: flex;
-  flex-direction: column;
-}
-ul.recipeEvents > li {
-  flex-grow: 1;
-}
-ul.recipeEvents > li > span {
-  position: absolute;
-}
 
 .autogrid #recipeBox {
   grid-row-start: 1;
   grid-row-end: span 5; 
   grid-column-start: 1;
   grid-column-end: span 2;
+
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+
+  height: 76vh;
 }
 
 .rBarElement{
-  height: 60px;
+  height: 100%;
   width: 20px;
   background-color: var(--bar-background);
+}
+
+#recipeBox h2, #recipeBox ul {
+  padding: 1rem 0;
+}
+
+ul.recipeEvents {
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1;
+}
+ul.recipeEvents > li {
+  display: flex;
+  flex-grow: 2;
+  transition: flex-grow .5s ease-in-out 0.4s;
+}
+
+ul.recipeEvents > li.active {
+  flex-grow: 3;
+}
+
+ul.recipeEvents > li > span {
+  padding: 0;
+  margin: 0 0 0 4rem;
+  width: -webkit-fill-available;
+  text-align: right;
+}
+
+button.recipeButton {
+  height: 34px;
+  outline: 1px solid;
+  outline-offset: -1px;
+  border: 0px;
+  padding: 0;
+  overflow: hidden;
+}
+
+button.recipeButton.hidden {
+  animation-name: starting;
+  animation-duration: 0.04s;
+  animation-iteration-count: 20;
+  animation-timing-function: steps(2, end);
+  transition: 
+    opacity .5s linear,
+    height .5s ease-in-out 0.4s;
+  height: 0px;
+  opacity: 0;
 }
 
