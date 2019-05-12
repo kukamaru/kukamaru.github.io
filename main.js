@@ -83,13 +83,6 @@ function saveActiveTimers() {
 }
 
 function recallTimers() {
-	var thing = JSON.parse(localStorage.getItem('activeTimers')); // gets timers
-	if (thing){
-		for (var i = 0; i < thing.length; i++)
-		{
-			reactivate(thing[i]);
-		}
-	}
 	var thing2 = JSON.parse(localStorage.getItem('activeRecipes')); // and recipes :)
 	console.log(thing2);
 	if (thing2){
@@ -97,7 +90,15 @@ function recallTimers() {
 		{
 			reactivateRecipe(thing2[i]);
 		}
+	}	
+	var thing = JSON.parse(localStorage.getItem('activeTimers')); // gets timers
+	if (thing){
+		for (var i = 0; i < thing.length; i++)
+		{
+			reactivate(thing[i]);
+		}
 	}
+
 }
 
 function reactivate(old){
@@ -114,6 +115,10 @@ function reactivate(old){
 	}
 
 	activeTimers.push(ato);
+	if (ato.recipeId){
+		var recipe = getActiveRecipe(ato.recipeId);
+		recipe.reapplyAto(ato);
+	}
 }
 
 function reactivateRecipe(old){
@@ -1652,6 +1657,10 @@ function Recipe(){
 		this.text = text;
 		this.countdown = false;
 		this.isVertical = true;
+	}
+
+	Recipe.prototype.reapplyAto = function(ato){
+		this.atos.push(ato);
 	}
 
 	Recipe.prototype.nextEvent = function(){
