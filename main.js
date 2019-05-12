@@ -129,7 +129,7 @@ function reactivate(old){
 	activeTimers.push(ato);
 	if (ato.recipeId){
 		var recipe = getActiveRecipe(ato.recipeId);
-		recipe.reapplyAto(ato);
+		if (recipe) recipe.reapplyAto(ato);
 	}
 }
 
@@ -1549,10 +1549,10 @@ function startRecipe(id){
 	recipe.start();
 }
 
-var newRecipeID = (function() {
-	var counter = 0;
-	return function(){ counter++; return counter }
-})();
+var newRecipeID = function(){
+	var d = new Date();
+	return d.valueOf();
+}
 
 function Recipe(){
 	//-- ingredients--
@@ -1714,18 +1714,20 @@ function Recipe(){
 	Recipe.prototype.lastEvent = function(){
 
 		function killAtos(recipe) {
-			while (recipe.atos.length > 0){
-				appendText(recipe.atos.length);
-				var ato = recipe.atos.pop();
-				ato.active = false;
+			for (var i = 0;activeTimers.length > i;i++){
+				var ato = activeTimers[i];
+				if (ato.recipeId == recipe.id){
+					ato.active = false;
+				}
 			}
 		}
 
-
+		appendText("last event");
 		console.log(this.atos);
 		this.active = false;
+		//activeRecipes.refresh();
 
-		setTimeout(killAtos(this),500);
+		setTimeout(killAtos(this),5000);
 	}
 
 
@@ -1733,7 +1735,8 @@ function Recipe(){
 	Object.defineProperties(this,{
 		"id":{
 			value: newRecipeID(),
-			writable:false
+			writable:true,
+			enumerable:true
 		}, 
 		"name":{
 			value: "mydeliciousbread",
@@ -1748,19 +1751,18 @@ function Recipe(){
 	//placeholder events...
 	eventArray = [
 		//	new WaitEvent(10000,"wait, mixing and kneading"),
-		new TimeEvent(5000,"first rise",this),
-		new TimeEvent(5000,"2rise",this),
-		new TimeEvent(5000,"f3x rise",this),
+		new TimeEvent(6000,"first rise",this),
+		new TimeEvent(6000,"2rise",this),
+		new TimeEvent(6000,"f3x rise",this),
 		//	new WaitEvent(10000,"wait, "),
-		new TimeEvent(5000,"s4econd rise",this),
+		new TimeEvent(6000,"s4econd rise",this),
 		//	new WaitEvent(10000,"wait, shaping"),
-		new TimeEvent(5000,"c5ook with lid",this),
-		new TimeEvent(5000,"c6ook without lid (total cooking time)",this),
-		new TimeEvent(5000,"l7et cool....",this)
+		new TimeEvent(6000,"c5ook with lid",this),
+		new TimeEvent(6000,"c6ook without lid (total cooking time)",this),
+		new TimeEvent(6000,"l7et cool....",this)
 		];
 
 	this.events = eventArray;
-	this.originalEvents = eventArray;
 	Recipe.prototype.start = function(){
 		this.active = true;
 		this.runcount = 0;
