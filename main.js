@@ -621,7 +621,7 @@ function setAlarm(ato) {
 
 //autoplay issues if refreshed and no interaction
 function alarm(ato) {
-
+	if (ato.isFinished) return;
 	var soundID = ato.soundID
 
 	var isLooping = sounds[soundID].looping;
@@ -650,7 +650,6 @@ function alarm(ato) {
 	//ato.action();
 
 	if (ato.recipeId){
-		if (ato.isFinished) return;
 		ato.isFinished = true;
 		var recipe = getActiveRecipe(ato.recipeId);
 		recipe.nextEvent();
